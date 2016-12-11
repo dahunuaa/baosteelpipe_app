@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>news</title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="../css/app.css"/>
+        <link href="../css/mui.picker.css" rel="stylesheet" />
+		<link href="../css/mui.poppicker.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/defined_uploadimg.css" />
+		<style>
+			ul {
+				font-size: 14px;
+				color: #8f8f94;
+				
+			}
+			li{
+				list-style-type:none;/*去掉li前面的小黑点*/
+			}
+			.mui-btn {
+				padding: 10px;
+			}
+			
+			
+		</style>
+
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">新建信息指南</h1>
+		</header>
+		<div class="mui-content">
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+					<label>标题</label>
+					<input id="title" type="text" class="mui-input-clear" placeholder="请输入信息指南标题">
+				</div>
+				<li class="mui-table-view-cell">
+				<a id="selectcategory" class="mui-navigate-right">
+					选择分类<span id="category"style="padding: 0px 0px 0px 45px;"></span>
+				</a>
+			    </li>
+			    </form>
+				<br>
+				<label>&nbsp;&nbsp;&nbsp;内容</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				
+				<div class="mui-input-row" style="margin: 10px 5px;">
+					<textarea id="textarea" rows="5" placeholder="请填写正文"></textarea>
+				</div>	
+				
+				<label>&nbsp;&nbsp;&nbsp;上传图片（可选）</label>
+				<br />
+				<img class="picture" id="pic_1" src="../img/iconfont-tianjia.png" style="margin-left: 30px; height: 100px;">
+				<br/>        
+				<div class="mui-button-row">
+					<button id="newguide_submit" class="mui-btn mui-btn-primary" type="button" onclick="return true;">提交</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button id="newguide_cancel" class="mui-btn mui-btn-danger" type="button" onclick="return false;">取消</button>
+				</div>
+				
+				
+		
+			
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/app.js"></script>
+		<script src="../js/mui.picker.js"></script>
+		<script src="../js/mui.poppicker.js"></script>
+		<script src="../js/mui.view.js "></script>
+		<script src="../js/feedback-page.js"></script>
+		<script src="../js/mui.zoom.js"></script>
+		<script src="../js/mui.previewimage.js"></script>
+		
+		<script>
+		(function($, doc) {
+				$.init();
+				$.previewImage();
+				$.ready(function() {
+					//选择地点
+					var selectcategory = new $.PopPicker();
+					selectcategory.setData([{
+						value: 'bijixiaojie',
+						text: '笔记小结'
+					},{
+						value: 'yonghuxinxi',
+						text: '用户信息'
+					}, {
+						value: 'chanpinxinxi',
+						text: '产品信息'
+					}, {
+						value: 'hangyexinxi',
+						text: '行业信息'
+					}, {
+						value: 'gongsixinxi',
+						text: '公司新闻'
+					}]);
+					var showUserPickerButton = doc.getElementById('selectcategory');
+					var category = doc.getElementById('category');
+					showUserPickerButton.addEventListener('tap', function(event) {
+						selectcategory.show(function(items) {
+							category.innerText = items[0].text;
+							//返回 false 可以阻止选择框的关闭
+//							return false;
+						});
+					}, false);
+					
+					
+				//上传图片
+				var carmer_1 = doc.getElementById('pic_1')
+				carmer_1.addEventListener('tap', function(event) {
+					if(mui.os.plus){
+						var a = [{
+							title: "拍照"
+						}, {
+							title: "从手机相册选择"
+						},{
+							title:"撤销图片"
+						}];
+						plus.nativeUI.actionSheet({
+							cancel: "取消",
+							buttons: a
+						}, function(b) {
+							switch (b.index) {
+								case 0:
+									break;
+								case 1:
+									getImage();
+									break;
+								case 2:
+									galleryImg();
+									break;
+								case 3:
+									deleteImg();
+									break;
+								default:
+									break
+							}
+						})	
+					}
+					
+				});
+		
+				//拍照
+				function getImage() {
+					var c = plus.camera.getCamera();
+					c.captureImage(function(e) {
+						plus.io.resolveLocalFileSystemURL(e, function(entry) {
+							var s = entry.toLocalURL() + "?version=" + new Date().getTime();
+							appendFile(s);
+							document.getElementById("pic_1").src = s;
+							//变更大图预览的src
+							//目前仅有一张图片，暂时如此处理，后续需要通过标准组件实现
+		//					document.querySelector("#__mui-imageview__group .mui-slider-item img").src = s + "?version=" + new Date().getTime();;;
+						}, function(e) {
+							console.log("读取拍照文件错误：" + e.message);
+						});
+					}, function(s) {
+						console.log("error" + s);
+					}, {
+						filename: "_doc/head.jpg"
+					})
+				}
+				//从相册选择图片
+				function galleryImg() {
+					plus.gallery.pick(function(a) {
+						plus.io.resolveLocalFileSystemURL(a, function(entry) {
+							plus.io.resolveLocalFileSystemURL("_doc/", function(root) {
+								root.getFile("head.jpg", {}, function(file) {
+									//文件已存在
+									file.remove(function() {
+										entry.copyTo(root, 'head.jpg', function(e) {
+												var e = e.fullPath + "?version=" + new Date().getTime();
+												appendFile(e);
+												document.getElementById("pic_1").src = e;
+												//变更大图预览的src
+												//目前仅有一张图片，暂时如此处理，后续需要通过标准组件实现
+		//										document.querySelector("#__mui-imageview__group .mui-slider-item img").src = e + "?version=" + new Date().getTime();;
+											},
+											function(e) {
+												console.log('copy image fail:' + e.message);
+											});
+									}, function() {
+										console.log("delete image fail:" + e.message);
+									});
+								}, function() {
+									//文件不存在
+									entry.copyTo(root, 'head.jpg', function(e) {
+											var path = e.fullPath + "?version=" + new Date().getTime();
+											appendFile(e)
+											document.getElementById("head-img1").src = path;
+											//变更大图预览的src
+											//目前仅有一张图片，暂时如此处理，后续需要通过标准组件实现
+											document.querySelector("#__mui-imageview__group .mui-slider-item img").src = path;
+										},
+										function(e) {
+											console.log('copy image fail:' + e.message);
+										});
+								});
+							}, function(e) {
+								console.log("get _www folder fail");
+							})
+						}, function(e) {
+							console.log("读取拍照文件错误：" + e.message);
+						});
+					}, function(a) {}, {
+						filter: "image"
+					})
+				};
+				
+				function deleteImg(path){
+					document.getElementById("pic_1").src="../img/iconfont-tianjia.png"
+					f1 = null
+				}
+				
+		//		生成canvas	
+				var f1 = null;
+				var path_pic= "";
+				function appendFile(path){
+					var img = new Image();
+					path_pic = path;
+					img.src=path;
+					img.onload = function(){
+						var that = this;
+		//				生成比例
+						var w = that.width,
+							h = that.height,
+							scale = w/h;
+							w = 480 ||w;//480 你想压缩到多大 改这里
+							h = w/scale;
+		//				生成canvas
+		 				var canvas = document.createElement('canvas');
+		 				var ctx = canvas.getContext('2d');
+		 				canvas.width = w;
+		        		canvas.height = h;
+		 				ctx.drawImage(that,0,0,w,h);
+		 				var base64 = canvas.toDataURL('image/png',1||0.8);//1最清晰，越低越模糊。有一点不清楚这里明明设置的是png。弹出 base64 开头的一段 data：image/png;却是png。哎开心就好，开心就好
+						f1 = base64;//把base64数据丢过去，上传要用
+						
+						//下面两行，就是显示当前所选取的图片，之前的方法里面已经实现
+		//				var pic = document.getElementById("x");
+		//				pic.src = base64; //这里丢到img 的 src 里面就能看到效果了
+							
+					}
+				}
+				
+				
+			     //提交出差任务
+			        var titleBox = doc.getElementById('title');
+					var categoryBox = doc.getElementById('category');
+					var textareaBox = doc.getElementById('textarea');
+					var newguide_submitButton = doc.getElementById("newguide_submit");
+					var newguide_cancelButton = doc.getElementById('newguide_cancel');
+					newguide_submitButton.addEventListener('tap', function(event) {
+						if(titleBox.value==""){
+							plus.nativeUI.toast("请输入标题")
+						}else if(categoryBox.innerText==""){
+							plus.nativeUI.toast("请选择分类")
+						}else if(textareaBox.value==""){
+							plus.nativeUI.toast("请填写正文")
+						}else{
+						var wt=plus.nativeUI.showWaiting("正在提交...");
+						$.ajax({
+						type: "post",
+//						url: "http://192.168.191.1:8080/baosteelpipe/NewInformationGuide",
+						url: "http://121.42.186.54:8081/baosteelpipe/NewInformationGuide",
+						data: {
+//							"guide_editor":editorBox.value,
+//							"guide_editor_name":editornameBox.value,
+							"guide_title":titleBox.value,
+							"guide_category":categoryBox.innerText,
+							"guide_text":textareaBox.value,
+							"pic":f1, 
+						},
+						async: true,
+						dataType:"text",//如果返回的是str，那么这个地方必须用text，用json报错
+						success: function(data) {
+							if (data=="ok")
+							{	
+								wt.close();
+								plus.nativeUI.toast("新建信息指南成功");
+								mui.back();
+								
+							}else{
+								plus.nativeUI.toast("新建信息指南失败");
+							}
+						},
+						error: function() {
+							plus.nativeUI.toast("请求服务器出现失败!");
+						}
+					});
+			
+						}
+						});
+
+			   newguide_cancelButton.addEventListener('tap',function(event){
+			   	mui.back();
+			   })
+			
+				});
+			})(mui, document);
+		</script>
+		</script>
+	</body>
+</html>

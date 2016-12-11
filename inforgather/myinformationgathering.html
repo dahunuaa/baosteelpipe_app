@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>myinformationgathering</title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="../css/app.css"/>
+		<style>
+			body {
+				background-color:#efeff4;
+			}
+		   
+		</style>
+
+	</head>
+	 
+	
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			 
+			 <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			 <!--<a class="mui-icon mui-icon-reload mui-pull-right" id="refresh"><div style="margin:-18px 10px 10px 30px; font: '楷体';font-size: 18px;">刷新</div></a>-->
+			<h1 class="mui-title">我的情报搜集</h1>
+			
+		</header>
+		
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<ul class="mui-table-view mui-table-view-chevron" id="list">
+					
+				</ul>
+			</div>
+		</div>
+		
+		
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/app.js"></script>
+		<script>
+		(function($,doc){
+			mui.init({
+				pullRefresh: {
+					container: '#pullrefresh',
+					up: {
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				}
+			});
+			var list = document.getElementById("list")
+			var count = -1;
+			function pullupRefresh() {
+				count = count +1
+				setTimeout(function() {
+					
+					mui.ajax({
+						type: "post",//后面必须加逗号！！！！！！！！
+//						url: "http://192.168.191.1:8080/baosteelpipe/MyInformationgathering",
+						url: "http://121.42.186.54:8081/baosteelpipe/MyInformationgathering",
+						data:{
+							"pull_count":count,
+						},
+						async:true,
+						dataType:"json",
+						success:function(data){
+							mui('#pullrefresh').pullRefresh().endPullupToRefresh((data ==""||null));				            
+							mui.each(data,function(key,value){
+							var li = document.createElement("li")
+							li.className="mui-table-view-cell"
+							li.setAttribute("gather_id",value.gather_id);
+							li.setAttribute("gather_editor",value.gather_editor);
+							li.setAttribute("gather_editor_name",value.gather_editor_name);
+							li.setAttribute("gather_title",value.gather_title);
+							li.setAttribute("gather_area",value.area);
+							li.setAttribute("gather_address",value.address);
+							li.setAttribute("gathering_text",value.gathering_text);
+							li.setAttribute("gather_oil_field",value.gather_oil_field);
+							li.setAttribute("time",value.time);
+							li.setAttribute("origin_file_name",value.origin_file_name);
+						 	 li.setAttribute("new_file_name",value.new_file_name);
+							
+//							plus.nativeUI.toast(value.buss_id)
+                            li.innerHTML ='<a class="mui-navigate-right"'+"<br>"+"序号："+value.gather_id+"&nbsp&nbsp&nbsp"+"编辑者："+value.gather_editor_name +"<br>"+"编辑时间："+value.time+"<br>" +"标题："+value.gather_title 
+                                          +"<br>"+"区域："+value.area+"&nbsp&nbsp"+value.gather_oil_field+'</a>';
+                                                        
+                            list.appendChild(li)
+							})
+							
+							mui("#list").on('tap','li',function(){
+								var gather_id = this.getAttribute("gather_id")
+								var gather_editor = this.getAttribute("gather_editor")
+								var gather_editor_name = this.getAttribute("gather_editor_name")
+								var gather_title = this.getAttribute("gather_title")
+								var gather_area = this.getAttribute("gather_area")
+								var gather_address = this.getAttribute("gather_address")
+								var gather_text = this.getAttribute("gathering_text")
+								var gather_oil_field = this.getAttribute("gather_oil_field")
+								var time = this.getAttribute("time")
+								var origin_file_name = this.getAttribute("origin_file_name")
+								var new_file_name = this.getAttribute("new_file_name")
+													
+								mui.openWindow({
+							    url:"informationgathering_edit.html",
+							    id:"informationgathering_edit",
+							    
+							    extras:{
+							    	gather_id:gather_id,
+							    	gather_editor:gather_editor,
+							    	gather_editor_name:gather_editor_name,
+							    	gather_title:gather_title,
+							    	gather_area:gather_area,
+							    	gather_address:gather_address,
+							    	gather_text:gather_text,
+							    	gather_oil_field:gather_oil_field,
+							    	gather_time:time,
+							    	origin_file_name:origin_file_name,
+						    		new_file_name:new_file_name,
+							    }
+							})
+		                  });										                                         			         			           
+			   		},
+				  
+				  });
+				}, 100);
+				
+			}
+			/*
+			 下拉刷新(以从新加载本页的方法来实现)
+			 * */
+			
+			if (mui.os.plus) {
+				mui.plusReady(function() {
+					setTimeout(function() {
+						mui('#pullrefresh').pullRefresh().pullupLoading();
+					}, 1000);
+
+				});
+			} else {
+				mui.ready(function() {
+					mui('#pullrefresh').pullRefresh().pullupLoading();
+				});
+			}
+			
+		}(mui,document))
+		</script>
+	</body>
+</html>

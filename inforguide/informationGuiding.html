@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>informationGuiding</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<style>
+			html,
+			body {
+				background-color:#efeff4;
+			}
+		    #pullrefresh{
+		    	margin: -10px 0px 0px 0px;
+		    }
+		</style>
+    </head>
+	<body>
+		<header>
+			
+		</header>
+		<div align="center" style="background-color:#FAFAFA">
+			
+			<input type="search" id="inforguide_search" class="mui-icon mui-icon-search" placeholder="请输入搜索内容" style="width:250px;height:35px; background-color:#E8E8E8; margin-top: 10px;margin-bottom: 5px;"/>
+			<a id="icon-search"><span class="mui-icon mui-icon-search"></span></a>
+			<!--<a class="mui-pull-left" style="margin:15px 15px 15px 15px;" id="refresh">刷新</a>-->
+			<hr />
+		</div>
+		<!--下拉刷新容器-->
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<ul class="mui-table-view mui-table-view-chevron" id="list">
+					
+				</ul>
+			</div>
+		</div>
+	
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/app.js"></script>
+	<script>
+		(function($,doc){
+			mui.init({
+				pullRefresh: {
+					container: '#pullrefresh',
+					down:{
+						callback:pulldownRefresh
+					},
+					up: {
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				}
+			});
+			var list = document.getElementById("list")	
+			var count = -1;
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				count = count +1
+				setTimeout(function() {
+					
+					mui.ajax({
+					type: "post",//后面必须加逗号！！！！！！！！
+//					url: "http://192.168.191.1:8080/baosteelpipe/InformationGuiding",
+					url: "http://121.42.186.54:8081/baosteelpipe/InformationGuiding",
+					data:{
+						"pull_count":count,
+					},
+					async:true,
+					dataType:"json",
+					success:function(data){
+						
+						mui('#pullrefresh').pullRefresh().endPullupToRefresh((data==""||null))						            
+						mui.each(data,function(key,value){
+						var li = document.createElement("li")
+						li.className="mui-table-view-cell"
+						li.setAttribute("guide_id",value.guide_id);
+						li.setAttribute("guide_editor",value.guide_editor)
+						li.setAttribute("guide_name",value.guide_name)
+						li.setAttribute("guide_title",value.guide_title)
+						li.setAttribute("guide_category",value.guide_category)
+						li.setAttribute("guide_text",value.guide_text)
+						li.setAttribute("time",value.time)
+						li.setAttribute("pic_path",value.pic_path)
+
+                        li.innerHTML ='<a class="mui-navigate-right"'+"<br>"+"序号："+value.guide_id+"&nbsp&nbsp&nbsp"+"编辑者："+value.guide_name +"<br>"+"编辑时间："+value.time +"<br>"+"分类："+value.guide_category 
+                                          +"<br>"+"标题："+value.guide_title+'</a>';
+                                       
+                        list.appendChild(li)
+						})
+						
+						mui("#list").on('tap','li',function(){
+								var guide_id = this.getAttribute("guide_id")
+								var guide_editor = this.getAttribute("guide_editor")
+								var guide_name = this.getAttribute("guide_name")
+								var guide_title = this.getAttribute("guide_title")
+								var guide_category = this.getAttribute("guide_category")
+								var guide_text = this.getAttribute("guide_text")
+								var time = this.getAttribute("time")
+								var pic_path = this.getAttribute("pic_path")
+//								plus.nativeUI.toast(guide_id)
+													
+								mui.openWindow({
+							    url:"detail_inforguide.html",
+							    id:"detail_inforguide",
+							    
+							    extras:{
+							    	guide_id:guide_id,
+							    	guide_editor:guide_editor,
+							    	guide_name:guide_name,
+							    	guide_title:guide_title,
+							    	guide_category:guide_category,
+							    	guide_text:guide_text,
+							    	guide_time:time,
+							    	pic_path:pic_path,
+							    }
+							     
+							})
+		                  });											                                         			           		           
+		   		        },
+				  
+				        });	
+				}, 100);
+				
+			}
+			/*
+			 下拉刷新(以从新加载本页的方法来实现)
+			 * */
+			function pulldownRefresh(){
+			   mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+               plus.webview.currentWebview().reload();
+			}
+			
+			
+			if (mui.os.plus) {
+				mui.plusReady(function() {
+					setTimeout(function() {
+						mui('#pullrefresh').pullRefresh().pullupLoading();
+					}, 100);
+
+				});
+			} else {
+				mui.ready(function() {
+					mui('#pullrefresh').pullRefresh().pullupLoading();
+				});
+			}
+			
+			$.ready(function(){
+				var inforguide_search=document.getElementById("inforguide_search")
+				inforguide_search.addEventListener("tap",function(event){
+					mui.openWindow({
+						url:"inforguide_search.html",
+						id:"inforguide_search",
+					})
+				})
+//				var list = document.getElementById("list")	
+//					list.innerHTML="";//解决刷新重复出出现的问题
+//					mui.ajax({
+//					type: "post",//后面必须加逗号！！！！！！！！
+//					url: "http://192.168.191.1:8080/baosteel/InformationGuiding",
+//					data:{
+//						
+//					},
+//					async:true,
+//					dataType:"json",
+//					success:function(data){
+//						
+//												            
+//						mui.each(data,function(key,value){
+//						var li = document.createElement("li")
+//						li.className="mui-table-view-cell"
+//						li.setAttribute("guide_id",value.guide_id);
+//						li.setAttribute("guide_editor",value.guide_editor)
+//						li.setAttribute("guide_name",value.guide_name)
+//						li.setAttribute("guide_title",value.guide_title)
+//						li.setAttribute("guide_category",value.guide_category)
+//						li.setAttribute("guide_text",value.guide_text)
+//						li.setAttribute("time",value.time)
+//
+//                      li.innerHTML ='<a class="mui-navigate-right"'+"<br>"+"序号："+value.guide_id+"&nbsp&nbsp&nbsp"+"编辑者："+value.guide_name +"<br>"+"编辑时间："+value.time +"<br>"+"分类："+value.guide_category 
+//                                        +"<br>"+"标题："+value.guide_title+'</a>';
+//                                     
+//                      list.appendChild(li)
+//						})
+//						
+//						mui("#list").on('tap','li',function(){
+//								var guide_id = this.getAttribute("guide_id")
+//								var guide_editor = this.getAttribute("guide_editor")
+//								var guide_name = this.getAttribute("guide_name")
+//								var guide_title = this.getAttribute("guide_title")
+//								var guide_category = this.getAttribute("guide_category")
+//								var guide_text = this.getAttribute("guide_text")
+//								var time = this.getAttribute("time")
+////								plus.nativeUI.toast(guide_id)
+//													
+//								mui.openWindow({
+//							    url:"detail_inforguide.html",
+//							    id:"detail_inforguide",
+//							    
+//							    extras:{
+//							    	guide_id:guide_id,
+//							    	guide_editor:guide_editor,
+//							    	guide_name:guide_name,
+//							    	guide_title:guide_title,
+//							    	guide_category:guide_category,
+//							    	guide_text:guide_text,
+//							    	guide_time:time,
+//							    }
+//							     
+////						        styles:{
+////						        top:'0px',//mui标题栏默认高度为45px；
+////						        bottom:'0px'//默认为0px，可不定义；
+////						      }
+//							})
+//		                  });											                                         			           		           
+//		   		        },
+//				  
+//				        });					
+//				     
+				inforguide_search.addEventListener("tap",function(event){
+					mui.openWindow({
+						
+						url:"inforguide_search.html",
+						id:"inforguide_search"
+					})
+				})
+//				refresh.addEventListener("tap",function(event){
+//					var list = document.getElementById("list")	
+//					list.innerHTML="";//解决刷新重复出出现的问题
+//					mui.ajax({
+//					type: "post",//后面必须加逗号！！！！！！！！
+//					url: "http://192.168.191.1:8080/baosteel/InformationGuiding",
+//					data:{
+//						
+//					},
+//					async:true,
+//					dataType:"json",
+//					success:function(data){
+//						
+//												            
+//						mui.each(data,function(key,value){
+//						var li = document.createElement("li")
+//						li.className="mui-table-view-cell"
+//						li.setAttribute("guide_id",value.guide_id);
+//						li.setAttribute("guide_editor",value.guide_editor)
+//						li.setAttribute("guide_name",value.guide_name)
+//						li.setAttribute("guide_title",value.guide_title)
+//						li.setAttribute("guide_category",value.guide_category)
+//						li.setAttribute("guide_text",value.guide_text)
+//						li.setAttribute("time",value.time)
+//                      li.innerHTML ='<a class="mui-navigate-right"'+"<br>"+"序号："+value.guide_id+"&nbsp&nbsp&nbsp"+"编辑者："+value.guide_name +"<br>"+"编辑时间："+value.time +"<br>"+"分类："+value.guide_category 
+//                                        +"<br>"+"标题："+value.guide_title+'</a>';
+//                                     
+//                      list.appendChild(li)
+//						})
+//						
+//						mui("#list").on('tap','li',function(){
+//								var guide_id = this.getAttribute("guide_id")
+//								var guide_editor = this.getAttribute("guide_editor")
+//								var guide_name = this.getAttribute("guide_name")
+//								var guide_title = this.getAttribute("guide_title")
+//								var guide_category = this.getAttribute("guide_category")
+//								var guide_text = this.getAttribute("guide_text")
+//								var time = this.getAttribute("time")
+//
+////								plus.nativeUI.toast(guide_id)
+//													
+//								mui.openWindow({
+//							    url:"detail_inforguide.html",
+//							    id:"detail_inforguide",
+//							    
+//							    extras:{
+//							    	guide_id:guide_id,
+//							    	guide_editor:guide_editor,
+//							    	guide_name:guide_name,
+//							    	guide_title:guide_title,
+//							    	guide_category:guide_category,
+//							    	guide_text:guide_text,
+//							    	guide_time:time,
+//							    }
+//							    
+//							     
+////						        styles:{
+////						        top:'0px',//mui标题栏默认高度为45px；
+////						        bottom:'0px'//默认为0px，可不定义；
+////						      }
+//							})
+//		                 });	
+//		   		        },
+//				  
+//				        });					
+//				     })
+					
+				});
+		}(mui,document))
+		</script>
+
+  </body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>myBussinessRecord</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<style>
+			html,
+			body {
+				background-color:#efeff4;
+			}
+		    
+		</style>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a id="back" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" ></a>
+			<h1 id="buss_search" class="mui-title">出差信息查询</h1>
+		</header>
+		<!--下拉刷新容器-->
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<!--数据列表-->
+				<ul class="mui-table-view mui-table-view-chevron"id="list">
+					
+				</ul>
+			</div>
+		</div>
+		
+		<script type="text/javascript" src="../js/mui.min.js" ></script>
+		<script type="text/javascript" src="../js/mui.js" ></script>
+		<script>
+			
+		(function($,doc){
+			
+			$.plusReady(function(){
+				mui.init({
+				pullRefresh: {
+					container: '#pullrefresh',
+					up: {
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+							}
+						}
+					});
+			var self = plus.webview.currentWebview();
+			var bussmen_name = self.bussmen_name;
+			var buss_accounts = self.buss_account;
+			var buss_place = self.buss_place;
+			var buss_reason = self.buss_reason;
+			var buss_begintime = self.buss_begintime;
+			var buss_endtime = self.buss_endtime;
+			var search_list = document.getElementById("list")	
+			var count = -1;
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				count = count +1
+				setTimeout(function() {
+						$.ajax({
+						type: "post",
+//						url: "http://192.168.191.1:8080/baosteelpipe/Buss_search",
+						url: "http://121.42.186.54:8081/baosteelpipe/Buss_search",
+						data: {
+							"bussmen_name":bussmen_name,
+							"buss_accounts":buss_accounts,
+							"buss_place":buss_place,
+							"buss_reason":buss_reason,
+							"buss_begintime":buss_begintime,
+							"buss_endtime":buss_endtime,
+							"pull_count":count,
+						},
+						async: true,
+						dataType:"json",
+						success: function(data) {
+							mui('#pullrefresh').pullRefresh().endPullupToRefresh((data ==""||null));
+							mui.each(data,function(key,value){
+							var li = document.createElement("li")
+							li.className="mui-table-view-cell"
+			                li.innerHTML = "序号："+value.buss_id+"&nbsp;&nbsp;&nbsp&nbsp;&nbsp;"+"编辑人："+value.editor_name+"<br>"+"编辑时间："+value.time+"<br>"+"出差日期："+value.buss_begintime +"—"+value.buss_endtime +"<br>" +value.bussmen_name 
+			                                   +"<br>"+value.accounts+"人"+"&nbsp&nbsp"+value.buss_reason+"&nbsp&nbsp"+value.buss_place;
+			                               
+			                search_list.appendChild(li)
+							})							
+						},
+//						error: function() {
+//							plus.nativeUI.toast("请求服务器失败!");
+//						}
+					});
+			
+				}, 100);
+				
+			}
+			
+					})
+			
+
+			
+			if (mui.os.plus) {
+				mui.plusReady(function() {
+					setTimeout(function() {
+						mui('#pullrefresh').pullRefresh().pullupLoading();
+					}, 1000);
+
+				});
+			} else {
+				mui.ready(function() {
+					mui('#pullrefresh').pullRefresh().pullupLoading();
+				});
+			}
+			
+		}(mui,document))
+		
+			
+		</script>
+		
+	</body>
+</html>

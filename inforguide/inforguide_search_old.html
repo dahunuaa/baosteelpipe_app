@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>inforguide_search</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<style>
+			html,
+			body {
+				background-color:#efeff4;
+			}
+		    div{
+		    	background-color: #EEEEEE;
+		    }
+		</style>
+	</head>
+	<body>
+		<div align="center" style="background-color:#FAFAFA">
+			
+			<input type="search" id="inforguide_search" class="mui-icon mui-icon-search"  placeholder="请输入搜索内容" style="width:250px;height:35px; background-color:#E8E8E8; margin-top: 10px;margin-bottom: 5px;"/>
+			<a id="icon_search"><span class="mui-icon mui-icon-search"></span></a>
+			 <a id="back" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"style="margin:15px -20px 15px 15px;"></a>
+			<hr />
+		</div>
+		<div class="mui-content" id="search_content">
+        <ul class="mui-table-view" style="margin-top:-10px;" id="search_list">
+  				
+		</ul>		
+		</div>
+		
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/app.js"></script>
+		<script>
+		(function($,doc){
+			$.init();
+			$.ready(function(){
+			
+			  	var inforguide_search = document.getElementById("inforguide_search")
+			  	var icon_search = document.getElementById("icon_search")
+			  
+		        icon_search.addEventListener("tap",function(event){
+			    if (inforguide_search.value==""){
+			    	plus.nativeUI.toast("请输入搜索内容")
+			    }else{
+				var search_list = document.getElementById("search_list")	
+				search_list.innerHTML="";//解决刷新重复出出现的问题,先为空，再填充数据
+
+				mui.ajax({
+				type: "post",
+//				url: "http://192.168.191.1:8080/baosteelpipe/Inforguide_search",
+				url: "http://121.42.186.54:8081/baosteelpipe/Inforguide_search",
+				data:{
+					"inforguide_search":inforguide_search.value
+				},
+
+				async:true,
+				dataType:"json",
+				success:function(data){	
+					if (data ==""){
+						plus.nativeUI.toast("无搜索结果")
+					}
+					mui.each(data,function(key,value){
+					var li = document.createElement("li")
+					li.className="mui-table-view-cell"
+					li.setAttribute("guide_id",value.guide_id);
+					li.setAttribute("guide_editor",value.guide_editor)
+					li.setAttribute("guide_name",value.guide_name)
+					li.setAttribute("guide_title",value.guide_title)
+					li.setAttribute("guide_category",value.guide_category)
+					li.setAttribute("guide_text",value.guide_text)
+					li.setAttribute("time",value.time)
+                    li.innerHTML ='<a class="mui-navigate-right"'+"<br>"+"序号："+value.guide_id+"&nbsp&nbsp&nbsp"+"编辑者："+value.guide_name +"<br>"+"编辑时间："+value.time +"<br>"+"分类："+value.guide_category 
+                                          +"<br>"+"标题："+value.guide_title+'</a>';  
+                    search_list.appendChild(li)
+					})
+					
+					mui("#search_list").on('tap','li',function(){
+					var guide_id = this.getAttribute("guide_id")
+					var guide_editor = this.getAttribute("guide_editor")
+					var guide_name = this.getAttribute("guide_name")
+					var guide_title = this.getAttribute("guide_title")
+					var guide_category = this.getAttribute("guide_category")
+					var guide_text = this.getAttribute("guide_text")
+					var time = this.getAttribute("time")
+//								plus.nativeUI.toast(guide_id)
+										
+					mui.openWindow({
+				    url:"detail_inforguide.html",
+				    id:"detail_inforguide",
+				    
+				    extras:{
+				    	guide_id:guide_id,
+				    	guide_editor:guide_editor,
+				    	guide_name:guide_name,
+				    	guide_title:guide_title,
+				    	guide_category:guide_category,
+				    	guide_text:guide_text,
+				    	guide_time:time,
+				    }
+				     
+//						        styles:{
+//						        top:'0px',//mui标题栏默认高度为45px；
+//						        bottom:'0px'//默认为0px，可不定义；
+//						      }
+				            })
+		                  });											                                         			           		           
+		   		        										                                         			           		           
+	   		                         },
+			  
+			           });	
+			          }
+			     })
+				
+				});
+		}(mui,document))
+		</script>
+	
+	</body>
+</html>

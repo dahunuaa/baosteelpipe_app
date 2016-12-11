@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>businessInformation</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="../css/iconfont.css" />
+		<style>
+			html,
+			body {
+				background-color:#efeff4;
+			}
+		    #pullrefresh{
+		    	margin:-10px 0px 0px 0px;
+		    }
+		    
+		    .mui-table-view-cell{
+		    	border-radius: 30px;
+		    	margin-left: 40px;
+		    	margin-right: 20px;
+		    	background-color:#D8D8D8;
+		    	margin-bottom: 10px;
+		    }
+		    .mui-icon-checkmarkempty{
+		      margin-left: 10px;
+		      background-color: #007AFF;
+		      border-radius: 15px;
+		      float:left;/*先将前面的符号改成浮动型的再改margin-top就可以和数据对齐了*/
+		      margin-top:50px;
+		    }
+		    .mui-table-view-chevron{
+		    	border-bottom:hidden;
+		    }
+		    .icon-daiwancheng{
+		      margin-left: 10px;
+		      background-color:lightpink;
+		      border-radius: 15px;
+		      float:left;
+		      margin-top:50px;
+		    }
+		    /*#pullrefresh{
+		    	margin:50px 0px 0px 0px;//苹果版本
+		    }*/
+		</style>
+    </head>
+	<body>
+		<header>
+			
+		</header>
+		<div align="center" style="background-color:#FAFAFA ">
+			<input type="search" id="buss_search" class="mui-icon mui-icon-search" placeholder="请输入搜索内容" style="width:250px;height:35px; background-color:#E8E8E8; margin-top: 10px;margin-bottom: 5px;"/>
+			<a id="icon-search"><span class="mui-icon mui-icon-search"></span></a>
+			<!--<a class="mui-pull-left" style="margin:15px 15px 15px 15px;" id="refresh">刷新</a>-->
+			<hr />
+		</div>
+		<div class="mui-content" style="font-size: 15px;" >
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<ul class="mui-table-view mui-table-view-chevron" id="list" style="background-color:#efeff4">
+					
+				</ul>
+			</div>
+		</div>	
+		</div>
+		<!--下拉刷新容器-->
+		
+		
+	
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/app.js"></script>
+	<script>
+	
+		(function($,doc){
+			mui.init({
+				pullRefresh: {
+					container: '#pullrefresh',
+					down:{
+						callback:pulldownRefresh
+					},
+					up: {
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				}
+			});
+			var list = document.getElementById("list")	
+			var count = -1;
+			
+			
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				count = count +1
+				setTimeout(function() {
+					
+					mui.ajax({
+					type: "post",//后面必须加逗号！！！！！！！！
+//					url: "http://192.168.191.1:8080/baosteelpipe/BusinessInformation",
+					url: "http://121.42.186.54:8081/baosteelpipe/BusinessInformation",
+					data:{
+						"pull_count":count,
+					},
+					async:true,
+					dataType:"json",
+					success:function(data){
+						mui('#pullrefresh').pullRefresh().endPullupToRefresh((data ==""||null));	
+						mui.each(data,function(key,value){
+						var li = document.createElement("li")
+						li.className = "mui-table-view-cell"
+						li.setAttribute("buss_id",value.buss_id);
+						li.setAttribute("editor_name",value.editor_name);
+						li.setAttribute("editor_name",value.editor_name);
+						li.setAttribute("time",value.time);
+						li.setAttribute("buss_begintime",value.buss_begintime);
+						li.setAttribute("buss_endtime",value.buss_endtime);
+						li.setAttribute("bussmen_name",value.bussmen_name);
+						li.setAttribute("accounts",value.accounts);
+						li.setAttribute("buss_reason",value.buss_reason);
+						li.setAttribute("buss_place",value.buss_place)
+						
+						li.innerHTML = "序号："+value.buss_id+"&nbsp;&nbsp;&nbsp&nbsp;&nbsp;"+"编辑人："+value.editor_name+"<br>"+"编辑时间："+value.time+"<br>"+"出差日期："
+									+value.buss_begintime +"—"+value.buss_endtime +"<br>" +value.bussmen_name
+                                   +"<br>"+value.accounts+"人"+"&nbsp&nbsp"+value.buss_reason+"&nbsp&nbsp"+value.buss_place;
+						var icon = document.createElement("icon")
+						var date1 = new Date(value.buss_endtime);
+						
+						var date2 =new Date();
+						
+						if(date1<date2){
+							icon.className="mui-icon mui-icon-checkmarkempty"
+						}else{
+							icon.className="mui-icon iconfont icon-daiwancheng"							
+						}
+						list.appendChild(icon)
+                        list.appendChild(li)
+                       
+					})
+					mui("#list").on('tap','li',function(){
+						var buss_id = this.getAttribute("buss_id")
+						var editor_name = this.getAttribute("editor_name")
+						var edit_time = this.getAttribute("time")
+						var buss_begintime = this.getAttribute("buss_begintime")
+						var buss_endtime = this.getAttribute("buss_endtime")
+						var bussmen_name = this.getAttribute("bussmen_name")
+						var accounts = this.getAttribute("accounts")
+						var buss_reason = this.getAttribute("buss_reason")
+						var buss_place = this.getAttribute("buss_place")
+						mui.openWindow({
+					    url:"buss_detail.html",
+					    id:"buss_detail",
+					    
+					    extras:{
+					    	buss_id:buss_id,
+					    	editor_name:editor_name,
+					    	edit_time:edit_time,
+					    	buss_begintime:buss_begintime,
+					    	buss_endtime:buss_endtime,
+					    	bussmen_name:bussmen_name,
+					    	accounts:accounts,
+					    	buss_reason:buss_reason,
+					    	buss_place:buss_place,
+					    }
+					     
+					})
+	                  });
+						
+					},
+					});
+				}, 100);
+				
+			}
+			/*
+			 下拉刷新(以从新加载本页的方法来实现)
+			 * */
+			function pulldownRefresh(){
+			   mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+               plus.webview.currentWebview().reload();
+			}
+			
+			
+			if (mui.os.plus) {
+				mui.plusReady(function() {
+					setTimeout(function() {
+						mui('#pullrefresh').pullRefresh().pullupLoading();
+					}, 100);
+
+				});
+			} else {
+				mui.ready(function() {
+					mui('#pullrefresh').pullRefresh().pullupLoading();
+				});
+			}
+			
+//			$.init();
+			$.ready(function(){
+//				var refresh = document.getElementById("refresh")
+				var buss_search=document.getElementById("buss_search")
+				buss_search.addEventListener("tap",function(event){
+					mui.openWindow({
+						url:"buss_search.html",
+						id:"buss_search"
+					})
+				})
+//				refresh.addEventListener("tap",function(event){	
+//					list.innerHTML="";//解决刷新重复出出现的问题
+//					mui.ajax({
+//					type: "get",//后面必须加逗号！！！！！！！！
+////					url: "http://121.42.186.54:8081/baosteel/BusinessInformation",
+//                  url: "http://192.168.191.1:8080/baosteel/BusinessInformation",
+//					data:{
+//						"pull_count":0,
+//					},
+//					async:true,
+//					dataType:"json",
+//					success:function(data){
+//																		            
+//						mui.each(data,function(key,value){
+//						var li = document.createElement("li")
+//						li.className="mui-table-view-cell"
+//                      li.innerHTML = "序号："+value.buss_id+"&nbsp;&nbsp;&nbsp&nbsp;&nbsp;"+"编辑人："+value.editor_name+"<br>"+"编辑时间："+value.time+"<br>"+"出差日期："+value.buss_begintime +"—"+value.buss_endtime +"<br>" +value.bussmen_name 
+//                                     +"<br>"+value.accounts+"人"+"&nbsp&nbsp"+value.buss_reason+"&nbsp&nbsp"+value.buss_place;
+//                                     
+//                      list.appendChild(li)
+//						})
+//																                                         			           		           
+//		   		                         },
+//				  
+//				           });					
+//				     })
+					
+				});
+		}(mui,document))
+		</script>
+
+  </body>
+</html>

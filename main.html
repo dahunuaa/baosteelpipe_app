@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+		<meta charset="utf-8">
+		<title>BAOSTEEL</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="css/mui.min.css">
+		<style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			nav{
+				position:fixed;
+				bottom: 0px;
+				left: 0px;
+			}
+		</style>
+    </head>
+
+	<body>
+			<!--主界面部分-->
+				<header class="mui-bar mui-bar-nav">
+					<a class=" mui-pull-left"><div style="margin:10px 0px 0px 0px; font: '楷体';font-size: 20px; font-style:oblique;color: #000000;">宝钢</div></a>
+					<!--<a class=" mui-btn mui-btn-link mui-pull-right"id="quit">关闭</a>-->
+					<a id="notice" class="mui-tab-item mui-active">
+						<span id="notices" class="mui-icon mui-icon-chat mui-pull-right"></span>
+						<!--<span id="amounts" class="mui-badge">0</span>-->
+					</a>
+					<h1  id="title" class="mui-title">出差信息</h1>
+					<!--在上面的h1中加入id=“title” 下main配置更换标题就可以了-->
+				</header>
+					<!--底部选项卡-->
+				<nav class="mui-bar mui-bar-tab">
+					<a id="defaultTab" class="mui-tab-item mui-active" href="bussinessinfo/businessInformation.html">
+						<span class="mui-icon mui-icon-contact"></span>
+						<span class="mui-tab-label"><div style="margin: 0px 0px 0px 0px;">出差信息</div></span>
+					</a>
+					<a class="mui-tab-item" href="inforgather/informationGathering.html">
+						<span class="mui-icon mui-icon-eye"></span>
+						<span class="mui-tab-label"><div style="margin: 0px 0px 0px 0px;">情报搜集</div></span>
+					</a>
+					<a class="mui-tab-item" href="inforguide/informationGuiding.html">
+						<span class="mui-icon mui-icon-list"></span>
+						<!--如果想在上面显示有多少未读消息 则写入代码为<span class="mui-badge">9</span>-->
+						<span class="mui-tab-label"><div style="margin: 0px 0px 0px 0px;">信息指南</div></span>
+					</a>
+					<a class="mui-tab-item" href="selfInformation.html" id="selfinfor">
+						<span class="mui-icon mui-icon-person"></span>
+						<span class="mui-tab-label"><div style="margin: 0px 0px 0px 0px;">个人主页</div></span>
+					</a>
+				</nav>
+		<script src="js/mui.js"></script>
+		<script src="js/mui.min.js"></script>
+		<script src="js/app.js"></script>
+		<script src="js/mui.enterfocus.js"></script>
+		<script>
+		(function ($, doc) {
+			//mui初始化
+			$.init();
+			$.plusReady(function(){
+//			now = new Date()
+//				hour = now.getHours()
+//				if(hour<6){
+//					gesture ="凌晨好!"
+//				}else if(hour<9){
+//					gesture = "早上好!"
+//				}else if(hour<12){
+//					gesture="上午好！"
+//				}else if(hour<14){
+//					gesture="中午好！"
+//				}else if(hour<17){
+//					gesture="下午好！"
+//				}else if(hour<19){
+//					gesture="傍晚好！"
+//				}else{
+//					gesture="晚上好！"
+//				}
+//			var self = plus.webview.currentWebview()
+//			window.user_name = self.user_name
+//			plus.nativeUI.toast(gesture+user_name)
+//			localStorage.setItem("user_name",user_name)
+			var subpages = ['bussinessinfo/businessInformation.html', 'inforgather/informationGathering.html', 'inforguide/informationGuiding.html','selfInformation.html'];
+			var subpage_style = {
+				top: '45px',
+				bottom: '51px'
+			};
+			
+			var aniShow = {};
+			
+			 //创建子页面，首个选项卡页面显示，其它均隐藏；
+			mui.plusReady(function() {
+				var self = plus.webview.currentWebview();
+				
+				for (var i = 0; i < 4; i++) {
+					var temp = {};
+					var sub = plus.webview.create(subpages[i], subpages[i], subpage_style);
+					if (i > 0) {
+						sub.hide();
+					}else{
+						temp[subpages[i]] = "true";
+						mui.extend(aniShow,temp);
+					}
+					self.append(sub);
+					
+				}
+				
+			});
+			 //当前激活选项
+			var activeTab = subpages[0];
+			var title = document.getElementById("title");
+			 //选项卡点击事件
+			mui('.mui-bar-tab').on('tap', 'a', function(e) {
+				var targetTab = this.getAttribute('href');
+				if (targetTab == activeTab) {
+					return;
+				}
+				//更换标题
+				title.innerHTML = this.querySelector('.mui-tab-label').innerHTML;
+				//显示目标选项卡
+				//若为iOS平台或非首次显示，则直接显示
+				if(mui.os.ios||aniShow[targetTab]){
+					plus.webview.show(targetTab);
+				}else{
+					//否则，使用fade-in动画，且保存变量
+					var temp = {};
+					temp[targetTab] = "true";
+					mui.extend(aniShow,temp);
+					plus.webview.show(targetTab,"fade-in",300);
+				}
+				//隐藏当前;
+				plus.webview.hide(activeTab);
+				//更改当前活跃的选项卡
+				activeTab = targetTab;
+			});
+			 //自定义事件，模拟点击“首页选项卡”
+			document.addEventListener('gohome', function() {
+				var defaultTab = document.getElementById("defaultTab");
+				//模拟首页点击
+				mui.trigger(defaultTab, 'tap');
+				//切换选项卡高亮
+				var current = document.querySelector(".mui-bar-tab>.mui-tab-item.mui-active");
+				if (defaultTab !== current) {
+					current.classList.remove('mui-active');
+					defaultTab.classList.add('mui-active');
+				}
+			});
+			
+			
+			//公告通知提示数量
+			var notices = document.getElementById("notices");
+//			notices.innerHTML="1"
+			notices.addEventListener('tap',function(){
+				mui.openWindow({
+					url:"notice/noticelist.html",
+					id:"noticelist",
+				});
+			});
+			
+			
+			var menu = null,
+				main = null;
+			var showMenu = false;
+			var first = null;
+			mui.back = function() {
+				if (showMenu) {
+					closeMenu();
+				} else {
+					//首次按键，提示‘再按一次退出应用’
+					if (!first) {
+						first = new Date().getTime();
+						mui.toast('再按一次退出应用');
+						setTimeout(function() {
+							first = null;
+						}, 1000);
+					} else {
+						if (new Date().getTime() - first < 1000) {
+							plus.runtime.quit();
+						}
+					}
+				}
+			};
+		   
+			
+      });
+		}(mui, document));
+		</script>
+	
+
+		</script>
+	</body>
+
+</html>

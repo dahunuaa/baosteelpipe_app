@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>news</title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="../css/app.css"/>
+        <link href="../css/mui.picker.css" rel="stylesheet" />
+		<link href="../css/mui.poppicker.css" rel="stylesheet" />
+		<style>
+			ul {
+				font-size: 14px;
+				color: #8f8f94;
+				
+			}
+			li{
+				list-style-type:none;/*去掉li前面的小黑点*/
+			}
+			.mui-btn {
+				padding: 10px;
+			}
+			
+			
+		</style>
+
+	</head>
+	<body>
+		
+		<div class="mui-content">
+			<form class="mui-input-group">
+				<!--<div class="mui-input-row">
+					<label>编辑人工号</label>
+					<input id="editor" type="text" class="mui-input-clear" placeholder="编辑人工号">
+				</div>
+				<div class="mui-input-row">
+					<label>编辑人姓名</label>
+					<input id="editor_name" type="text" class="mui-input-clear" placeholder="编辑人姓名">
+				</div>-->
+				<div class="mui-input-row">
+					<label>出&nbsp;差&nbsp;人</label>
+					<input id="names" type="text" class="mui-input-clear" placeholder="出差人姓名">
+				</div>
+				<div class="mui-input-row">
+					<label>总&nbsp;人&nbsp;数</label>
+					<input id="accounts" type="text" class="mui-input-clear" placeholder="出差总人数">
+				</div>
+				<div class="mui-input-row">
+				    <label>出&nbsp;差&nbsp;地</label>
+				    <input id="place" type="text" class="mui-input-clear" placeholder="写入出差地">
+				</div>
+				<div class="mui-input-row">
+			    <label>出差缘由</label>
+			    <input id="job" type="text" class="mui-input-clear" placeholder="写入出差缘由">
+				</div>
+				<li class="mui-table-view-cell">
+				<a id="begintime" class="mui-navigate-right">
+					开始时间<span id="timebegin"style="padding: 0px 0px 0px 45px;"></span>
+				</a>
+			    </li>
+			    
+		        <li class="mui-table-view-cell">
+				<a id="endtime" class="mui-navigate-right">
+					结束时间<span id="timeend"style="padding: 0px 0px 0px 45px;"></span>
+				</a>
+			    </li>
+                <button id="search_btn" type="button" class="mui-table-view-cell mui-btn mui-btn-block mui-btn-primary"  style="margin-top: 25px;">查询</button>
+				
+			</form>
+			
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/app.js"></script>
+		<script src="../js/mui.picker.js"></script>
+		<script src="../js/mui.poppicker.js"></script>
+		<script>
+		(function($, doc) {
+				$.init();
+				$.ready(function() {
+					//选择地点
+//					var selectplace = new $.PopPicker();
+//					selectplace.setData([{
+//						value: 'beijing',
+//						text: '北京'
+//					}, {
+//						value: 'shanghai',
+//						text: '上海'
+//					}, {
+//						value: 'guangzhou',
+//						text: '广州'
+//					}, {
+//						value: 'shenzhen',
+//						text: '深圳'
+//					}, {
+//						value: 'nanjing',
+//						text: '南京'
+//					}, {
+//						value: 'tianjin',
+//						text: '天津'
+//					}, {
+//						value: 'shenyang',
+//						text: '沈阳'
+//					}, {
+//						value: 'anshan',
+//						text: '鞍山'
+//					}, {
+//						value: 'baotou',
+//						text: '包头'
+//					}, {
+//						value: 'wuhan', 
+//						text: '武汉'
+//					}]);
+//					var showUserPickerButton = doc.getElementById('selectplace');
+//					var place = doc.getElementById('place');
+//					showUserPickerButton.addEventListener('tap', function(event) {
+//						selectplace.show(function(items) {
+//							place.innerText = items[0].text;
+//							//返回 false 可以阻止选择框的关闭
+////							return false;
+//						});
+//					}, false);
+//					
+//				//选择出差事由
+//					var selectjob = new $.PopPicker();
+//					selectjob.setData([{
+//						value: 'genjing',
+//						text: '跟井'
+//					}, {
+//						value: 'yonghuzoufang',
+//						text: '用户走访'
+//					}, {
+//						value: 'shangjian',
+//						text: '商检'
+//					}, {
+//						value: 'jishuzhichi',
+//						text: '技术支持'
+//					}, {
+//						value: 'qita',
+//						text: '其他'
+//					}]);
+//					var showUserPickerButton = doc.getElementById('selectjob');
+//					var job = doc.getElementById('job');
+//					showUserPickerButton.addEventListener('tap', function(event) {
+//						selectjob.show(function(items) {
+//							job.innerText = items[0].text;
+//							//返回 false 可以阻止选择框的关闭
+////							return false;
+//						});
+//					}, false);
+					
+					//选择出差开始时间
+					var timebegin = document.getElementById("timebegin");
+			
+					document.getElementById("begintime").addEventListener('tap', function() {
+						var dDate = new Date();
+						dDate.setFullYear(dDate.getFullYear(), dDate.getMonth(), dDate.getDate());//月份小1
+						var minDate = new Date();
+						minDate.setFullYear(2016, 0, 1);
+						var maxDate = new Date();
+						maxDate.setFullYear(2020, 11, 31);
+						plus.nativeUI.pickDate(function(e) {
+							var d = e.date;
+							timebegin.innerText = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+						}, function(e) {
+							timebegin.innerText = "您没有选择日期";
+						}, {
+							title: "请选择日期",
+							date: dDate,
+							minDate: minDate,
+							maxDate: maxDate
+						});
+					})
+			
+			//选择出差结束时间
+					var timeend = document.getElementById("timeend");
+					
+							document.getElementById("endtime").addEventListener('tap', function() {
+								var dDate = new Date();
+								dDate.setFullYear(dDate.getFullYear(), dDate.getMonth(), dDate.getDate());//月份小1
+								var minDate = new Date();
+								minDate.setFullYear(2016, 0, 1);
+								var maxDate = new Date();
+								maxDate.setFullYear(2020, 11, 31);
+								plus.nativeUI.pickDate(function(e) {
+									var d = e.date;
+									timeend.innerText = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+								}, function(e) {
+									timeend.innerText = "您没有选择日期";
+								}, {
+									title: "请选择日期",
+									date: dDate,
+									minDate: minDate,
+									maxDate: maxDate
+								});
+							})
+							
+			     //提交查询条件
+			        var nameBox = doc.getElementById('names');
+					var accountsBox = doc.getElementById('accounts');
+					var placeBox = doc.getElementById('place');
+					var jobBox = doc.getElementById("job");
+					var timebeginBox = doc.getElementById('timebegin');
+					var timeend = doc.getElementById('timeend');
+					var searchButton = doc.getElementById("search_btn");
+					
+					
+					searchButton.addEventListener('tap', function(event) {
+						if (timebeginBox.innerText =="您没有选择日期"){
+							timebeginBox.innerText =""
+						}
+						if(timeend.innerText =="您没有选择日期"){
+							timeend.innerText=""
+						}
+						if(nameBox.value==""&accountsBox.value==""&placeBox.value==""&jobBox.value==""&timebeginBox.innerText==""&timeend.innerText==""){
+							plus.nativeUI.toast("请输入查询条件")
+						}else{
+							mui.openWindow({
+								url:"buss_search_content.html",
+								id:"buss_search_content.html",
+								
+								extras:{
+								"bussmen_name":nameBox.value,
+								"buss_account":accountsBox.value,
+								"buss_place":placeBox.value,
+								"buss_reason":jobBox.value,
+								"buss_begintime":timebeginBox.innerText,
+								"buss_endtime":timeend.innerText,
+								
+							}
+							})
+							
+
+						}
+						});
+			   
+				});
+			})(mui, document);
+		</script>
+		</script>
+	</body>
+</html>

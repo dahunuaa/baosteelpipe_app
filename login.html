@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>hello baosteel</title>
+    <link href="css/mui.min.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+    <style>
+    	
+			.mui-input-group {
+				margin-top: 10px;
+			}
+			.mui-input-group:first-child {
+				margin-top: 20px;
+			}
+			.mui-input-group label {
+				width: 22%;
+			}
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				width: 78%;
+			}
+			.mui-checkbox input[type=checkbox],
+			.mui-radio input[type=radio] {
+				top: 6px;
+			}
+			.mui-content-padded {
+				margin-top: 25px;
+			}
+			.mui-btn {
+				padding: 10px;
+			}
+			
+			
+    </style>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+	<h1 class="mui-title">欢迎登陆宝钢集团出差信息管理系统</h1>
+	</header>
+	<div class="mui-content">
+	   <img alt="bs_1" src="img/bg_2.png" style="width:-webkit-fill-available";/>
+		<form id="login-form" class="mui-input-group">
+			<div class="mui-input-row">
+				<label>工号</label>
+				<input id="account" type="text" class="mui-input-clear mui-input" placeholder="请输入账号" />
+			</div>
+			<div class="mui-input-row">
+				<label>密码</label>
+				<input id="password" type="password" class="mui-input-clear mui-input" placeholder="请输入密码" />
+			</div>
+		</form>
+			<div class="mui-input-row mui-checkbox mui-left" id="rember_account">
+				<label id="remb_lable">记住工号和密码：No</label>
+				<input name="checkbox" id="rember_acc_psw" value="Item 1" type="checkbox">
+			</div>
+		</form>
+		
+		<div class="mui-content-padded">
+			<button id="login" class="mui-btn mui-btn-block mui-btn-primary">登录</button>
+			</div>
+		</div>
+		
+    <div align="center" ><font size="1"> ALL RIGHT RESERVED @BAOSTEEL</font></div>
+	</div>
+	
+	<!--js/update.js好用，只有在打包安装的时候好用，真机调试的时候不行-->
+	<script type="text/javascript" src="js/update.js" ></script>
+	<script src="js/mui.min.js"></script>
+	<script src="js/mui.enterfocus.js"></script>
+	<script src="js/app.js"></script>
+	<script>
+		(function ($, doc) {
+			$.init();
+			mui('#rember_account').on('change', 'input', function() {
+			var value = this.checked?"Yes":"No";
+			this.previousElementSibling.innerText = "记住工号和密码："+value;
+			localStorage.setItem("value",value)
+			});
+			
+			
+			$.plusReady(function() {
+					mui.preload({
+						"id": 'main',
+						"url": 'main.html',
+					});
+					
+					//检查 "登录状态/锁屏状态" 结束
+					var loginButton = doc.getElementById('login');
+					var accountBox = doc.getElementById('account');
+					var passwordBox = doc.getElementById('password');
+					
+					if(localStorage.getItem("value") == "Yes"){
+						document.getElementById("rember_acc_psw").checked="true"
+						document.getElementById("remb_lable").innerHTML="记住工号和密码：Yes"
+						accountBox.value = localStorage.getItem("user_account")
+						passwordBox.value = localStorage.getItem("user_psw")	
+					}else{
+						accountBox.value = ""
+						passwordBox.value = ""	
+					}
+					
+					loginButton.addEventListener('tap', function(event) {
+						if (accountBox.value==""||passwordBox.value=="") {
+							plus.nativeUI.toast("用户名或密码错误")
+						} else{
+						localStorage.setItem("user_account",accountBox.value);//accountBox.value只有在表单提交的时候会显示其值
+						localStorage.setItem("user_psw",passwordBox.value);
+						$.ajax({
+						type: "post",
+						url: "http://121.42.186.54:8081/baosteelpipe/userslogin",
+//						url: "http://192.168.191.1:8080/baosteelpipe/userslogin",
+						data: {
+							"name": accountBox.value,
+							"pswd": passwordBox.value
+						},
+						async: true,
+						dataType:"json",//后台传json的话这儿需要写成json
+						success: function(data) {
+							mui.each(data,function(key,value){
+								if (value.str=="ok")
+								{
+									mui.openWindow({
+									    url: 'main.html', 
+									    id:'main',
+//								    extras:{
+//										user_name:value.user_name
+//									} 
+									 })
+									
+								}else{
+									plus.nativeUI.toast("用户名或密码错误");
+								}
+							})
+						},
+						error: function() {
+							plus.nativeUI.toast("请求服务器出现失败!");
+						}
+					});
+						}
+						});
+					
+					$.enterfocus('#login-form input', function() {
+						$.trigger(loginButton, 'tap');
+					});
+
+//			按返回键直接返回到手机页面
+			$.back = function(event) {
+				plus.runtime.quit();
+			}
+				
+			});		
+		}(mui, document));
+	</script>
+	
+	
+	
+	
+	
+	
+</body> 
+</html>

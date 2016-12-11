@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>news</title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="../css/app.css"/>
+		<style>
+			body {
+				background-color:#efeff4;
+			}
+		   
+		</style>
+
+	</head>
+	 
+	
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			 
+			 <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			 <!--<a class="mui-icon mui-icon-reload mui-pull-right" id="refresh"><div style="margin:-18px 10px 10px 30px; font: '楷体';font-size: 18px;">刷新</div></a>-->
+			<h1 class="mui-title">我的出差记录</h1>
+			
+		</header>
+		
+		<div class="mui-content" >
+        <div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<ul class="mui-table-view mui-table-view-chevron" id="list">
+					
+				</ul>
+			</div>
+		</div>
+		
+		
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/app.js"></script>
+		<script>
+		(function($,doc){
+			$.plusReady(function(){
+				mui.init({
+				pullRefresh: {
+					container: '#pullrefresh',
+					up: {
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				}
+			});
+			var list = document.getElementById("list")
+			var count = -1;
+			function pullupRefresh() {
+				count = count +1
+				setTimeout(function() {
+					
+					mui.ajax({
+						type: "post",//后面必须加逗号！！！！！！！！
+//						url: "http://192.168.191.1:8080/baosteelpipe/myBusinessRecord",
+						url: "http://121.42.186.54:8081/baosteelpipe/myBusinessRecord",
+						data:{
+							"pull_count":count,
+						},
+						async:true,
+						dataType:"json",
+						success:function(data){
+							mui('#pullrefresh').pullRefresh().endPullupToRefresh((data ==""||null));
+							var list = document.getElementById("list")				
+				            
+							mui.each(data,function(key,value){
+							var li = document.createElement("li")
+							li.className="mui-table-view-cell"
+							li.setAttribute("id",value.buss_id);
+							li.setAttribute("editor",value.editor)
+							li.setAttribute("editorname",value.editor_name)
+							li.setAttribute("bussmenname",value.bussmen_name)
+							li.setAttribute("accounts",value.accounts)
+							li.setAttribute("bussplace",value.buss_place)
+							li.setAttribute("bussreason",value.buss_reason)
+							li.setAttribute("bussbegintime",value.buss_begintime)
+							li.setAttribute("bussendtime",value.buss_endtime)
+//							plus.nativeUI.toast(value.buss_id)
+
+                            li.innerHTML ='<a class="mui-navigate-right"'+"<br>"+"序号："+value.buss_id+"&nbsp;&nbsp;&nbsp&nbsp;&nbsp;"+"编辑人："+value.editor_name+"<br>"+"编辑时间："+value.time+"<br>"+"出差日期："+value.buss_begintime +"—"+value.buss_endtime +"<br>" +value.bussmen_name 
+                                   +"<br>"+value.accounts+"人"+"&nbsp&nbsp"+value.buss_reason+"&nbsp&nbsp"+value.buss_place;
+                                                        
+                            list.appendChild(li)
+							})
+							
+							mui("#list").on('tap','li',function(){
+								var id = this.getAttribute("id")
+								var editor = this.getAttribute("editor")
+								var editorname = this.getAttribute("editorname")
+								var bussmenname = this.getAttribute("bussmenname")
+								var accounts = this.getAttribute("accounts")
+								var bussplace = this.getAttribute("bussplace")
+								var bussreason = this.getAttribute("bussreason")
+								var bussbegintime = this.getAttribute("bussbegintime")
+								var bussendtime = this.getAttribute("bussendtime")
+													
+								mui.openWindow({
+							    url:"buss_edit.html",
+							    id:"buss_edit",
+							
+							    
+							    extras:{
+							    	_id:id,
+							    	_editor:editor,
+							    	_editor_name:editorname,
+							    	_begintime:bussbegintime,
+							    	_endtime:bussendtime,
+							    	_name:bussmenname,
+							    	_accounts:accounts,
+							    	_reason:bussreason,
+							    	_place:bussplace,
+							    }
+							    
+//						        styles:{
+//						        top:'0px',//mui标题栏默认高度为45px；
+//						        bottom:'0px'//默认为0px，可不定义；
+//						      }
+							})
+		                  });										                                         			         			           
+			   		},
+				  
+				  });
+				}, 100);
+				
+			}
+			})
+
+			/*
+			 下拉刷新(以从新加载本页的方法来实现)
+			 * */
+			
+			if (mui.os.plus) {
+				mui.plusReady(function() {
+					setTimeout(function() {
+						mui('#pullrefresh').pullRefresh().pullupLoading();
+					}, 1000);
+
+				});
+			} else {
+				mui.ready(function() {
+					mui('#pullrefresh').pullRefresh().pullupLoading();
+				});
+			}
+
+		}(mui,document))
+		</script>
+	</body>
+</html>

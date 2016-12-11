@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>myBussinessRecord</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<style>
+			html,
+			body {
+				background-color:#efeff4;
+			}
+		    div{
+		    	background-color: #EEEEEE;
+		    }
+		</style>
+	</head>
+	<body>
+		<div align="center" style="background-color:#FAFAFA">
+			
+			<input type="search" id="buss_search" class="mui-icon mui-icon-search"  placeholder="请输入搜索内容" style="width:250px;height:35px; background-color:#E8E8E8; margin-top: 10px;margin-bottom: 5px;"/>
+			<a id="icon_search"><span class="mui-icon mui-icon-search"></span></a>
+			 <a id="back" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"style="margin:15px -20px 15px 15px;"></a>
+			<hr />
+		</div>
+		<div class="mui-content" id="search_content">
+        <ul class="mui-table-view" style="margin-top:-10px;" id="search_list">
+  				
+		</ul>		
+		</div>
+		
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/app.js"></script>
+		<script>
+		(function($,doc){
+			mui.init({
+			pullRefresh: {
+				container: '#pullrefresh',
+				up: {
+					contentrefresh: '正在加载...',
+					callback: pullupRefresh
+					}
+				}
+			});
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			count = -1;
+			function pullupRefresh() {
+				count = count +1
+				setTimeout(function() {
+					
+				mui.ajax({
+				type: "post",
+//				url: "http://192.168.191.1:8080/baosteelpipe/Buss_search",
+				url: "http://121.42.186.54:8081/baosteelpipe/Buss_search",
+				data:{
+					"buss_search":buss_search.value,
+					"pull_count":count,
+				},
+
+				async:true,
+				dataType:"json",
+				success:function(data){	
+					if (data ==""){
+						plus.nativeUI.toast("无搜索结果")
+					}
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh((data ==""||null));
+					mui.each(data,function(key,value){
+					var li = document.createElement("li")
+					li.className="mui-table-view-cell"
+                    li.innerHTML = "序号："+value.buss_id+"&nbsp;&nbsp;&nbsp&nbsp;&nbsp;"+"编辑人："+value.editor_name+"<br>"+"编辑时间："+value.time+"<br>"+"出差日期："+value.buss_begintime +"—"+value.buss_endtime +"<br>" +value.bussmen_name 
+                                       +"<br>"+value.accounts+"人"+"&nbsp&nbsp"+value.buss_reason+"&nbsp&nbsp"+value.buss_place;
+                                   
+                    search_list.appendChild(li)
+					})
+															                                         			           		           
+	   		                         },
+			  
+			           });
+				}, 1500);
+				
+			}
+			if (mui.os.plus) {
+				mui.plusReady(function() {
+					setTimeout(function() {
+						mui('#pullrefresh').pullRefresh().pullupLoading();
+					}, 1000);
+
+				});
+			} else {
+				mui.ready(function() {
+					mui('#pullrefresh').pullRefresh().pullupLoading();
+				});
+			}
+			
+			$.ready(function(){
+			
+			  	var buss_search = document.getElementById("buss_search")
+			  	var icon_search = document.getElementById("icon_search")
+			  
+		    icon_search.addEventListener("tap",function(event){
+			    if (buss_search.value==""){
+			    	plus.nativeUI.toast("请输入搜索内容")
+			    }else{
+				var search_list = document.getElementById("search_list")	
+				search_list.innerHTML="";//解决刷新重复出出现的问题,先为空，再填充数据
+
+				mui.ajax({
+				type: "post",
+				url: "http://192.168.191.1:8080/baosteelpipe/Buss_search",
+//				url: "http://121.42.186.54:8081/baosteelpipe/Buss_search",
+				data:{
+					"buss_search":buss_search.value,
+					"pull_count":0,
+				},
+
+				async:true,
+				dataType:"json",
+				success:function(data){	
+					if (data ==""){
+						plus.nativeUI.toast("无搜索结果")
+					}
+					mui.each(data,function(key,value){
+					var li = document.createElement("li")
+					li.className="mui-table-view-cell"
+                    li.innerHTML = "序号："+value.buss_id+"&nbsp;&nbsp;&nbsp&nbsp;&nbsp;"+"编辑人："+value.editor_name+"<br>"+"编辑时间："+value.time+"<br>"+"出差日期："+value.buss_begintime +"—"+value.buss_endtime +"<br>" +value.bussmen_name 
+                                       +"<br>"+value.accounts+"人"+"&nbsp&nbsp"+value.buss_reason+"&nbsp&nbsp"+value.buss_place;
+                                   
+                    search_list.appendChild(li)
+					})
+															                                         			           		           
+	   		                         },
+			  
+			           });	
+			          }
+			     })
+				
+				});
+		}(mui,document))
+		</script>
+	
+	</body>
+</html>

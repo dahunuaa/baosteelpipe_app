@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<title>buss_detail</title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="../css/app.css"/>
+		<style type="text/css">
+			body {
+				background-color:#efeff4;
+			}
+		    div{
+		    	background-color: #EEEEEE;
+		    }
+		    .mui-content{
+		    	margin: 10px 15px 10px;
+				color: #6d6d72;
+				font-size: 15px;
+		    }
+		    footer {
+				position: fixed;
+				width: 100%;
+				height: 50px;
+				min-height: 50px;
+				border-top: solid 1px #bbb;
+				left: 0px;
+				bottom: 0px;
+				overflow: hidden;
+				padding: 0px 50px;
+				background-color: #fafafa;
+			}
+			.footer-left {
+				position: absolute;
+				width: 0px;
+				height: 0px;
+				left: 0px;
+				bottom: 0px;
+				text-align: center;
+				vertical-align: middle;
+				line-height: 100%;
+				padding: 12px 4px;
+			}
+			.footer-right {
+				position: absolute;
+				width: 50px;
+				height: 50px;
+				right: 0px;
+				bottom: 0px;
+				text-align: center;
+				vertical-align: middle;
+				line-height: 100%;
+				padding: 12px 5px;
+				display: inline-block;
+			}
+			.footer-center {
+				height: 100%;
+				padding: 5px 0px 5px;
+			}
+			.footer-center [class*=input] {
+				width: 100%;
+				height: 100%;
+				border-radius: 5px;
+			}
+			.footer-center .input-text {
+				background: #fff;
+				border: solid 1px #ddd;
+				padding: 10px !important;
+				font-size: 16px !important;
+				line-height: 18px !important;
+				font-family: verdana !important;
+				overflow: hidden;
+			}
+			.footer-center .input-sound {
+				background-color: #eee;
+			}
+
+		</style>
+
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			 
+			 <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			 <!--<a class="mui-icon mui-icon-reload mui-pull-right" id="refresh"><div style="margin:-18px 10px 10px 30px; font: '楷体';font-size: 18px;">刷新</div></a>-->
+			<h1 class="mui-title">出差任务详情</h1>
+			
+		</header>
+		
+		<div class="mui-content" >
+		
+        <h3 id="title" style="text-align:center"></h3>    
+        <span >出差任务序号:</span>&nbsp;&nbsp;&nbsp;<span id="buss_id"></span>
+        <br>
+        <span >编辑人:</span>&nbsp;&nbsp;&nbsp;<span id="editor_name"></span>
+        <br>
+        <span >编辑时间:</span>&nbsp;&nbsp;&nbsp;<span id="edit_time"></span>   
+        <br />
+        <span >出差日期:</span>&nbsp;&nbsp;&nbsp;<span id="buss_time"></span>   
+        <br />
+        <span >出差人:</span>&nbsp;&nbsp;&nbsp;<span id="bussmen_name"></span>   
+        <br />
+        <span >出差总人数:</span>&nbsp;&nbsp;&nbsp;<span id="accounts"></span>   
+        <br />
+        <span >出差缘由:</span>&nbsp;&nbsp;&nbsp;<span id="buss_reason"></span>   
+        <br />
+        <span >出差地:</span>&nbsp;&nbsp;&nbsp;<span id="buss_place"></span>   
+        <br />
+		</div>
+		<footer>
+			<!--<div class="footer-left">
+				<i id='msg-image' class="mui-icon mui-icon-camera" style="font-size: 28px;"></i>
+			</div>-->
+			<div class="footer-center">
+				<textarea id='msg-text' type="text" class='input-text'></textarea>
+			</div>
+			<label for="" class="footer-right">
+				<div class="mui-btn mui-btn-primary">
+					发表
+				</div>
+				<!--<i id='msg-type' class="mui-icon mui-icon-mic"></i>-->
+			</label>
+		</footer>
+		
+		<script src="../js/app.js"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/mui.view.js "></script>
+		<script>
+			(function($,doc){
+				$.init();
+				$.plusReady(function(){
+					var buss_id = document.getElementById('buss_id');
+			        var editor_name = document.getElementById('editor_name');
+					var edit_time = document.getElementById('edit_time');
+			        var buss_time = document.getElementById('buss_time');
+					var bussmen_name = document.getElementById('bussmen_name');
+					var accounts = document.getElementById("accounts");
+					var buss_reason = document.getElementById("buss_reason");
+					var buss_place = document.getElementById("buss_place");
+					
+					//获取前一个页面传过来的值
+					var self = plus.webview.currentWebview();//必须用plusReady 来获取前面传过来的值
+					var _buss_id =self.buss_id
+					var _editor_name = self.editor_name
+					var _edit_time = self.edit_time
+					var _buss_start_time = self.buss_begintime
+					var _buss_end_time = self.buss_endtime
+					var _bussmen_name = self.bussmen_name
+					var _accounts = self.accounts
+					var _buss_reason = self.buss_reason
+					var _buss_place = self.buss_place
+//					plus.nativeUI.toast(self.buss_id)
+
+					
+				
+					buss_id.innerHTML=_buss_id
+					editor_name.innerHTML=_editor_name
+					edit_time.innerHTML=_edit_time
+					buss_time.innerHTML=_buss_start_time+"—"+_buss_end_time
+					bussmen_name.innerHTML=_bussmen_name
+					accounts.innerHTML=_accounts
+					buss_reason.innerHTML = _buss_reason
+					buss_place.innerHTML = _buss_place
+					
+					
+					
+				})
+			}(mui,document))
+		</script>
+		
+	</body>
+</html>

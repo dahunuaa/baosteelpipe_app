@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>businessInformation</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<style>
+			html,
+			body {
+				background-color:#efeff4;
+			}
+			div{
+				font-style:italic;
+			}
+		</style>
+   </head>
+	<body>
+
+		<div align="center" style="background-color:#FAFAFA">
+			<input type="search" id="inforgather_search" class="mui-icon mui-icon-search" placeholder="请输入搜索内容" style="width:250px;height:35px; background-color:#E8E8E8; margin-top: 10px;margin-bottom: 5px;"/>
+			<a id="inforgather_search"><span class="mui-icon mui-icon-search"></span></a>
+			<hr>
+		</div>
+		<!--<img src="../img/bs_5.png" style="width: 359px;height: 75px; "/>-->
+		<div class="mui-content" style=" margin-top:-23px;">
+
+		        <ul class="mui-table-view mui-grid-view mui-grid-9">
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+							<img src="../img/dongbei.png"  id="dongbei"/>
+							<div class="mui-media-body">东北</div></a></li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+			                <img src="../img/xinan.png" id="xinan" />
+			                <div class="mui-media-body">西南</div></a></li>
+			        <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+		                    <img src="../img/donghai.png" id="zhonghaiyou" />
+		                    <div class="mui-media-body">中海油</div></a></li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+		                    <img src="../img/huabei.png" id="huabei" />
+		                    <div class="mui-media-body">华北</div></a></li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+		                   <img src="../img/huazhong.png" id="huazhong" />
+		                    <div class="mui-media-body">华中</div></a></li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+		                    <img src="../img/huadong.png" id="huadong" />
+		                    <div class="mui-media-body">华东</div></a></li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+		                    <img src="../img/xinjiang.png" id="xinjiang" />
+		                    <div class="mui-media-body">新疆</div></a></li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+		                   <img src="../img/xibei.png" id="xibei" />
+		                    <div class="mui-media-body">西北</div></a></li>
+		           <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+							<span class="mui-icon mui-icon-list" id="inforgather_list" style="margin: 3px;"></span>
+							<div class="mui-media-body" >情报列表</div>
+								</a>
+							</li>
+		        </ul> 
+		</div>
+		
+	    <script src="../js/mui.min.js"></script>
+		<script src="../js/app.js"></script>
+		<script>
+		(function($,doc){
+			$.init();
+			$.ready(function(){
+				//情报搜集搜索
+				var inforgather_search=document.getElementById("inforgather_search")
+				inforgather_search.addEventListener("tap",function(event){
+//					var guide_id = this.getAttribute("guide_id")
+					mui.openWindow({
+						url:"inforGathering_search.html",
+						id:"inforGathering_search",
+						
+					})
+					
+				})
+				//情报搜集东北 西南等情报列表
+				var dongbei_list=document.getElementById("dongbei")
+				dongbei_list.addEventListener("tap",function(event){
+					mui.openWindow({
+						url:"area_list.html",
+						id:"area_list",
+						
+					extras:{
+							  area:"东北"
+							    }
+					})
+				})
+				var xinan_list=document.getElementById("xinan")
+				xinan_list.addEventListener("tap",function(event){
+					mui.openWindow({
+						url:"area_list.html",
+						id:"area_list",
+						
+					extras:{
+							  area:"西南"
+							    }
+					})
+				})
+				var zhonghaiyou_list=document.getElementById("zhonghaiyou")
+				zhonghaiyou_list.addEventListener("tap",function(event){
+					mui.openWindow({
+						url:"area_list.html",
+						id:"area_list",
+						
+					extras:{
+							  area:"中海油"
+							    }
+					})
+				})
+				var huabei_list=document.getElementById("huabei")
+				huabei_list.addEventListener("tap",function(event){
+					mui.openWindow({
+						url:"area_list.html",
+						id:"area_list",
+						
+					extras:{
+							  area:"华北"
+							    }
+					})
+				})
+				var huazhong_list=document.getElementById("huazhong")
+				huazhong_list.addEventListener("tap",function(event){
+					mui.openWindow({
+						url:"area_list.html",
+						id:"area_list",
+						
+					extras:{
+							  area:"华中"
+							    }
+					})
+				})
+				var huadong_list=document.getElementById("huadong")
+				huadong_list.addEventListener("tap",function(event){
+					mui.openWindow({
+						url:"area_list.html",
+						id:"area_list",
+						
+					extras:{
+							  area:"华东"
+							    }
+					})
+				})
+				var xinjiang_list=document.getElementById("xinjiang")
+				xinjiang_list.addEventListener("tap",function(event){
+					mui.openWindow({
+						url:"area_list.html",
+						id:"area_list",
+						
+					extras:{
+							  area:"新疆"
+							    }
+					})
+				})
+				var xibei_list=document.getElementById("xibei")
+				xibei_list.addEventListener("tap",function(event){
+					mui.openWindow({
+						url:"area_list.html",
+						id:"area_list",
+						
+					extras:{
+							  area:"西北"
+							    }
+					})
+				})
+				
+				var inforgather_list = document.getElementById("inforgather_list")
+				inforgather_list.addEventListener('tap',function(event){
+					mui.openWindow({
+						url:"inforgather_list.html",
+						id:"inforgather_list",
+					})
+				})
+				
+				});
+		}(mui,document))
+		</script>
+	
+	</body>
+</html>

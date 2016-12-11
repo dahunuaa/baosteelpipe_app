@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>ECahrt 示例</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="css/mui.min.css">
+		<!--App自定义的css-->
+		<link rel="stylesheet" type="text/css" href="css/app.css" />
+		<style>
+			.chart {
+				height: 200px;
+				margin: 0px;
+				padding: 0px;
+			}
+			h5 {
+				margin-top: 30px;
+				font-weight: bold;
+			}
+			h5:first-child {
+				margin-top: 15px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">Echart</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-content-padded">
+				
+			</div>
+			<div class="mui-content-padded">
+				<h5>情报搜集区域饼状图</h5>
+				<div class="chart" id="inforgatherChart"></div>
+				<h5>出差人数月份折线图</h5>
+				<div class="chart" id="bussinforChart"></div>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="libs/echarts-all.js"></script>
+		<!--<script type="text/javascript" src="js/inforgather_pie.js" ></script>-->
+		
+		<script>
+		    (function($,doc){
+		    	$.init()
+		    	$.plusReady(function(){
+		    		
+		    	function getPieData(){
+					var gather_area="";//定义全局变量
+		    		$.ajax({
+		    			type:"post",
+		    			url:"http://121.42.186.54:8081/baosteelpipe/Inforgatherpie",
+		    			data:{},
+		    			async:false,
+						dataType:"json",
+		    			success:function(data){
+		    			   gather_area = data
+		    			},
+		    		});
+		    		return gather_area;
+		    	}
+		    		var getinforgatherChart = function(){
+					var chartOption={
+						calculable: false,
+						series: [{
+							name: '出差地统计',
+							type: 'pie',
+							radius: '80%',
+							center: ['50%', '50%'],
+							data:getPieData(),
+						}]
+					} 
+					return chartOption;
+				};
+				   var getbussinforChart = function(){
+				   	  var chartOption={
+						calculable: false,
+						grid: {
+							x: 35,
+							x2: 10,
+							y: 30,
+							y2: 25
+						},
+						toolbox: {
+						show: false,
+						feature: {
+							mark: {
+								show: true
+							},
+							dataView: {
+								show: true,
+								readOnly: false
+							},
+							magicType: {
+								show: true,
+								type: ['line', 'bar']
+							},
+							restore: {
+								show: true
+							},
+							saveAsImage: {
+								show: true
+							}
+							}
+						},
+						xAxis: [{
+							type: 'category',
+							data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月']
+						}],
+						yAxis: [{
+							type: 'value',
+							splitArea: {
+								show: true
+							}
+						}],
+						series: [{
+							name: '出差人数月份折线图',
+							type: 'line',//直接将line改成bar就可以实现折线图和柱状图之间的转换
+							data: [8, 10, 20, 15, 8, 15, 18]
+						}]
+					};
+					return chartOption;
+				   };
+				
+				
+				var byId = function(id) {
+					return document.getElementById(id);
+				};
+				var inforgatherChart = echarts.init(byId('inforgatherChart'));
+				inforgatherChart.setOption((getinforgatherChart()))
+	    		var bussinforChart = echarts.init(byId('bussinforChart'));
+	    		bussinforChart.setOption((getbussinforChart()))
+		    	})
+		    	
+		    })(mui,document)
+			
+			
+		</script>
+	</body>
+
+</html>

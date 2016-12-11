@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>newinformationgathering</title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="../css/app.css"/>
+        <link href="../css/mui.picker.css" rel="stylesheet" />
+		<link href="../css/mui.poppicker.css" rel="stylesheet" />
+		<style>
+			ul {
+				font-size: 14px;
+				color: #8f8f94;
+				
+			}
+			li{
+				list-style-type:none;/*去掉li前面的小黑点*/
+			}
+			
+			
+		</style>
+
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">新建情报搜集</h1>
+		</header>
+		<div class="mui-content">
+			<form class="mui-input-group">
+				<!--<div class="mui-input-row">
+					<label>编辑者工号</label>
+					<input id="editor" type="text" class="mui-input-clear" placeholder="编辑人工号">
+				</div>
+				<div class="mui-input-row">
+					<label>编辑人姓名</label>
+					<input id="editor_name" type="text" class="mui-input-clear" placeholder="编辑人姓名">
+				</div>-->
+				<div class="mui-input-row">
+					<label>标题</label>
+					<input id="title" type="text" class="mui-input-clear" placeholder="请输入情报搜集标题">
+				</div>
+				<div class="mui-input-row">
+					<label>地址</label>
+					<input id="address" type="text" class="mui-input-clear" placeholder="请输入情报地址">
+				</div>
+				<li class="mui-table-view-cell">
+				<a id="selectarea" class="mui-navigate-right">
+					选择油田区块<span id="area"style="padding: 0px 0px 0px 45px;"></span>
+				</a>
+			    </li>
+			    <div class="mui-input-row">
+					<label>油田</label>
+					<input id="oil_field" type="text" class="mui-input-clear" placeholder="请输入油田">
+				</div>
+			    </form>
+			    <br/>
+				<label>&nbsp;&nbsp;&nbsp;内容</label>
+				<div class="mui-input-row" style="margin: 10px 5px;">
+					<textarea id="textarea" rows="6" placeholder="请填写正文"></textarea>
+				</div>
+				<form id="uploadForm" style="margin-top: -15px;">
+				<label>&nbsp;&nbsp;&nbsp;上传文件（可选）【小于5M】</label>
+				<br/>
+				<input type="file" name="file" id="file_up" style="margin-top: 10px; margin-left: 12px; "/>
+				<br/>
+				<button id="cancel_file"  type="button"style="margin-top: 10px; margin-left: 12px; height: 30px; width: 85px; background-color:skyblue"  >撤销文件</button>
+				</form>
+				<div>
+        		<br/>
+				<div class="mui-button-row">
+					<button id="newgather_submit" class="mui-btn mui-btn-primary" type="button" onclick="return true;">提交</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button id="newgather_cancel" class="mui-btn mui-btn-danger" type="button" onclick="return false;">取消</button>
+				</div>
+		
+			
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/app.js"></script>
+		<script src="../js/mui.picker.js"></script>
+		<script src="../js/mui.poppicker.js"></script>
+		<script>
+		(function($, doc) {
+				mui.init();
+				$.ready(function() {
+					//选择地点
+					var selectarea = new $.PopPicker();
+					selectarea.setData([{
+						value: 'dongbei',
+						text: '东北'
+					},{
+						value: 'xinan',
+						text: '西南'
+					}, {
+						value: 'zhonghaiyou',
+						text: '中海油'
+					}, {
+						value: 'huabei',
+						text: '华北'
+					}, {
+						value: 'huazhong',
+						text: '华中'
+					}, {
+						value: 'huadong',
+						text: '华东'
+					}, {
+						value: 'xinjiang',
+						text: '新疆'
+					}]);
+					var showUserPickerButton = doc.getElementById('selectarea');
+					var area = doc.getElementById('area');
+					showUserPickerButton.addEventListener('tap', function(event) {
+						selectarea.show(function(items) {
+							area.innerText = items[0].text;
+							//返回 false 可以阻止选择框的关闭
+//							return false;
+						});
+					}, false);
+					
+			     //提交出差任务
+//			        var editorBox = doc.getElementById('editor');
+//			        var editornameBox = doc.getElementById('editor_name');
+			        var titleBox = doc.getElementById('title');
+					var addressBox = doc.getElementById('address');
+					var areaBox = doc.getElementById('area');
+					var oil_fieldBox = doc.getElementById('oil_field');
+					var textareaBox = doc.getElementById('textarea');
+					var newgather_submitButton = doc.getElementById("newgather_submit");
+					var newgather_cancelButton = doc.getElementById('newgather_cancel');
+					
+					document.getElementById("cancel_file").addEventListener('tap',function(e){
+		          		var obj= document.getElementById("file_up");
+		          		obj.outerHTML = obj.outerHTML
+					})
+					
+					newgather_submitButton.addEventListener('tap', function(event) {
+						if(titleBox.value==""){
+							plus.nativeUI.toast("请输入标题")
+						}else if(addressBox.value==""){
+							plus.nativeUI.toast("输入地址")
+						}else if(areaBox.innerText==""){
+							plus.nativeUI.toast("请选择油田区块")
+						}else if(oil_fieldBox.value==""){
+							plus.nativeUI.toast("请输入油田")
+						}else if(textareaBox.value==""){
+							plus.nativeUI.toast("请填写正文")
+						}else{						
+							//必须把下面两行代码放在这儿 如果放在刚开始不行
+							var  file = document.getElementById("file_up").files[0];
+							var formData = new FormData($("#uploadForm")[0]);
+							var wt  = plus.nativeUI.showWaiting("正在提交...");
+							window.new_file_name="";
+							origin_name="";
+							if(file !=""&&file !=undefined){
+								origin_name=file.name
+								$.ajax({
+								type:"post",
+	//							url:"http://192.168.191.1:8080/baosteelpipe/uploadfile",
+								url:"http://121.42.186.54:8081/baosteelpipe/uploadfile",
+								data:formData,
+								async: false,//想把data值赋给一个全局变量 然后给下一个ajax里面用，必须将此处改为false，应为js是非阻塞的，会同时执行多个ajax
+								cache:false,
+								contentType:false,
+								processData:false,
+	//							dataType:"text",
+								success:function(data){
+								   window.new_file_name = data;
+								},
+								error:function(data){
+									plus.nativeUI.toast("上传失败！");
+								}
+							});	
+							}
+							
+							$.ajax({
+							type: "post",
+	//						url: "http://192.168.191.1:8080/baosteelpipe/NewInformationgathering",
+							url: "http://121.42.186.54:8081/baosteelpipe/NewInformationgathering",
+							data: {
+							
+								"gather_title":titleBox.value,
+								"gather_address":addressBox.value,
+								"gather_area":areaBox.innerText,
+								"gather_text":textareaBox.value,
+								"gather_oil_field":oil_fieldBox.value,
+								"origin_file_name":origin_name,
+								"new_file_name":new_file_name,
+							},
+							async: true,
+							dataType:"text",
+							success: function(data) {
+	//							plus.nativeUI.toast("服务器传回来的消息为:" +data);
+								if (data=="ok")
+								{
+									wt.close("新建情报搜集成功");
+									plus.nativeUI.toast("新建情报搜集成功");
+									mui.back();
+									
+								}else{
+									plus.nativeUI.toast("新建情报搜集失败");
+								}
+							},
+							error: function() {
+								plus.nativeUI.toast("请求服务器出现失败!");
+							}
+						});
+			
+						}
+						});
+			   
+			   newgather_cancelButton.addEventListener('tap',function(event){
+			   	mui.back();
+			   })
+			
+				});
+			})(mui, document);
+		</script>
+		</script>
+	</body>
+</html>

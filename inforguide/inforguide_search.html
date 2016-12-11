@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>inforguide_search</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link href="../css/mui.min.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="../css/app.css"/>
+        <link href="../css/mui.picker.css" rel="stylesheet" />
+		<link href="../css/mui.poppicker.css" rel="stylesheet" />
+		<style>
+			ul {
+				font-size: 14px;
+				color: #8f8f94;
+				
+			}
+			li{
+				list-style-type:none;/*去掉li前面的小黑点*/
+			}
+		</style>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a id="back" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 id="buss_search"class="mui-title">信息指南查询</h1>
+		</header>
+		<div class="mui-content">
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+					<label>标题</label>
+					<input id="title" type="text" class="mui-input-clear" placeholder="请输入标题关键字">
+				</div>
+				<li class="mui-table-view-cell">
+					<a id="selectcategory" class="mui-navigate-right">
+						选择分类<span id="category"style="padding: 0px 0px 0px 45px;"></span>
+					</a>
+				</li>
+				<div class="mui-input-row">
+					<label>内容</label>
+					<input id="textarea" type="text" class="mui-input-clear" placeholder="请输入内容关键字">
+				</div>	
+				<button id="search_btn" type="button" class="mui-table-view-cell mui-btn mui-btn-block mui-btn-primary"  style="margin-top: 25px;">查询</button>
+			</form>
+						
+		</div>
+		<script type="text/javascript" src="../js/app.js" ></script>
+		<script type="text/javascript" src="../js/mui.min.js" ></script>
+		<script src="../js/mui.picker.js"></script>
+		<script src="../js/mui.poppicker.js"></script>
+		<script>
+			(function($, doc) {
+				$.init();
+				$.ready(function() {
+					//选择地点
+					var selectcategory = new $.PopPicker();
+					selectcategory.setData([{
+						value: 'bijixiaojie',
+						text: '笔记小结'
+					},{
+						value: 'yonghuxinxi',
+						text: '用户信息'
+					}, {
+						value: 'chanpinxinxi',
+						text: '产品信息'
+					}, {
+						value: 'hangyexinxi',
+						text: '行业信息'
+					}, {
+						value: 'gongsixinxi',
+						text: '公司新闻'
+					}]);
+					var showUserPickerButton = doc.getElementById('selectcategory');
+					var category = doc.getElementById('category');
+					showUserPickerButton.addEventListener('tap', function(event) {
+						selectcategory.show(function(items) {
+							category.innerText = items[0].text;
+							//返回 false 可以阻止选择框的关闭
+//							return false;
+						});
+					}, false);
+					var titleBox = doc.getElementById("title")
+					var categoryBox = doc.getElementById("category")
+					var contentBox = doc.getElementById("textarea")
+					searchButton = doc.getElementById("search_btn")
+					searchButton.addEventListener('tap',function(event){
+						if (titleBox.value ==""&categoryBox.innerText==""&contentBox.value==""){
+							plus.nativeUI.toast("请输入查询条件")
+						}else{
+							mui.openWindow({
+								url:"inforguide_search_content.html",
+								id:"inforguide_search_content",
+								
+								extras:{
+									"title":titleBox.value,
+									"category":categoryBox.innerText,
+									"content":contentBox.value,
+									
+								}
+							})
+						}
+					})
+					
+			
+				});
+			})(mui, document);
+			
+		</script>
+	</body>
+</html>

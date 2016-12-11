@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="css/mui.min.css">
+		<!--App自定义的css-->
+		<link rel="stylesheet" type="text/css" href="css/app.css"/>
+		
+		<style>
+			html,body {
+				background-color: #efeff4;
+			}
+			.title{
+				margin: 20px 15px 10px;
+				color: #6d6d72;
+				font-size: 15px;
+			}
+			.mui-media-body{
+				margin-left: 70px;
+			}
+			.head-img {
+				width: 40px;
+				/*height: 40px;*/
+			}
+			#mui-media-body{
+				padding: 100px;
+			}
+		
+		</style>
+	</head>
+
+	<body>
+		<!--<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">设置</h1>
+		</header>-->
+		<div class="mui-content">
+			<ul class="mui-table-view mui-table-view-chevron">
+				<!--<li class="mui-table-view-cell mui-media">
+					<a class="mui-navigate-right" id="account">
+						<img class="mui-media-object mui-pull-left head-img" id="head-img" src="">
+						<div class="mui-media-body" >
+							BAOSTEEL
+							<p id="user_name">admin</p>
+						</div>
+					</a>
+				</li>-->
+				<li class="mui-table-view-cell">
+					<a id="newtask" class="mui-navigate-right">
+						新建出差任务
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a id="myBusinessRecord" class="mui-navigate-right" >
+						我的出差记录
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-collapse"><a class="mui-navigate-right">信息指南</a>
+						<ul class="mui-table-view mui-table-view-chevron">
+							<li class="mui-table-view-cell"><a class="mui-navigate-right" id="newinformationguide">新建信息指南</a>
+							</li>
+							<li class="mui-table-view-cell"><a class="mui-navigate-right" id="myinformationguide">我的信息指南</a>
+							</li>
+						</ul>
+				</li>
+				<li class="mui-table-view-cell mui-collapse"><a class="mui-navigate-right">情报搜集</a>
+						<ul class="mui-table-view mui-table-view-chevron">
+							<li class="mui-table-view-cell"><a class="mui-navigate-right" id="newinformationgathering">新建情报搜集</a>
+							</li>
+							<li class="mui-table-view-cell"><a class="mui-navigate-right" id="myinformationgathering">我的情报搜集</a>
+							</li>
+						</ul>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" id="notice">
+						通知公告
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" id="selfsetting">
+						个人设置
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" id="echart">
+						echart
+					</a>
+				</li>
+			</ul>
+			<ul class="mui-table-view" style="margin-top: 25px;">
+				<li class="mui-table-view-cell">
+					<a id="logoff" style="text-align: center;color: #FF3B30;">
+						退出
+					</a>
+				</li>
+			</ul>
+		
+		</div>
+	</style>
+
+	<script src="js/mui.min.js"></script>
+	<script src="js/app.js"></script>
+	<script type="text/javascript" src="js/selectpic.js" ></script>
+	<script>
+	(function($,doc){
+
+		mui.init();
+		
+		//重写selectpic.js中的defaultImg方法
+//		function defaultImg() {
+//			if(mui.os.plus){
+//				plus.io.resolveLocalFileSystemURL("_doc/head.jpg", function(entry) {
+//					var s = entry.fullPath + "?version=" + new Date().getTime();;
+//					document.getElementById("head-img").src = s;
+//				}, function(e) {
+//					document.getElementById("head-img").src = 'img/BS_2.png';
+//				})
+//			}else{
+//				document.getElementById("head-img").src = 'img/BS_2.png';
+//				}
+//				
+//			}
+
+		mui.plusReady(function(){
+			mui.preload({
+				"id":"echart",
+				"url":"echart.html"
+			});
+//		document.getElementById("user_name").innerHTML=localStorage.getItem("user_name")
+
+		setTimeout(function (){
+		defaultImg();
+		setTimeout(function() {
+			initImgPreview();
+			}, 0);
+		},0);
+		
+//		document.getElementById("account").addEventListener('tap',function(event){
+//			selectpic("head-img");
+//		})
+		
+		
+		document.getElementById("newtask").addEventListener('tap',function () {
+			mui.openWindow({
+		    url:"bussinessinfo/createNewTask.html",//url是字符串啊！！！！！！！！
+		    id:"createNewTask",
+            styles:{
+	        top:'0px',//mui标题栏默认高度为45px；
+	        bottom:'0px'//默认为0px，可不定义；
+	      }
+		})
+		})
+		
+		//我的出差任务
+		document.getElementById("myBusinessRecord").addEventListener('tap',function () {
+		mui.openWindow({
+	    url:"bussinessinfo/myBusinessRecord.html",//url是字符串啊！！！！大哥！！！！！！
+	    id:"myBusinessRecord",
+        styles:{
+        top:'0px',//mui标题栏默认高度为45px；
+        bottom:'0px'//默认为0px，可不定义；
+          }
+	     })
+		});
+		
+		//新建信息指南
+		document.getElementById("newinformationguide").addEventListener('tap',function () {
+			mui.openWindow({
+		    url:"inforguide/newinformationguide.html",//url是字符串啊！！！！！！！！
+		    id:"newinformationguide",
+            styles:{
+	        top:'0px',//mui标题栏默认高度为45px；
+	        bottom:'0px'//默认为0px，可不定义；
+	      }
+		})
+		})
+		
+		//我的信息指南
+		document.getElementById("myinformationguide").addEventListener('tap',function () {
+		mui.openWindow({
+	    url:"inforguide/myInformationGuiding.html",//url是字符串啊！！！！大哥！！！！！！
+	    id:"myInformationGuiding",
+        styles:{
+        top:'0px',//mui标题栏默认高度为45px；
+        bottom:'0px'//默认为0px，可不定义；
+          }
+	     })
+		});
+		
+		//新建情报搜集
+		document.getElementById("newinformationgathering").addEventListener('tap',function () {
+			mui.openWindow({
+		    url:"inforgather/newinformationgathering.html",//url是字符串啊！！！！！！！！
+		    id:"newinformationgathering",
+            styles:{
+	        top:'0px',//mui标题栏默认高度为45px；
+	        bottom:'0px'//默认为0px，可不定义；
+	      }
+		})
+		})
+		
+		//我的情报搜集
+		document.getElementById("myinformationgathering").addEventListener('tap',function () {
+		mui.openWindow({
+	    url:"inforgather/myinformationgathering.html",//url是字符串啊！！！！大哥！！！！！！
+	    id:"myinformationgathering",
+        styles:{
+        top:'0px',//mui标题栏默认高度为45px；
+        bottom:'0px'//默认为0px，可不定义；
+          }
+	     })
+		});
+		
+		document.getElementById("logoff").addEventListener('tap',function(){
+			plus.runtime.quit()
+		})
+		
+		//个人设置
+		document.getElementById("selfsetting").addEventListener('tap',function(){
+			mui.openWindow({
+				url:"selfsetting/selfsetting.html",
+				id:"selfsetting",
+			})
+		});
+		//通知公告
+		document.getElementById("notice").addEventListener('tap',function(){
+			mui.openWindow({
+				url:"notice/notice.html",
+				id:"noice",
+			})
+		});
+		document.getElementById("echart").addEventListener('tap',function(){
+			mui.openWindow({
+				url:"echart.html",
+				id:"echart"
+				})
+		})
+
+		
+	 })
+	}(mui, document));
+	</script>
+	</body>
+</html>

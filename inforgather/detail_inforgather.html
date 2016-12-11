@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>detail_inforguide</title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="../css/app.css"/>
+        <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
+		<style>
+			
+		    .mui-content{
+		    	margin: 10px 15px 10px;
+				color: #6d6d72;
+				font-size: 15px;
+		    }
+		   html,body {
+				background-color: #efeff4;
+			}
+			/*.title{
+				margin: 20px 15px 10px;
+				color: #6d6d72;
+				font-size: 15px;
+			}*/
+		   
+		</style>
+
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			 
+			 <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			 <!--<a class="mui-icon mui-icon-reload mui-pull-right" id="refresh"><div style="margin:-18px 10px 10px 30px; font: '楷体';font-size: 18px;">刷新</div></a>-->
+			<h1 class="mui-title">情报搜集详情</h1>
+			
+		</header>		
+		
+		<div class="mui-content" >
+			<h4 id="gather_title" style="text-align: center"></h4>		
+	        <span >情报搜集序号:</span>&nbsp;&nbsp;&nbsp;<span id="gather_id"></span>	      
+	        <br />
+	        <span >编辑者:</span>&nbsp;&nbsp;&nbsp;<span id="gather_editor_name"></span>      
+	        <br />
+	        <span >编辑时间:</span>&nbsp;&nbsp;&nbsp;<span id="gather_time"></span>          
+	        <br />
+	        <span >地址:</span>&nbsp;&nbsp;&nbsp;<span id="gather_address"></span>          
+	        <br />
+	        <span >油田:</span>&nbsp;&nbsp;&nbsp;<span id="gather_oil_field"></span>
+	        <br />
+	        <span style="border-left:20px;">正文:</span>&nbsp;&nbsp;&nbsp;<span id="gather_text"></span>
+	        <br/>
+        	<span>文件：</span><span id="file_to_download"></span>
+			<br/>
+			<span id="processspan">下载进度：</span><span id="processtext"></span>
+			<div class="mui-button-row">
+				<button id="downloadfile" class="mui-btn mui-btn-primary" type="button" onclick="return true;" >点击下载</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<button id="openfile" class="mui-btn mui-btn-danger" type="button" onclick="return false;">打开文件</button>
+			</div>	
+	        
+		</div>
+	
+		<script src="../js/app.js"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/common.js"></script>
+		<script>
+		 //点击下载和打开按钮中的onclick时间的tap按钮不能放在（function（$,doc）{mui,document}下面 要不然不好使）
+//			(function($,doc){
+//				$.init();
+				mui.plusReady(function(){
+					var gather_title = document.getElementById('gather_title');
+			        var gather_id = document.getElementById('gather_id');
+//					var guide_editor = document.getElementById('guide_editor');
+			        var gather_editor_name = document.getElementById('gather_editor_name');
+					var gather_address = document.getElementById('gather_address');
+					var gather_text = document.getElementById("gather_text");
+					var gather_oil_field = document.getElementById("gather_oil_field");
+					var gather_time = document.getElementById("gather_time");
+					var file_to_download = document.getElementById("file_to_download");
+					var file_size = document.getElementById("filesize")
+					
+					//获取前一个页面传过来的值
+					var self = plus.webview.currentWebview();//必须用plusReady 来获取前面传过来的值
+					var inforgather_id =self.gather_id
+					var inforgather_editor = self.gather_editor
+					var inforgather_editor_name = self.gather_editor_name
+					var inforgather_title = self.gather_title
+					var inforgather_area = self.gather_area
+					var inforgather_address = self.gather_address
+					var inforgather_text = self.gather_text
+					var infor_gather_oil_field = self.gather_oil_field
+					var time = self.gather_time
+					var origin_file_name = self.origin_file_name
+					var new_file_name = self.new_file_name
+					if(origin_file_name == "null"||origin_file_name ==""){
+						origin_file_name = "无"
+						document.getElementById("processspan").style.display="none"
+						document.getElementById("downloadfile").style.display ="none"
+						document.getElementById("openfile").style.display="none"
+					}				
+				
+					gather_title.innerHTML=inforgather_title
+					gather_id.innerHTML=inforgather_id
+					gather_time.innerHTML=time
+					gather_editor_name.innerHTML=inforgather_editor_name
+					gather_address.innerHTML=inforgather_address
+					gather_oil_field.innerHTML=infor_gather_oil_field
+					gather_text.innerHTML=inforgather_text
+					file_to_download.innerHTML=origin_file_name
+		      	
+		      		var processtext = document.getElementById("processtext")
+					var dtask=null;
+					var fileName=origin_file_name;
+					document.getElementById("downloadfile").addEventListener('tap',function(e){
+						if(origin_file_name=="无"){
+							plus.nativeUI.toast("无文件可下载！")
+						}else{
+							var url = "http://121.42.186.54:8081/uploadfiles/"+new_file_name;
+						    var options = {method:"GET",filename:"_doc/"+fileName};
+							dtask = plus.downloader.createDownload( url, options );
+						    dtask.addEventListener( "statechanged", function(task,status){
+						    	if(!dtask){return;}
+						    	switch(task.state) {
+						    		case 1: // 开始
+						    			plus.nativeUI.toast("开始下载...");			    			
+						    		break;
+						    		case 2: // 已连接到服务器
+						    			plus.nativeUI.toast("开始下载...");
+						    		break;
+						    		case 3:	// 已接收到数据
+										processtext.innerHTML=task.downloadedSize+"/"+task.totalSize;
+						    			
+						    		break;
+						    		case 4:	// 下载完成			    			
+						    			processtext.innerHTML=parseInt(task.totalSize/1024)+"KB"
+						    			plus.nativeUI.toast("下载完成!");
+						    		break;
+						    	}
+						    } );
+			
+						    dtask.start();
+							}
+					    
+					})
+				document.getElementById("openfile").addEventListener('tap',function(e){
+					plus.runtime.openFile("_doc/"+fileName, {},function(e){
+			    })
+				})
+					
+					
+				})
+
+				
+//			}(mui,document))
+			
+//			var processtext = document.getElementById("processtext")
+//			var dtask=null;
+//			var fileName="1_1474437773362_28.pdf";
+//			function createDownloadTask(){
+//				if ( dtask ) {
+//					outLine( "下载任务已创建！" );
+//					return;
+//				}
+//			    var url = "http://121.42.186.54:8081/uploadfiles/1_1474437773362_28.pdf";
+//			    var options = {method:"GET",filename:"_doc/"+fileName};
+//				dtask = plus.downloader.createDownload( url, options );
+//			    dtask.addEventListener( "statechanged", function(task,status){
+//			    	if(!dtask){return;}
+//			    	switch(task.state) {
+//			    		case 1: // 开始
+//			    			plus.nativeUI.toast("开始下载...");			    			
+//			    		break;
+//			    		case 2: // 已连接到服务器
+//			    			plus.nativeUI.toast("开始下载...");
+//			    		break;
+//			    		case 3:	// 已接收到数据
+//							processtext.innerHTML=task.downloadedSize+"/"+task.totalSize;
+//			    			
+//			    		break;
+//			    		case 4:	// 下载完成			    			
+//			    			processtext.innerHTML=parseInt(task.totalSize/1024)+"KB"
+//			    			plus.nativeUI.toast("下载完成!");
+//			    		break;
+//			    	}
+//			    } );
+//
+//			    dtask.start();
+//			    				    
+//			}
+//			function openTask(){
+//				plus.runtime.openFile("_doc/"+fileName, {},function(e){
+//			    			plus.nativeUI.toast("打开文件")
+//			    })
+//			}
+			
+		</script>
+		
+	</body>
+</html>
