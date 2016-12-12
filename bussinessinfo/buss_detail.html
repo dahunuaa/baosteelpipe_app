@@ -30,17 +30,6 @@
 				padding: 0px 50px;
 				background-color: #fafafa;
 			}
-			/*.footer-left {
-				position: absolute;
-				width: 0px;
-				height: 0px;
-				left: 0px;
-				bottom: 0px;
-				text-align: center;
-				vertical-align: middle;
-				line-height: 100%;
-				padding: 12px 4px;
-			}*/
 			.footer-center {
 				height: 100%;
 				margin: 5px 12px 0px -40px;
@@ -76,7 +65,9 @@
 				font-family: verdana !important;
 				overflow: hidden;
 			}
-			
+			/*#pullrefresh{
+		    	margin: -10px 0px 1500px 0px;
+		    }*/
 		</style>
 
 	</head>
@@ -111,11 +102,17 @@
         <br />
 		<span>评论区：</span>
 			
+		<div id="comments" class="comment">
+			<ul class="mui-table-view mui-table-view-chevron" id="comments_list">
+				
+			</ul>
+		</div>
+		
 		</div>
 		
 		<footer>
 			<div class="footer-center">
-				<textarea id='msg-text' type="text" class='input-text'></textarea>
+				<textarea id='comment_text' type="text" class='input-text'></textarea>
 			</div>
 			<label for="" class="footer-right">
 				<div id="comment_btn" class="mui-btn mui-btn-primary">
@@ -151,9 +148,6 @@
 					var _accounts = self.accounts
 					var _buss_reason = self.buss_reason
 					var _buss_place = self.buss_place
-//					plus.nativeUI.toast(self.buss_id)
-
-					
 				
 					buss_id.innerHTML=_buss_id
 					editor_name.innerHTML=_editor_name
@@ -163,10 +157,58 @@
 					accounts.innerHTML=_accounts
 					buss_reason.innerHTML = _buss_reason
 					buss_place.innerHTML = _buss_place
+					//显示当前出差任务下的评论
+					var comment_list = document.getElementById("comments_list")
+					var count = -1
+//					mui.ajax({
+//					type:"post",
+//					url:"http://121.42.186.54:8081/baosteelpipe/Comment_list",
+//					data:{
+//						"pull_count":count,
+//					},
+//					async:true,
+//					dataType:"json",
+//					success:function(data){
+//						mui.each(data,function(key,value){
+//						var li = document.createElement("li")
+//						li.className="mui-table-view-cell"
+//                      li.innerHTML ='<a class="mui-navigate-right"'+"<br>"+"序号："+"&nbsp&nbsp&nbsp"+"编辑者："+"<br>"+"编辑时间：" 
+//                      				+"<br>"+"分类："+"<br>"+"标题："+'</a>';
+//                      			
+//                                     
+//                      comment_list.appendChild(li)
+//						})
+//						
+//		   		        },
+//					});
 					
 					
+					//提交评论
+					comment_text = document.getElementById("comment_text")
 					comment_btn = document.getElementById("comment_btn")
 					comment_btn.addEventListener('tap',function(event){
+						if(comment_text.value ==""){
+							plus.nativeUI.toast("请输入评论内容~")
+						}else{
+							mui.ajax({
+							type:"post",
+							url:"http://121.42.186.54:8081/baosteelpipe/Add_comment",
+							data:{
+								"buss_id":_buss_id,
+								"comment_text":comment_text.value,
+							},
+							async:true,
+							dataType:"text",
+							success:function(data){
+							 	if (data == "ok"){
+										plus.nativeUI.toast("评论成功~")
+										mui.back();
+									}else{
+										plus.nativeUI.toast("评论失败，请重试！")
+									}   
+							}
+						 });	
+						}
 						
 					})
 					
