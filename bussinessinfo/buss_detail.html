@@ -65,9 +65,17 @@
 				font-family: verdana !important;
 				overflow: hidden;
 			}
-			/*#pullrefresh{
-		    	margin: -10px 0px 1500px 0px;
-		    }*/
+			#com_name{
+				font-size: 15px;
+				color: #007AFF;
+			}
+			#com_time{
+				font-size: 13px;
+			}
+			#com_text{
+				font-size: 18px;
+				color: #000000;
+			}
 		</style>
 
 	</head>
@@ -160,27 +168,28 @@
 					//显示当前出差任务下的评论
 					var comment_list = document.getElementById("comments_list")
 					var count = -1
-//					mui.ajax({
-//					type:"post",
-//					url:"http://121.42.186.54:8081/baosteelpipe/Comment_list",
-//					data:{
-//						"pull_count":count,
-//					},
-//					async:true,
-//					dataType:"json",
-//					success:function(data){
-//						mui.each(data,function(key,value){
-//						var li = document.createElement("li")
-//						li.className="mui-table-view-cell"
-//                      li.innerHTML ='<a class="mui-navigate-right"'+"<br>"+"序号："+"&nbsp&nbsp&nbsp"+"编辑者："+"<br>"+"编辑时间：" 
-//                      				+"<br>"+"分类："+"<br>"+"标题："+'</a>';
-//                      			
-//                                     
-//                      comment_list.appendChild(li)
-//						})
-//						
-//		   		        },
-//					});
+					mui.ajax({
+					type:"get",
+					url:"http://121.42.186.54:8081/baosteelpipe/Comment_list",
+					data:{
+						"buss_id":_buss_id,
+					},
+					async:true,
+					dataType:"json",
+					success:function(data){
+						mui.each(data,function(key,value){
+						var li = document.createElement("li")
+						li.className="mui-table-view-cell"
+						li.innerHTML="<span id='com_name'>"+value.name+"</span>"+"&nbsp;&nbsp;&nbsp;"+"<span id='com_time'>"+value.time
+										+"</span>"+"<br>"+"<span id='com_text'>"+value.text+"</span>";
+
+                        			
+                        comment_list.appendChild(li)
+						})
+						
+		   		        },
+					});
+					
 					
 					
 					//提交评论
@@ -192,8 +201,8 @@
 						}else{
 							mui.ajax({
 							type:"post",
-							url:"http://192.168.191.1:8080/baosteelpipe/Add_comment",
-//							url:"http://121.42.186.54:8081/baosteelpipe/Add_comment",
+//							url:"http://192.168.191.1:8080/baosteelpipe/Add_comment",
+							url:"http://121.42.186.54:8081/baosteelpipe/Add_comment",
 							data:{
 								"buss_id":_buss_id,
 								"comment_text":comment_text.value,
