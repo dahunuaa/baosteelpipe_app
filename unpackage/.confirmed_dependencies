@@ -44,7 +44,8 @@
 			"css/mui.min.css"
 		],
 		"refer": [
-			"echart.html"
+			"echart.html",
+			"bussinessinfo/myBusinessRecord.html"
 		]
 	},
 	"inforgather/informationGathering.html": {
@@ -173,6 +174,15 @@
 		],
 		"refer": [
 			"notice/notice_detail.html"
+		]
+	},
+	"bussinessinfo/myBusinessRecord.html": {
+		"resources": [
+			"js/app.js",
+			"js/mui.min.js",
+			"css/app.css",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
 		]
 	}
 }

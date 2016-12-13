@@ -14,7 +14,7 @@
 		    	background-color: #EEEEEE;
 		    }
 		    .mui-content{
-		    	margin: 10px 15px 10px;
+		    	margin: 10px 15px 60px;
 				color: #6d6d72;
 				font-size: 15px;
 		    }
@@ -108,7 +108,7 @@
         <span >出差地:</span>&nbsp;&nbsp;&nbsp;<span id="buss_place"></span>   
         <br />
         <br />
-		<span>评论区：</span>
+		<span id="comment_area">评论区：</span>
 			
 		<div id="comments" class="comment">
 			<ul class="mui-table-view mui-table-view-chevron" id="comments_list">
@@ -177,16 +177,23 @@
 					async:true,
 					dataType:"json",
 					success:function(data){
+						if(data==""||data==NaN||data==undefined){
+							document.getElementById("comment_area").style.display="none"
+							plus.nativeUI.toast("暂无评论~")
+						}
 						mui.each(data,function(key,value){
 						var li = document.createElement("li")
 						li.className="mui-table-view-cell"
 						li.innerHTML="<span id='com_name'>"+value.name+"</span>"+"&nbsp;&nbsp;&nbsp;"+"<span id='com_time'>"+value.time
 										+"</span>"+"<br>"+"<span id='com_text'>"+value.text+"</span>";
 
-                        			
                         comment_list.appendChild(li)
 						})
 						
+						 mui("#comments_list").on("longtap","li",function(){
+						 	alert(222)
+						 })
+						 	
 		   		        },
 					});
 					
@@ -212,7 +219,7 @@
 							success:function(data){
 							 	if (data == "ok"){
 										plus.nativeUI.toast("评论成功~")
-										mui.back();
+										plus.webview.getWebviewById("buss_detail").reload()
 									}else{
 										plus.nativeUI.toast("评论失败，请重试！")
 									}   
