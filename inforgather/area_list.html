@@ -12,7 +12,14 @@
 			body {
 				background-color:#efeff4;
 			}
-		    
+		    .mui-table-view-cell{
+		    	border-radius: 10px;
+		    	margin-left: 10px;
+		    	margin-right: 10px;
+		    	background-color:#D8D8D8;
+		    	margin-bottom: 10px;
+		    	margin-top: 2px;
+		    }
 		</style>
     </head>
 	<body>
@@ -105,7 +112,6 @@
 								var time = this.getAttribute("time")
 								var origin_file_name = this.getAttribute("origin_file_name")
 								var new_file_name = this.getAttribute("new_file_name")
-//								plus.nativeUI.toast(guide_id)
 													
 								mui.openWindow({
 							    url:"detail_inforgather.html",

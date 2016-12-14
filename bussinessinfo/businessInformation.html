@@ -87,6 +87,13 @@
 					}
 				}
 			});
+			
+			$.init( { //需要先定义longtap
+					gestureConfig:{
+					   tap: true, //默认为true
+					   longtap: true, //默认为false
+					  }}) 
+
 			var list = document.getElementById("list")	
 			var count = -1;
 			
@@ -126,6 +133,7 @@
 						li.innerHTML = "序号："+value.buss_id+"&nbsp;&nbsp;&nbsp&nbsp;&nbsp;"+"编辑人："+value.editor_name+"<br>"+"编辑时间："+value.time+"<br>"+"出差日期："
 									+value.buss_begintime +"—"+value.buss_endtime +"<br>" +value.bussmen_name
                                    +"<br>"+value.accounts+"人"+"&nbsp&nbsp"+value.buss_reason+"&nbsp&nbsp"+value.buss_place;
+                        li.setAttribute("buss_text",li.textContent)
 						var icon = document.createElement("icon")
 						var date1 = new Date(value.buss_endtime);
 						
@@ -166,8 +174,25 @@
 					    	buss_place:buss_place,
 					    }
 					     
-					})
+						})
 	                  });
+	                 //长按复制 
+	                 mui("#list").on("longtap","li",function(){
+	                 	buss_text = this.getAttribute("buss_text")
+	                 	var btnArray = ['否','是'];
+	                 	mui.confirm('复制该记录？','',btnArray,function(e){
+	                 		if(e.index == 1){
+	                 			//（google已经禁止利用js来复制粘贴）安卓版本复制粘贴，ios的参考native.js汇总
+	                 			var Context = plus.android.importClass("android.content.Context");
+							    var main = plus.android.runtimeMainActivity();
+							    var clip = main.getSystemService(Context.CLIPBOARD_SERVICE);
+							    plus.android.invoke(clip,"setText",buss_text);
+								plus.nativeUI.toast("该记录已经复制到剪贴板~");	                 			
+	                 		}else{
+	                 			
+	                 		}
+	                 	})
+	                 })
 						
 					},
 					});

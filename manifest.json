@@ -892,7 +892,8 @@
 					"js/app.js",
 					"js/common.js",
 					"js/defined_downloadfile.js",
-					"css/common.css"
+					"css/common.css",
+					"css/comment.css"
 				],
 				"refer": [],
 				"priority": 0
@@ -911,7 +912,8 @@
 					"js/feedback-page.js",
 					"css/defined_uploadimg.css",
 					"css/feedback-page.css",
-					"css/image_preview.css"
+					"css/image_preview.css",
+					"css/comment.css"
 				],
 				"refer": [],
 				"priority": 0
@@ -1309,7 +1311,8 @@
 					"js/mui.min.js",
 					"css/app.css",
 					"fonts/mui.ttf",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"css/comment.css"
 				],
 				"refer": [],
 				"priority": 0

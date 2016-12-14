@@ -6,6 +6,7 @@
 		<title>buss_detail</title>
 		<link href="../css/mui.min.css" rel="stylesheet" />
         <link rel="stylesheet" type="text/css" href="../css/app.css"/>
+        <link rel="stylesheet" href="../css/comment.css" />
 		<style type="text/css">
 			body {
 				background-color:#efeff4;
@@ -13,69 +14,7 @@
 		    div{
 		    	background-color: #EEEEEE;
 		    }
-		    .mui-content{
-		    	margin: 10px 15px 60px;
-				color: #6d6d72;
-				font-size: 15px;
-		    }
-		    footer {
-				position: fixed;
-				width: 100%;
-				height: 50px;
-				min-height: 50px;
-				border-top: solid 1px #bbb;
-				left: 0px;
-				bottom: 0px;
-				overflow: hidden;
-				padding: 0px 50px;
-				background-color: #fafafa;
-			}
-			.footer-center {
-				height: 100%;
-				margin: 5px 12px 0px -40px;
-				padding: 0px 0px 10px 0px;
-				background: #FFFFFF
-			}
-			.footer-right {
-				position: absolute;
-				width: 50px;
-				height: 50px;
-				right: 1px;
-				bottom: 4px;
-				text-align: center;
-				vertical-align: middle;
-				line-height: 100%;
-				padding: 12px 5px;
-				display: inline-block;
-				margin: 5px 12px 0px;
-			}
-			
-			.footer-center [class*=input] {
-				width: 100%;
-				height:100%;
-				border-radius: 5px;
-				
-			}
-			.footer-center .input-text {
-				/*background: #fff;*/
-				border: solid 1px #ddd;
-				padding: 10px !important;
-				font-size: 16px !important;
-				line-height: 18px !important;
-				font-family: verdana !important;
-				overflow: hidden;
-			}
-			#com_name{
-				font-size: 15px;
-				color: #007AFF;
-			}
-			#com_time{
-				font-size: 13px;
-			}
-			#com_text{
-				font-size: 18px;
-				color: #000000;
-			}
+		    
 		</style>
 
 	</head>
@@ -169,13 +108,14 @@
 					accounts.innerHTML=_accounts
 					buss_reason.innerHTML = _buss_reason
 					buss_place.innerHTML = _buss_place
+					
 					//显示当前出差任务下的评论
 					var comment_list = document.getElementById("comments_list")
-					var count = -1
 					mui.ajax({
 					type:"get",
 					url:"http://121.42.186.54:8081/baosteelpipe/Comment_list",
 					data:{
+						"type":"buss",
 						"buss_id":_buss_id,
 					},
 					async:true,
@@ -183,28 +123,51 @@
 					success:function(data){
 						if(data==""||data==NaN||data==undefined){
 							document.getElementById("comment_area").style.display="none"
-							plus.nativeUI.toast("暂无评论~")
 						}
 						mui.each(data,function(key,value){
 						var li = document.createElement("li")
 						li.className="mui-table-view-cell"
 						li.setAttribute("comment_id",value.comment_id);
+						li.setAttribute("user_id",value.user_id);
 						li.innerHTML="<span id='com_name'>"+value.name+"</span>"+"&nbsp;&nbsp;&nbsp;"+"<span id='com_time'>"+value.time
 										+"</span>"+"<br>"+"<span id='com_text'>"+value.text+"</span>";
 
                         comment_list.appendChild(li)
 						})
 						
-						 mui("#comments_list").on("longtap","li",function(){
-						 	var btnArray = ['否', '是'];
-							mui.confirm('删除此评论？', '', btnArray, function(e) {
-								if (e.index == 1) {
-									alert(this.getAttribute("comment_id"))
-								} else {
-								
-								}
-							})
-						 })
+					//长按评论删除
+					 mui("#comments_list").on("longtap","li",function(){
+					 	comment_id=this.getAttribute("comment_id")
+					 	user_id = this.getAttribute("user_id")
+					 	var btnArray = ['否', '是'];
+						mui.confirm('删除此评论？', '', btnArray, function(e) {
+							if (e.index == 1) {
+								mui.ajax({
+									type:"post",
+									url:"http://121.42.186.54:8081/baosteelpipe/Del_comment",
+									data:{
+										"type":"buss",
+										"user_id":user_id,
+										"comment_id":comment_id,
+									},
+									async:true,
+									dataTyoe:"text",
+									success:function(data){
+										if(data=="ok"){
+											plus.nativeUI.toast("该评论已删除~")
+											plus.webview.getWebviewById("buss_detail").reload()
+										}else if(data =="fail"){
+											plus.nativeUI.toast("您无权限删除此评论！")
+										}else{
+											plus.nativeUI.toast("出现异常，请重试~")
+										}
+									},
+								});
+							} else {
+							   
+							}
+						})
+					 })
 						 	
 		   		        },
 					});
@@ -223,6 +186,7 @@
 //							url:"http://192.168.191.1:8080/baosteelpipe/Add_comment",
 							url:"http://121.42.186.54:8081/baosteelpipe/Add_comment",
 							data:{
+								"type":"buss",
 								"buss_id":_buss_id,
 								"comment_text":comment_text.value,
 							},

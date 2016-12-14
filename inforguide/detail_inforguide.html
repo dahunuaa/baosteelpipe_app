@@ -7,6 +7,7 @@
 		<link href="../css/mui.min.css" rel="stylesheet" />
         <link rel="stylesheet" type="text/css" href="../css/app.css"/>
         <link rel="stylesheet" href="../css/image_preview.css" />
+        <link rel="stylesheet" href="../css/comment.css" />
 		<style type="text/css">
 			body {
 				background-color:#efeff4;
@@ -14,8 +15,6 @@
 		    div{
 		    	background-color: #EEEEEE;
 		    }
-		    
-		
 		   
 		</style>
 
@@ -46,10 +45,26 @@
         <p style="display: none;" id="picture_down">
 		<img id="picture_src" src="" hspace="5" vspace="5"   style="width: -webkit-fill-available;" data-preview-src="" data-preview-group="1"></img>
 		</p>
-		<!--<div align="center">
-			<img src="http://121.42.186.54:8081/uploadimage/123.jpg" alt="pic_1" style="width: 300px;" data-preview-src="" data-preview-group="1"></img>
+		<span id="comment_area">评论区：</span>
+			
+		<div id="comments" class="comment">
+			<ul class="mui-table-view mui-table-view-chevron" id="comments_list">
+				
+			</ul>
+		</div>
+		
+		</div>
+		
+		<footer>
+			<div class="footer-center">
+				<textarea id='comment_text' type="text" class='input-text'></textarea>
 			</div>
-		</div>-->
+			<label for="" class="footer-right">
+				<div id="comment_btn" class="mui-btn mui-btn-primary">
+					发表
+				</div>
+			</label>
+		</footer>
 		
 		<script src="../js/app.js"></script>
 		<script src="../js/mui.min.js"></script>
@@ -60,7 +75,11 @@
 		<script src="../js/mui.previewimage.js"></script>
 		<script>
 			(function($,doc){
-				$.init();
+				$.init( { //需要先定义longtap
+					gestureConfig:{
+					   tap: true, //默认为true
+					   longtap: true, //默认为false
+					  }}) 
 				$.plusReady(function(){
 					var title = document.getElementById('title');
 			        var guide_id = document.getElementById('guide_id');
@@ -98,7 +117,101 @@
 					document.getElementById("picture_src").src="http://121.42.186.54:8081/uploadimage/"+pic_path
 					}
 						
+					//显示当前出差任务下的评论
+					var comment_list = document.getElementById("comments_list")
+					mui.ajax({
+					type:"get",
+					url:"http://121.42.186.54:8081/baosteelpipe/Comment_list",
+					data:{
+						"type":"guide",
+						"buss_id":guideinfor_id,
+					},
+					async:true,
+					dataType:"json",
+					success:function(data){
+						if(data==""||data==NaN||data==undefined){
+							document.getElementById("comment_area").style.display="none"
+						}
+						mui.each(data,function(key,value){
+						var li = document.createElement("li")
+						li.className="mui-table-view-cell"
+						li.setAttribute("comment_id",value.comment_id);
+						li.setAttribute("user_id",value.user_id);
+						li.innerHTML="<span id='com_name'>"+value.name+"</span>"+"&nbsp;&nbsp;&nbsp;"+"<span id='com_time'>"+value.time
+										+"</span>"+"<br>"+"<span id='com_text'>"+value.text+"</span>";
+
+                        comment_list.appendChild(li)
+						})
+						
+					//长按评论删除
+					 mui("#comments_list").on("longtap","li",function(){
+					 	comment_id=this.getAttribute("comment_id")
+					 	user_id = this.getAttribute("user_id")
+					 	var btnArray = ['否', '是'];
+						mui.confirm('删除此评论？', '', btnArray, function(e) {
+							if (e.index == 1) {
+								mui.ajax({
+									type:"post",
+									url:"http://121.42.186.54:8081/baosteelpipe/Del_comment",
+									data:{
+										"type":"guide",
+										"user_id":user_id,
+										"comment_id":comment_id,
+									},
+									async:true,
+									dataTyoe:"text",
+									success:function(data){
+										if(data=="ok"){
+											plus.nativeUI.toast("该评论已删除~")
+											plus.webview.getWebviewById("detail_inforguide").reload()
+										}else if(data =="fail"){
+											plus.nativeUI.toast("您无权限删除此评论！")
+										}else{
+											plus.nativeUI.toast("出现异常，请重试~")
+										}
+									},
+								});
+							} else {
+							   
+							}
+						})
+					 })
+						 	
+		   		        },
+					});
 					
+					
+					
+					//提交评论
+					comment_text = document.getElementById("comment_text")
+					comment_btn = document.getElementById("comment_btn")
+					comment_btn.addEventListener('tap',function(event){
+						if(comment_text.value ==""){
+							plus.nativeUI.toast("请输入评论内容~")
+						}else{
+							mui.ajax({
+							type:"post",
+//							url:"http://192.168.191.1:8080/baosteelpipe/Add_comment",
+							url:"http://121.42.186.54:8081/baosteelpipe/Add_comment",
+							data:{
+								"type":"guide",
+								"buss_id":guideinfor_id,
+								"comment_text":comment_text.value,
+							},
+							async:true,
+							dataType:"text",
+							success:function(data){
+							 	if (data == "ok"){
+										plus.nativeUI.toast("评论成功~")
+										plus.webview.getWebviewById("detail_inforguide").reload()
+									}else{
+										plus.nativeUI.toast("评论失败，请重试！")
+									}   
+							}
+						 });	
+						}
+						
+					})
 					
 					
 				})
