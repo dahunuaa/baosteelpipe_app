@@ -57,6 +57,7 @@
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/app.js"></script>
+		<script type="text/javascript" src="../js/basepath.js" ></script>
 		<script>
 		(function($, doc) {
 				$.init();
@@ -90,8 +91,7 @@
 						
 						$.ajax({
 						type: "post",
-//						url: "http://192.168.191.1:8080/baosteelpipe/Notice_edit",
-						url: "http://121.42.186.54:8081/baosteelpipe/Notice_edit",
+						url: basepath+"baosteelpipe/Notice_edit",
 						data: {
 						
 							"notice":noticeBox.value,
@@ -126,8 +126,7 @@
 						
 						$.ajax({
 						type: "post",
-//						url: "http://192.168.191.1:8080/baosteelpipe/Notice_delete",
-						url: "http://121.42.186.54:8081/baosteelpipe/Notice_delete",
+						url: basepath+"baosteelpipe/Notice_delete",
 						data: {
 							"notice_id":notice_id,
 						},

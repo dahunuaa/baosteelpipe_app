@@ -38,6 +38,7 @@
 		
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/app.js"></script>
+		<script type="text/javascript" src="../js/basepath.js" ></script>
 		<script>
 		(function($,doc){
 			mui.init({
@@ -56,8 +57,7 @@
 				setTimeout(function(){
 					mui.ajax({
 						type:"post",
-//						url:"http://192.168.191.1:8080/baosteelpipe/Mynotice",
-						url:"http://121.42.186.54:8081/baosteelpipe/Mynotice",
+						url:basepath"baosteelpipe/Mynotice",
 						data:{
 							"pull_count":count,
 						},

@@ -33,6 +33,7 @@
 		
 		<script type="text/javascript" src="../js/mui.min.js" ></script>
 		<script type="text/javascript" src="../js/mui.js" ></script>
+		<script type="text/javascript" src="../js/basepath.js" ></script>
 		<script>
 			
 		(function($,doc){
@@ -64,8 +65,7 @@
 				setTimeout(function() {
 						$.ajax({
 						type: "post",
-//						url: "http://192.168.191.1:8080/baosteelpipe/Buss_search",
-						url: "http://121.42.186.54:8081/baosteelpipe/Buss_search",
+						url: basepath+"baosteelpipe/Buss_search",
 						data: {
 							"bussmen_name":bussmen_name,
 							"buss_accounts":buss_accounts,

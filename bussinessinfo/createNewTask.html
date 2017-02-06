@@ -96,6 +96,7 @@
 		<script src="../js/app.js"></script>
 		<script src="../js/mui.picker.js"></script>
 		<script src="../js/mui.poppicker.js"></script>
+		<script type="text/javascript" src="../js/basepath.js" ></script>
 		<script>
 		(function($, doc) {
 				$.init();
@@ -252,8 +253,7 @@
 						
 						$.ajax({
 						type: "post",
-//						url: "http://192.168.191.1:8080/baosteelpipe/createNewTask",
-						url: "http://121.42.186.54:8081/baosteelpipe/createNewTask",
+						url: basepath+"baosteelpipe/createNewTask",
 						data: {
 //							"buss_editor":editorBox.value,
 //							"buss_editor_name":editornameBox.value,

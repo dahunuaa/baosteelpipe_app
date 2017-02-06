@@ -76,6 +76,7 @@
 		<script src="../js/feedback-page.js"></script>
 		<script src="../js/mui.zoom.js"></script>
 		<script src="../js/mui.previewimage.js"></script>
+		<script type="text/javascript" src="../js/basepath.js" ></script>
 		<script>
 		(function($, doc) {
 				$.init();
@@ -135,7 +136,7 @@
 					categoryBox.innerText=guide_category
 					textareaBox.value=guide_text
 					if(pic_path!=0&&pic_path!="null"){
-						document.getElementById("pic_1").src="http://121.42.186.54:8081/uploadimage/"+pic_path	
+						document.getElementById("pic_1").src=basepath+"uploadimage/"+pic_path	
 					}
 					
 					
@@ -295,8 +296,7 @@
 						var wt=plus.nativeUI.showWaiting("正在提交...");
 						$.ajax({
 						type: "post",
-//						url: "http://192.168.191.1:8080/baosteelpipe/Inforguide_edit",
-						url: "http://121.42.186.54:8081/baosteelpipe/Inforguide_edit",
+						url: basepath+"baosteelpipe/Inforguide_edit",
 						data: {
 							"guide_id":guide_id,
 							"guide_title":titleBox.value,
@@ -333,8 +333,7 @@
 							
 						$.ajax({
 						type: "post",
-//						url: "http://192.168.191.1:8080/baosteelpipe/Inforguide_delete",
-						url: "http://121.42.186.54:8081/baosteelpipe/Inforguide_delete",
+						url: basepath+"baosteelpipe/Inforguide_delete",
 						data: {
 							"guide_id":guide_id,//后面必须加上逗号
 						},

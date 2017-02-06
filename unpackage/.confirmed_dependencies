@@ -9,7 +9,8 @@
 			"css/style.css",
 			"js/mui.enterfocus.js",
 			"js/updatesimple.js",
-			"js/update.js"
+			"js/update.js",
+			"js/basepath.js"
 		],
 		"refer": [
 			"main.html"
@@ -59,7 +60,8 @@
 			"img/donghai.png",
 			"img/huadong.png",
 			"img/huazhong.png",
-			"img/dongbei.png"
+			"img/dongbei.png",
+			"css/mui.min.css"
 		],
 		"refer": [
 			"inforgather/inforgather_list.html",
@@ -69,7 +71,9 @@
 	},
 	"echart.html": {
 		"resources": [
-			"libs/echarts-all.js"
+			"libs/echarts-all.js",
+			"css/app.css",
+			"css/mui.min.css"
 		],
 		"refer": []
 	},
@@ -80,7 +84,8 @@
 			"js/app.js",
 			"js/mui.min.js",
 			"fonts/mui.ttf",
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"js/basepath.js"
 		],
 		"refer": [
 			"bussinessinfo/buss_detail.html",
@@ -100,7 +105,8 @@
 			"fonts/mui.ttf",
 			"css/mui.min.css",
 			"css/image_preview.css",
-			"css/comment.css"
+			"css/comment.css",
+			"js/basepath.js"
 		],
 		"refer": []
 	},
@@ -113,7 +119,8 @@
 			"js/app.js",
 			"js/mui.min.js",
 			"fonts/mui.ttf",
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"js/basepath.js"
 		]
 	},
 	"inforgather/detail_inforgather.html": {
@@ -136,7 +143,8 @@
 			"js/app.js",
 			"js/mui.min.js",
 			"fonts/mui.ttf",
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"js/basepath.js"
 		]
 	},
 	"inforgather/area_list.html": {
@@ -145,7 +153,8 @@
 			"js/mui.min.js",
 			"fonts/mui.ttf",
 			"css/mui.min.css",
-			"js/mui.js"
+			"js/mui.js",
+			"js/basepath.js"
 		],
 		"refer": [
 			"inforgather/detail_inforgather.html"
@@ -190,7 +199,8 @@
 			"js/mui.min.js",
 			"css/app.css",
 			"fonts/mui.ttf",
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"js/basepath.js"
 		]
 	},
 	"bussinessinfo/buss_search.html": {

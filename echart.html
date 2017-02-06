@@ -44,6 +44,7 @@
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script src="libs/echarts-all.js"></script>
+		<script type="text/javascript" src="js/basepath.js" ></script>
 		<!--<script type="text/javascript" src="js/inforgather_pie.js" ></script>-->
 		
 		<script>
@@ -55,7 +56,7 @@
 					var gather_area="";//定义全局变量
 		    		$.ajax({
 		    			type:"post",
-		    			url:"http://121.42.186.54:8081/baosteelpipe/Inforgatherpie",
+		    			url:basepath+"baosteelpipe/Inforgatherpie",
 		    			data:{},
 		    			async:false,
 						dataType:"json",

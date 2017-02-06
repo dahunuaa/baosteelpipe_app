@@ -34,6 +34,7 @@
 		
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/app.js"></script>
+		<script type="text/javascript" src="../js/basepath.js" ></script>
 		<script>
 		(function($,doc){
 			$.init();
@@ -51,8 +52,7 @@
 
 				mui.ajax({
 				type: "post",
-//				url: "http://192.168.191.1:8080/baosteelpipe/InforGathering_search",
-				url: "http://121.42.186.54:8081/baosteelpipe/InforGathering_search",
+				url: basepath+"baosteelpipe/InforGathering_search",
 				data:{
 					"inforgathering_search":inforgathering_search.value
 				},

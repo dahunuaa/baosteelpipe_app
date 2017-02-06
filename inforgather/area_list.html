@@ -44,6 +44,7 @@
 	<script src="../js/mui.min.js"></script>
 	<script src="../js/app.js"></script>
 	<script type="text/javascript" src="../js/mui.js" ></script>
+	<script type="text/javascript" src="../js/basepath.js" ></script>
 	<script>
 		(function($,doc){
 			$.plusReady(function(){
@@ -70,8 +71,7 @@
 					
 					mui.ajax({
 					type: "post",//后面必须加逗号！！！！！！！！
-//					url: "http://192.168.191.1:8080/baosteelpipe/InforGather_dongbei",
-					url: "http://121.42.186.54:8081/baosteelpipe/InforGather_dongbei",
+					url: basepath+"baosteelpipe/InforGather_dongbei",
 					data:{
 						"area":area,
 						"pull_count":count,
