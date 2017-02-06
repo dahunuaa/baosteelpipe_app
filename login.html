@@ -116,6 +116,9 @@
 						} else{
 						localStorage.setItem("user_account",accountBox.value);//accountBox.value只有在表单提交的时候会显示其值
 						localStorage.setItem("user_psw",passwordBox.value);
+						mui.ajax()
+						
+						
 						$.ajax({
 						type: "post",
 						url: basepath+"api/v1.0/user/login",
@@ -131,28 +134,21 @@
 						async: true,
 						dataType:"json",//后台传json的话这儿需要写成json
 						success: function(data) {
-							mui.each(data,function(key,value){
-								if (value.str=="ok")
-								{
-									mui.openWindow({
-									    url: 'main.html', 
-									    id:'main',
-//								    extras:{
-//										user_name:value.user_name
-//									} 
-									 })
-									
-								}else{
-									plus.nativeUI.toast("用户名或密码错误");
-								}
-							})
+							if (data.response.success=="1"){
+								mui.openWindow({
+									url:'main.html',
+									id:'main',
+								})
+							}else{
+								plus.nativeUI.toast("用户名或密码错误")
+							}
 						},
 						error: function() {
 							plus.nativeUI.toast("请求服务器出现失败!");
 						}
 					});
-						}
-						});
+					}
+					});
 					
 					$.enterfocus('#login-form input', function() {
 						$.trigger(loginButton, 'tap');
