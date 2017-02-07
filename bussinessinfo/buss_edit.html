@@ -78,12 +78,17 @@
 					结束时间<span id="timeend"style="padding: 0px 0px 0px 45px;"></span>
 				</a>
 			    </li>
-                
+                </form>
+                <br />
+                <label>&nbsp;&nbsp;&nbsp;备注(选填)</label>
+			    <div class="mui-input-row" style="margin: 10px 5px;">
+					<textarea id="textarea" rows="6" placeholder="选填"></textarea>
+				</div>
 				<div class="mui-button-row">
 					<button id="alter_task" class="mui-btn mui-btn-primary" type="button" onclick="return true;">确定</button>&nbsp;&nbsp;
 					<button id="delete_task" class="mui-btn mui-btn-danger" type="button" onclick="return false;">删除</button>
 				</div>
-			</form>
+			
 			
 		</div>
 		<script src="../js/mui.min.js"></script>
@@ -95,76 +100,6 @@
 		(function($, doc) {
 				$.init();
 				$.plusReady(function() {
-					
-//					var selectplace = new $.PopPicker();
-//					selectplace.setData([{
-//						value: 'beijing',
-//						text: '北京'
-//					}, {
-//						value: 'shanghai',
-//						text: '上海'
-//					}, {
-//						value: 'guangzhou',
-//						text: '广州'
-//					}, {
-//						value: 'shenzhen',
-//						text: '深圳'
-//					}, {
-//						value: 'nanjing',
-//						text: '南京'
-//					}, {
-//						value: 'tianjin',
-//						text: '天津'
-//					}, {
-//						value: 'shenyang',
-//						text: '沈阳'
-//					}, {
-//						value: 'anshan',
-//						text: '鞍山'
-//					}, {
-//						value: 'baotou',
-//						text: '包头'
-//					}, {
-//						value: 'wuhan', 
-//						text: '武汉'
-//					}]);
-//					var showUserPickerButton = doc.getElementById('selectplace');
-//					var place = doc.getElementById('place');
-//					showUserPickerButton.addEventListener('tap', function(event) {
-//						selectplace.show(function(items) {
-//							place.innerText = items[0].text;
-//							//返回 false 可以阻止选择框的关闭
-////							return false;
-//						});
-//					}, false);
-//					
-//				//选择出差事由
-//					var selectjob = new $.PopPicker();
-//					selectjob.setData([{
-//						value: 'genjing',
-//						text: '跟井'
-//					}, {
-//						value: 'yonghuzoufang',
-//						text: '用户走访'
-//					}, {
-//						value: 'shangjian',
-//						text: '商检'
-//					}, {
-//						value: 'jishuzhichi',
-//						text: '技术支持'
-//					}, {
-//						value: 'qita',
-//						text: '其他'
-//					}]);
-//					var showUserPickerButton = doc.getElementById('selectjob');
-//					var job = doc.getElementById('job');
-//					showUserPickerButton.addEventListener('tap', function(event) {
-//						selectjob.show(function(items) {
-//							job.innerText = items[0].text;
-//							//返回 false 可以阻止选择框的关闭
-////							return false;
-//						});
-//					}, false);
 					
 					//选择出差开始时间
 					var timebegin = document.getElementById("timebegin");
@@ -221,6 +156,7 @@
 					var jobBox = doc.getElementById("job");
 					var timebeginBox = doc.getElementById('timebegin');
 					var timeend = doc.getElementById('timeend');
+					var remark = doc.getElementById("textarea");
 					var altertaskButton = doc.getElementById("alter_task");
 					var deletetaskButton = doc.getElementById('delete_task');
 					
@@ -235,6 +171,7 @@
 					var bussreason = self._reason
 					var bussbegintime = self._begintime
 					var bussendtime = self._endtime
+					var buss_remark = self._remark
 					//填写的用.value,选择的用.innerText
 //					editorBox.value=editor
 //					editornameBox.value=editorname
@@ -244,6 +181,7 @@
 					jobBox.value=bussreason
 					timebeginBox.innerText=bussbegintime
 					timeend.innerText=bussendtime
+					remark.value = buss_remark
 
 					altertaskButton.addEventListener('tap', function(event) {
 						if(nameBox.value==""){
@@ -267,23 +205,34 @@
 						}else{
 						
 						$.ajax({
-						type: "post",
-						url: basepath+"baosteelpipe/Buss_edit",
-						data: {
-							"buss_id":_id,//后面必须加上逗号
-							"bussmen_name":nameBox.value,
-							"buss_accounts":accountsBox.value,
-							"buss_place":placeBox.value,
-							"buss_reason":jobBox.value,
-							"buss_begintime":timebeginBox.innerText,//可以获取到时间
-							"buss_endtime":timeend.innerText,
-							
+						type: "PUT",
+//						url: basepath+"baosteelpipe/Buss_edit",
+//						data: {
+//							"buss_id":_id,//后面必须加上逗号
+//							"bussmen_name":nameBox.value,
+//							"buss_accounts":accountsBox.value,
+//							"buss_place":placeBox.value,
+//							"buss_reason":jobBox.value,
+//							"buss_begintime":timebeginBox.innerText,//可以获取到时间
+//							"buss_endtime":timeend.innerText,
+//							
+//						},
+						url:basepath +"api/v1.0/business/"+_id,
+						data:{
+							"access_token":localStorage.getItem("token"),
+							"business_staff":nameBox.value,
+							"business_num":accountsBox.value,
+							"business_reason":jobBox.value,
+							"business_place":placeBox.value,
+							"begin_time":timebeginBox.innerText,
+							"end_time":timeend.innerText,
+							"remark":remark.value,
 						},
 						async: true,
-						dataType:"text",
+						dataType:"json",
 						success: function(data) {
 //							plus.nativeUI.toast("服务器传回来的消息为:" +data);
-							if (data=="ok")
+							if (data.response.success=="1")
 							{
 								plus.nativeUI.toast("修改出差任务成功");
 								mui.back();
@@ -300,37 +249,20 @@
 						}
 						});
 			   		deletetaskButton.addEventListener('tap', function(event) {
-						if(nameBox.value==""){
-							plus.nativeUI.toast("请输入所有出差人姓名")
-						}else if(accountsBox.value==""){
-							plus.nativeUI.toast("请输入出差人数")
-						}else if (placeBox.value==""){
-							plus.nativeUI.toast("请填写出差地")
-						}else if (jobBox.value==""){
-							plus.nativeUI.toast("请填写出差任务")
-						}else if(timebeginBox.innerText==""){
-							plus.nativeUI.toast("请选择出差开始时间")
-						}else if(timebeginBox.innerText=="您没有选择日期"){
-							plus.nativeUI.toast("请选择出差开始时间")
-						}else if (timeend.innerText=="您没有选择日期"){
-							plus.nativeUI.toast("请选择出差结束时间")
-						}else if (timeend.innerText==""){
-							plus.nativeUI.toast("请选择出差结束时间")
-						}else if(timebeginBox.innerText>timeend.innerText){
-							plus.nativeUI.toast("请检查出差时间")
-						}else{
 						
 						$.ajax({
-						type: "post",
-						url: basepath+"baosteelpipe/Buss_delete",
-						data: {
-							"buss_id":_id,//后面必须加上逗号
-						},
+						type: "DELETE",
+//						url: basepath+"baosteelpipe/Buss_delete",
+//						data: {
+//							"buss_id":_id,//后面必须加上逗号
+//						},
+						
+						url: basepath +"api/v1.0/business/"+_id+"?access_token="+localStorage.getItem("token"),
 						async: true,
-						dataType:"text",
+						dataType:"json",
 						success: function(data) {
 //							plus.nativeUI.toast("服务器传回来的消息为:" +data);
-							if (data=="ok")
+							if (data.response.success=="1")
 							{
 								plus.nativeUI.toast("删除出差任务成功");
 								mui.back();
@@ -345,7 +277,6 @@
 						}
 					});
 			
-						}
 						});
 			   
 				});

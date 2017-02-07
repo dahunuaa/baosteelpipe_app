@@ -48,7 +48,8 @@
 			"echart.html",
 			"bussinessinfo/myBusinessRecord.html",
 			"inforguide/newinformationguide.html",
-			"selfsetting/selfsetting.html"
+			"selfsetting/selfsetting.html",
+			"bussinessinfo/createNewTask.html"
 		]
 	},
 	"inforgather/informationGathering.html": {
@@ -169,7 +170,8 @@
 			"css/app.css",
 			"fonts/mui.ttf",
 			"css/mui.min.css",
-			"css/comment.css"
+			"css/comment.css",
+			"js/basepath.js"
 		]
 	},
 	"notice/notice_detail.html": {
@@ -201,6 +203,9 @@
 			"fonts/mui.ttf",
 			"css/mui.min.css",
 			"js/basepath.js"
+		],
+		"refer": [
+			"bussinessinfo/buss_edit.html"
 		]
 	},
 	"bussinessinfo/buss_search.html": {
@@ -283,6 +288,34 @@
 	"selfsetting/feedback.html": {
 		"resources": [
 			"js/app.js"
+		]
+	},
+	"bussinessinfo/createNewTask.html": {
+		"resources": [
+			"js/mui.picker.js",
+			"js/mui.poppicker.js",
+			"css/mui.poppicker.css",
+			"css/mui.picker.css",
+			"css/mui.min.css",
+			"js/basepath.js",
+			"js/app.js",
+			"js/mui.min.js",
+			"css/app.css",
+			"fonts/mui.ttf"
+		]
+	},
+	"bussinessinfo/buss_edit.html": {
+		"resources": [
+			"js/mui.picker.js",
+			"js/mui.poppicker.js",
+			"css/mui.poppicker.css",
+			"css/mui.picker.css",
+			"js/basepath.js",
+			"js/app.js",
+			"js/mui.min.js",
+			"css/app.css",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
 		]
 	}
 }

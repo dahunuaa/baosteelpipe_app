@@ -135,6 +135,7 @@
 						dataType:"json",//后台传json的话这儿需要写成json
 						success: function(data) {
 							if (data.response.success=="1"){
+								localStorage.setItem("token",data.response.data.token)
 								mui.openWindow({
 									url:'main.html',
 									id:'main',

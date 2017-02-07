@@ -58,47 +58,52 @@
 				setTimeout(function() {
 					
 					mui.ajax({
-						type: "post",//后面必须加逗号！！！！！！！！
-						url: basepath+"baosteelpipe/myBusinessRecord",
-						data:{
-							"pull_count":count,
-						},
+						type: "get",//后面必须加逗号！！！！！！！！
+//						url: basepath+"baosteelpipe/myBusinessRecord",
+//						data:{
+//							"pull_count":count,
+//						},
+						url: basepath+"api/v1.0/business?access_token="+localStorage.getItem("token")+"&page_size=10&page="+(count+1),
+						data:{},
 						async:true,
 						dataType:"json",
 						success:function(data){
-							mui('#pullrefresh').pullRefresh().endPullupToRefresh((data ==""||null));
+							mui('#pullrefresh').pullRefresh().endPullupToRefresh((data.response.data ==""||null));
 							var list = document.getElementById("list")				
 				            
-							mui.each(data,function(key,value){
+							mui.each(data.response.data,function(key,value){
 							var li = document.createElement("li")
 							li.className="mui-table-view-cell"
-							li.setAttribute("id",value.buss_id);
-							li.setAttribute("editor",value.editor)
-							li.setAttribute("editorname",value.editor_name)
-							li.setAttribute("bussmenname",value.bussmen_name)
-							li.setAttribute("accounts",value.accounts)
-							li.setAttribute("bussplace",value.buss_place)
-							li.setAttribute("bussreason",value.buss_reason)
-							li.setAttribute("bussbegintime",value.buss_begintime)
-							li.setAttribute("bussendtime",value.buss_endtime)
+							li.setAttribute("buss_id",value._id);
+							li.setAttribute("editor_name",value.add_user_name);
+							li.setAttribute("time",value.add_time);
+							li.setAttribute("buss_begintime",value.begin_time);
+							li.setAttribute("buss_endtime",value.end_time);
+							li.setAttribute("bussmen_name",value.business_staff);
+							li.setAttribute("accounts",value.business_num);
+							li.setAttribute("buss_reason",value.business_reason);
+							li.setAttribute("buss_place",value.business_place)
+							li.setAttribute("buss_remark",value.remark)
 //							plus.nativeUI.toast(value.buss_id)
 
-                            li.innerHTML ='<a class="mui-navigate-right"'+"<br>"+"序号："+value.buss_id+"&nbsp;&nbsp;&nbsp&nbsp;&nbsp;"+"编辑人："+value.editor_name+"<br>"+"编辑时间："+value.time+"<br>"+"出差日期："+value.buss_begintime +"—"+value.buss_endtime +"<br>" +value.bussmen_name 
-                                   +"<br>"+value.accounts+"人"+"&nbsp&nbsp"+value.buss_reason+"&nbsp&nbsp"+value.buss_place;
-                                                        
-                            list.appendChild(li)
+                            li.innerHTML = "编辑时间："+value.add_time+"<br>"+"出差日期："
+									+value.begin_time +"—"+value.end_time +"<br>" +value.business_staff
+                                   +"<br>"+value.business_num+"人"+"&nbsp&nbsp"+value.business_reason+"&nbsp&nbsp"+value.business_place;
+
+							list.appendChild(li)
 							})
 							
 							mui("#list").on('tap','li',function(){
-								var id = this.getAttribute("id")
-								var editor = this.getAttribute("editor")
-								var editorname = this.getAttribute("editorname")
-								var bussmenname = this.getAttribute("bussmenname")
+								var id = this.getAttribute("buss_id")
+//								var editor = this.getAttribute("editor")
+								var editorname = this.getAttribute("editor_name")
+								var bussmenname = this.getAttribute("bussmen_name")
 								var accounts = this.getAttribute("accounts")
-								var bussplace = this.getAttribute("bussplace")
-								var bussreason = this.getAttribute("bussreason")
-								var bussbegintime = this.getAttribute("bussbegintime")
-								var bussendtime = this.getAttribute("bussendtime")
+								var bussplace = this.getAttribute("buss_place")
+								var bussreason = this.getAttribute("buss_reason")
+								var bussbegintime = this.getAttribute("buss_begintime")
+								var bussendtime = this.getAttribute("buss_endtime")
+								var remark = this.getAttribute("buss_remark")
 													
 								mui.openWindow({
 							    url:"buss_edit.html",
@@ -107,7 +112,7 @@
 							    
 							    extras:{
 							    	_id:id,
-							    	_editor:editor,
+//							    	_editor:editor,
 							    	_editor_name:editorname,
 							    	_begintime:bussbegintime,
 							    	_endtime:bussendtime,
@@ -115,6 +120,7 @@
 							    	_accounts:accounts,
 							    	_reason:bussreason,
 							    	_place:bussplace,
+							    	_remark:remark,
 							    }
 							    
 //						        styles:{

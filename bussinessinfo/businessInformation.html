@@ -106,37 +106,43 @@
 				count = count +1
 				setTimeout(function() {
 					
+					
 					mui.ajax({
-					type: "post",//后面必须加逗号！！！！！！！！
-					url: basepath+"baosteelpipe/BusinessInformation",
+					type: "get",//后面必须加逗号！！！！！！！！
+//					url: basepath+"baosteelpipe/BusinessInformation",
+//					data:{
+//						"pull_count":count,
+//					},
+					url: basepath+"api/v1.0/business?access_token="+localStorage.getItem("token")+"&page_size=10&page="+(count+1),
 					data:{
-						"pull_count":count,
+						
 					},
 					async:true,
 					dataType:"json",
 					success:function(data){
-						mui('#pullrefresh').pullRefresh().endPullupToRefresh((data ==""||null));	
-						mui.each(data,function(key,value){
+//						alert(JSON.stringify(data))
+						mui('#pullrefresh').pullRefresh().endPullupToRefresh((data.response.data ==""||null));	
+						mui.each(data.response.data,function(key,value){
+//						alert(JSON.stringify(value))
 						var li = document.createElement("li")
 						li.className = "mui-table-view-cell"
-						li.setAttribute("buss_id",value.buss_id);
-						li.setAttribute("editor_name",value.editor_name);
-						li.setAttribute("editor_name",value.editor_name);
-						li.setAttribute("time",value.time);
-						li.setAttribute("buss_begintime",value.buss_begintime);
-						li.setAttribute("buss_endtime",value.buss_endtime);
-						li.setAttribute("bussmen_name",value.bussmen_name);
-						li.setAttribute("accounts",value.accounts);
-						li.setAttribute("buss_reason",value.buss_reason);
-						li.setAttribute("buss_place",value.buss_place)
+						li.setAttribute("buss_id",value._id);
+						li.setAttribute("editor_name",value.add_user_name);
+						li.setAttribute("time",value.add_time);
+						li.setAttribute("buss_begintime",value.begin_time);
+						li.setAttribute("buss_endtime",value.end_time);
+						li.setAttribute("bussmen_name",value.business_staff);
+						li.setAttribute("accounts",value.business_num);
+						li.setAttribute("buss_reason",value.business_reason);
+						li.setAttribute("buss_place",value.business_place)
+						li.setAttribute("buss_remark",value.remark)
 						
-						li.innerHTML = "序号："+value.buss_id+"&nbsp;&nbsp;&nbsp&nbsp;&nbsp;"+"编辑人："+value.editor_name+"<br>"+"编辑时间："+value.time+"<br>"+"出差日期："
-									+value.buss_begintime +"—"+value.buss_endtime +"<br>" +value.bussmen_name
-                                   +"<br>"+value.accounts+"人"+"&nbsp&nbsp"+value.buss_reason+"&nbsp&nbsp"+value.buss_place;
+						li.innerHTML = "编辑人："+value.add_user_name+"<br>"+"编辑时间："+value.add_time+"<br>"+"出差日期："
+									+value.begin_time +"—"+value.end_time +"<br>" +value.business_staff
+                                   +"<br>"+value.business_num+"人"+"&nbsp&nbsp"+value.business_reason+"&nbsp&nbsp"+value.business_place;
                         li.setAttribute("buss_text",li.textContent)
 						var icon = document.createElement("icon")
-						var date1 = new Date(value.buss_endtime);
-						
+						var date1 = new Date(value.end_time);
 						var date2 =new Date();
 						
 						if(date1<date2){
@@ -158,6 +164,7 @@
 						var accounts = this.getAttribute("accounts")
 						var buss_reason = this.getAttribute("buss_reason")
 						var buss_place = this.getAttribute("buss_place")
+						
 						mui.openWindow({
 					    url:"buss_detail.html",
 					    id:"buss_detail",

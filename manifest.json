@@ -946,7 +946,8 @@
 					"fonts/mui.ttf",
 					"css/mui.min.css",
 					"css/mui.poppicker.css",
-					"css/mui.picker.css"
+					"css/mui.picker.css",
+					"js/basepath.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -979,7 +980,8 @@
 					"fonts/mui.ttf",
 					"css/mui.min.css",
 					"css/mui.poppicker.css",
-					"css/mui.picker.css"
+					"css/mui.picker.css",
+					"js/basepath.js"
 				],
 				"refer": [
 					"bussinessinfo/myBusinessRecord.html"
@@ -1321,7 +1323,8 @@
 					"css/app.css",
 					"fonts/mui.ttf",
 					"css/mui.min.css",
-					"css/comment.css"
+					"css/comment.css",
+					"js/basepath.js"
 				],
 				"refer": [],
 				"priority": 0
