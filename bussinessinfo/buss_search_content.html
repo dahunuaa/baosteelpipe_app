@@ -75,7 +75,7 @@
 //							"buss_endtime":buss_endtime,
 //							"pull_count":count,
 //						},
-						url: basepath+"api/v1.0/business?access_token="+localStorage.getItem("token")+"&page_size=10&page="+(count+1)
+						url: basepath+"api/v1.0/business?access_token="+localStorage.getItem("token")+"&page_size=15&page="+(count+1)
 							+"&business_staff="+bussmen_name+"&business_num="+buss_accounts+"&business_place="+buss_place+
 							"&business_reason="+buss_reason+"&begin_time@>"+buss_begintime+"&end_time@<"+buss_endtime,
 						
@@ -95,9 +95,6 @@
 			                search_list.appendChild(li)
 							})							
 						},
-//						error: function() {
-//							plus.nativeUI.toast("请求服务器失败!");
-//						}
 					});
 			
 				}, 100);
@@ -105,7 +102,6 @@
 			}
 			
 					})
-			
 
 			
 			if (mui.os.plus) {

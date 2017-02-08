@@ -215,8 +215,9 @@
 				}
 				
 		//		生成canvas	
-				var f1 = null;
+				var f1 ='';
 				var path_pic= "";
+				var upload_img=""
 				function appendFile(path){
 					var img = new Image();
 					path_pic = path;
@@ -237,6 +238,8 @@
 		 				ctx.drawImage(that,0,0,w,h);
 		 				var base64 = canvas.toDataURL('image/png',1||0.8);//1最清晰，越低越模糊。有一点不清楚这里明明设置的是png。弹出 base64 开头的一段 data：image/png;却是png。哎开心就好，开心就好
 						f1 = base64;//把base64数据丢过去，上传要用
+						pic1=f1.split(',')[1]
+						upload_img=[pic1,'','']
 						
 						//下面两行，就是显示当前所选取的图片，之前的方法里面已经实现
 		//				var pic = document.getElementById("x");
@@ -253,6 +256,7 @@
 					var newguide_submitButton = doc.getElementById("newguide_submit");
 					var newguide_cancelButton = doc.getElementById('newguide_cancel');
 					newguide_submitButton.addEventListener('tap', function(event) {
+//						alert(upload_img)
 						if(titleBox.value==""){
 							plus.nativeUI.toast("请输入标题")
 						}else if(categoryBox.innerText==""){
@@ -263,19 +267,29 @@
 						var wt=plus.nativeUI.showWaiting("正在提交...");
 						$.ajax({
 						type: "post",
-						url: basepath+"baosteelpipe/NewInformationGuide",
-						data: {
-//							"guide_editor":editorBox.value,
-//							"guide_editor_name":editornameBox.value,
+						url: basepath+"api/v1.0/inforguide",
+						data:{
+							"access_token":localStorage.getItem("token"),
 							"guide_title":titleBox.value,
-							"guide_category":categoryBox.innerText,
+							"guide_type":categoryBox.innerText,
 							"guide_text":textareaBox.value,
-							"pic":f1, 
+							"images_list":JSON.stringify(upload_img),
+							
 						},
+//						url: basepath+"baosteelpipe/NewInformationGuide",
+//						data: {
+////							"guide_editor":editorBox.value,
+////							"guide_editor_name":editornameBox.value,
+//							"guide_title":titleBox.value,
+//							"guide_category":categoryBox.innerText,
+//							"guide_text":textareaBox.value,
+//							"pic":f1, 
+//						},
 						async: true,
-						dataType:"text",//如果返回的是str，那么这个地方必须用text，用json报错
+						dataType:"json",//如果返回的是str，那么这个地方必须用text，用json报错
 						success: function(data) {
-							if (data=="ok")
+//							alert(JSON.stringify(data))
+							if (data.response.success=="1")
 							{	
 								wt.close();
 								plus.nativeUI.toast("新建信息指南成功");

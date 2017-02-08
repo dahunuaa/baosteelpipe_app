@@ -49,7 +49,8 @@
 			"bussinessinfo/myBusinessRecord.html",
 			"inforguide/newinformationguide.html",
 			"selfsetting/selfsetting.html",
-			"bussinessinfo/createNewTask.html"
+			"bussinessinfo/createNewTask.html",
+			"inforguide/myInformationGuiding.html"
 		]
 	},
 	"inforgather/informationGathering.html": {
@@ -260,7 +261,8 @@
 			"fonts/mui.ttf",
 			"css/mui.min.css",
 			"css/mui.poppicker.css",
-			"css/mui.picker.css"
+			"css/mui.picker.css",
+			"js/basepath.js"
 		]
 	},
 	"inforguide/newinformationguide.html": {
@@ -279,7 +281,12 @@
 			"css/mui.picker.css",
 			"js/feedback-page.js",
 			"img/iconfont-tianjia.png",
-			"js/mui.view.js"
+			"js/mui.view.js",
+			"js/basepath.js",
+			"inforguide/newinformationguide.html"
+		],
+		"refer": [
+			"inforguide/newinformationguide.html"
 		]
 	},
 	"selfsetting/selfsetting.html": {
@@ -333,6 +340,16 @@
 			"js/basepath.js",
 			"js/mui.min.js",
 			"fonts/mui.ttf"
+		]
+	},
+	"inforguide/myInformationGuiding.html": {
+		"resources": [
+			"js/basepath.js",
+			"js/app.js",
+			"js/mui.min.js",
+			"css/app.css",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
 		]
 	}
 }
