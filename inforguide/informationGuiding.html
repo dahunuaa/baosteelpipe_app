@@ -77,31 +77,32 @@
 				setTimeout(function() {
 					
 					mui.ajax({
-					type: "post",//后面必须加逗号！！！！！！！！
-					url: basepath+"baosteelpipe/InformationGuiding",
-					data:{
-						"pull_count":count,
-					},
+					type: "get",//后面必须加逗号！！！！！！！！
+//					url: basepath+"baosteelpipe/InformationGuiding",
+//					data:{
+//						"pull_count":count,
+//					},
+						url: basepath+"api/v1.0/inforguide?access_token="+localStorage.getItem("token")+"&page_size=10&page="+(count+1),
 					async:true,
 					dataType:"json",
 					success:function(data){
 						
-						mui('#pullrefresh').pullRefresh().endPullupToRefresh((data==""||null))						            
-						mui.each(data,function(key,value){
+						mui('#pullrefresh').pullRefresh().endPullupToRefresh((data.response.data==""||null))						            
+						mui.each(data.response.data,function(key,value){
 						var li = document.createElement("li")
 						li.className="mui-table-view-cell"
-						li.setAttribute("guide_id",value.guide_id);
-						li.setAttribute("guide_editor",value.guide_editor)
-						li.setAttribute("guide_name",value.guide_name)
+						li.setAttribute("guide_id",value._id);
+						li.setAttribute("guide_editor",value.add_user_jobno)
+						li.setAttribute("guide_name",value.add_user_name)
 						li.setAttribute("guide_title",value.guide_title)
-						li.setAttribute("guide_category",value.guide_category)
+						li.setAttribute("guide_category",value.guide_type)
 						li.setAttribute("guide_text",value.guide_text)
-						li.setAttribute("time",value.time)
-						li.setAttribute("pic_path",value.pic_path)
+						li.setAttribute("time",value.add_time)
+						li.setAttribute("pic_path",value.images[0])
 
-                        li.innerHTML ='<a class="mui-navigate-right"'+"<br>"+"序号："+value.guide_id+"&nbsp&nbsp&nbsp"+"编辑者："+value.guide_name +"<br>"+"编辑时间："+value.time +"<br>"+"分类："+value.guide_category 
+                        li.innerHTML ='<a class="mui-navigate-right"'+"<br>"+"序号："+"编辑者："+value.add_user_name +"<br>"+"编辑时间："+value.add_time +"<br>"+"分类："+value.guide_type 
                                           +"<br>"+"标题："+value.guide_title+'</a>';
-                        li.setAttribute("inforguide_text",li.textContent+"正文:"+value.guide_text+"图片地址:"+"http://121.42.186.54:8081/uploadimage/"+value.pic_path)               
+                        li.setAttribute("inforguide_text",li.textContent+"正文:"+value.guide_text+"图片地址:"+value.images[0])               
                         list.appendChild(li)
 						})
 						
@@ -258,73 +259,6 @@
 						id:"inforguide_search"
 					})
 				})
-//				refresh.addEventListener("tap",function(event){
-//					var list = document.getElementById("list")	
-//					list.innerHTML="";//解决刷新重复出出现的问题
-//					mui.ajax({
-//					type: "post",//后面必须加逗号！！！！！！！！
-//					url: "http://192.168.191.1:8080/baosteel/InformationGuiding",
-//					data:{
-//						
-//					},
-//					async:true,
-//					dataType:"json",
-//					success:function(data){
-//						
-//												            
-//						mui.each(data,function(key,value){
-//						var li = document.createElement("li")
-//						li.className="mui-table-view-cell"
-//						li.setAttribute("guide_id",value.guide_id);
-//						li.setAttribute("guide_editor",value.guide_editor)
-//						li.setAttribute("guide_name",value.guide_name)
-//						li.setAttribute("guide_title",value.guide_title)
-//						li.setAttribute("guide_category",value.guide_category)
-//						li.setAttribute("guide_text",value.guide_text)
-//						li.setAttribute("time",value.time)
-//                      li.innerHTML ='<a class="mui-navigate-right"'+"<br>"+"序号："+value.guide_id+"&nbsp&nbsp&nbsp"+"编辑者："+value.guide_name +"<br>"+"编辑时间："+value.time +"<br>"+"分类："+value.guide_category 
-//                                        +"<br>"+"标题："+value.guide_title+'</a>';
-//                                     
-//                      list.appendChild(li)
-//						})
-//						
-//						mui("#list").on('tap','li',function(){
-//								var guide_id = this.getAttribute("guide_id")
-//								var guide_editor = this.getAttribute("guide_editor")
-//								var guide_name = this.getAttribute("guide_name")
-//								var guide_title = this.getAttribute("guide_title")
-//								var guide_category = this.getAttribute("guide_category")
-//								var guide_text = this.getAttribute("guide_text")
-//								var time = this.getAttribute("time")
-//
-////								plus.nativeUI.toast(guide_id)
-//													
-//								mui.openWindow({
-//							    url:"detail_inforguide.html",
-//							    id:"detail_inforguide",
-//							    
-//							    extras:{
-//							    	guide_id:guide_id,
-//							    	guide_editor:guide_editor,
-//							    	guide_name:guide_name,
-//							    	guide_title:guide_title,
-//							    	guide_category:guide_category,
-//							    	guide_text:guide_text,
-//							    	guide_time:time,
-//							    }
-//							    
-//							     
-////						        styles:{
-////						        top:'0px',//mui标题栏默认高度为45px；
-////						        bottom:'0px'//默认为0px，可不定义；
-////						      }
-//							})
-//		                 });	
-//		   		        },
-//				  
-//				        });					
-//				     })
-					
 				});
 		}(mui,document))
 		</script>
