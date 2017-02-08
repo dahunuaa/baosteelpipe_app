@@ -350,6 +350,29 @@
 			"css/app.css",
 			"fonts/mui.ttf",
 			"css/mui.min.css"
+		],
+		"refer": [
+			"inforguide/informationguiding_edit.html"
+		]
+	},
+	"inforguide/informationguiding_edit.html": {
+		"resources": [
+			"js/mui.picker.js",
+			"js/mui.zoom.js",
+			"js/mui.poppicker.js",
+			"css/defined_uploadimg.css",
+			"js/mui.previewimage.js",
+			"css/mui.poppicker.css",
+			"css/mui.picker.css",
+			"js/feedback-page.js",
+			"img/iconfont-tianjia.png",
+			"js/mui.view.js",
+			"css/mui.min.css",
+			"js/basepath.js",
+			"js/app.js",
+			"js/mui.min.js",
+			"css/app.css",
+			"fonts/mui.ttf"
 		]
 	}
 }

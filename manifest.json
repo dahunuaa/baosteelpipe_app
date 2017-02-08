@@ -1057,7 +1057,8 @@
 					"js/mui.previewimage.js",
 					"js/feedback-page.js",
 					"img/iconfont-tianjia.png",
-					"js/mui.view.js"
+					"js/mui.view.js",
+					"js/basepath.js"
 				],
 				"refer": [],
 				"priority": 0

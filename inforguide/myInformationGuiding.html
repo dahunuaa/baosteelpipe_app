@@ -61,28 +61,25 @@
 				setTimeout(function() {
 					
 					mui.ajax({
-						type: "post",//后面必须加逗号！！！！！！！！
-						url: basepath+"baosteelpipe/MyInformationGuiding",
-						data:{
-							"pull_count":count,
-						},
+						type: "get",//后面必须加逗号！！！！！！！！
+						url: basepath+"api/v1.0/inforguide?access_token="+localStorage.getItem("token")+"&page_size=10&page="+(count+1),
 						async:true,
 						dataType:"json",
 						success:function(data){
-							mui('#pullrefresh').pullRefresh().endPullupToRefresh((data ==""||null));				            
-							mui.each(data,function(key,value){
+							mui('#pullrefresh').pullRefresh().endPullupToRefresh((data.response.data ==""||null));				            
+							mui.each(data.response.data,function(key,value){
 							var li = document.createElement("li")
 							li.className="mui-table-view-cell"
-							li.setAttribute("guide_id",value.guide_id);
-							li.setAttribute("guide_editor",value.guide_editor)
-							li.setAttribute("guide_name",value.guide_name)
+							li.setAttribute("guide_id",value._id);
+							li.setAttribute("guide_editor",value.add_user_jobno)
+							li.setAttribute("guide_name",value.add_user_name)
 							li.setAttribute("guide_title",value.guide_title)
-							li.setAttribute("guide_category",value.guide_category)
+							li.setAttribute("guide_category",value.guide_type)
 							li.setAttribute("guide_text",value.guide_text)
-							li.setAttribute("pic_path",value.pic_path)
+							li.setAttribute("pic_path",value.images[0])
 							
 //							plus.nativeUI.toast(value.guide_id)
-                            li.innerHTML ='<a class="mui-navigate-right"'+"<br>"+"序号："+value.guide_id+"&nbsp&nbsp&nbsp"+"编辑者："+value.guide_name +"<br>"+"编辑时间："+value.time +"<br>"+"分类："+value.guide_category 
+                            li.innerHTML ='<a class="mui-navigate-right"'+"<br>"+"序号："+"编辑者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time +"<br>"+"分类："+value.guide_type 
                                           +"<br>"+"标题："+value.guide_title+'</a>';
                                                         
                             list.appendChild(li)

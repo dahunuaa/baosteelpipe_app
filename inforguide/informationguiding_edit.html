@@ -135,8 +135,11 @@
 					titleBox.value=guide_title
 					categoryBox.innerText=guide_category
 					textareaBox.value=guide_text
-					if(pic_path!=0&&pic_path!="null"){
-						document.getElementById("pic_1").src=basepath+"uploadimage/"+pic_path	
+					
+					if(pic_path=="undefined"||pic_path==""||pic_path==NaN){
+						document.getElementById("pic_1").src="../img/iconfont-tianjia.png"
+					}else{
+						document.getElementById("pic_1").src=pic_path
 					}
 					
 					
@@ -254,6 +257,7 @@
 		//		生成canvas	
 				var f1 = null;
 				var path_pic= "";
+				var upload_img="";
 				function appendFile(path){
 					var img = new Image();
 					path_pic = path;
@@ -274,6 +278,8 @@
 		 				ctx.drawImage(that,0,0,w,h);
 		 				var base64 = canvas.toDataURL('image/png',1||0.8);//1最清晰，越低越模糊。有一点不清楚这里明明设置的是png。弹出 base64 开头的一段 data：image/png;却是png。哎开心就好，开心就好
 						f1 = base64;//把base64数据丢过去，上传要用
+						pic1=f1.split(',')[1]
+						upload_img=[pic1,'','']
 						
 						//下面两行，就是显示当前所选取的图片，之前的方法里面已经实现
 		//				var pic = document.getElementById("x");
@@ -290,27 +296,35 @@
 						}else if(textareaBox.value==""){
 							plus.nativeUI.toast("请填写正文")
 						}else{
-						if(pic_path!=0&f1==null){
-							f1="1"//编辑的时候如果有图片而且不修改图片放置图片被空值覆盖的处理方法
+						if(f1==null){
+							upload_img=[pic_path,'','']//编辑的时候如果有图片而且不修改图片放置图片被空值覆盖的处理方法
 						}
 						var wt=plus.nativeUI.showWaiting("正在提交...");
 						$.ajax({
-						type: "post",
-						url: basepath+"baosteelpipe/Inforguide_edit",
-						data: {
-							"guide_id":guide_id,
+						type: "PUT",
+//						url: basepath+"baosteelpipe/Inforguide_edit",
+//						data: {
+//							"guide_id":guide_id,
+//							"guide_title":titleBox.value,
+//							"guide_category":categoryBox.innerText,
+//							"guide_text":textareaBox.value,
+//							"pic":f1, 
+//							"pic_path":pic_path,
+//							
+//						},
+						url:basepath+"api/v1.0/inforguide/"+guide_id,
+						data:{
+							"access_token":localStorage.getItem("token"),
 							"guide_title":titleBox.value,
-							"guide_category":categoryBox.innerText,
+							"guide_type":categoryBox.innerText,
 							"guide_text":textareaBox.value,
-							"pic":f1, 
-							"pic_path":pic_path,
-							
+							"images_list":JSON.stringify(upload_img),
 						},
 						async: true,
-						dataType:"text",
+						dataType:"json",
 						success: function(data) {
 //							plus.nativeUI.toast("服务器传回来的消息为:" +data);
-							if (data=="ok")
+							if (data.response.success=="1")
 							{	
 								wt.close();
 								plus.nativeUI.toast("修改信息指南成功");
@@ -332,16 +346,18 @@
 			   	inforguide_deleteButton.addEventListener('tap', function(event) {
 							
 						$.ajax({
-						type: "post",
-						url: basepath+"baosteelpipe/Inforguide_delete",
-						data: {
-							"guide_id":guide_id,//后面必须加上逗号
-						},
+						type: "DELETE",
+//						url: basepath+"baosteelpipe/Inforguide_delete",
+//						data: {
+//							"guide_id":guide_id,//后面必须加上逗号
+//						},
+						
+						url: basepath+"api/v1.0/inforguide/"+guide_id+"?access_token="+localStorage.getItem("token"),
 						async: true,
-						dataType:"text",
+						dataType:"json",
 						success: function(data) {
 //							plus.nativeUI.toast("服务器传回来的消息为:" +data);
-							if (data=="ok")
+							if (data.response.success=="1")
 							{
 								plus.nativeUI.toast("删除信息指南成功");
 								mui.back();

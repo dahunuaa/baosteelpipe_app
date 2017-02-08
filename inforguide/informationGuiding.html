@@ -97,10 +97,10 @@
 						li.setAttribute("guide_title",value.guide_title)
 						li.setAttribute("guide_category",value.guide_type)
 						li.setAttribute("guide_text",value.guide_text)
-						li.setAttribute("time",value.add_time)
+						li.setAttribute("time",value.last_updated_time)
 						li.setAttribute("pic_path",value.images[0])
 
-                        li.innerHTML ='<a class="mui-navigate-right"'+"<br>"+"序号："+"编辑者："+value.add_user_name +"<br>"+"编辑时间："+value.add_time +"<br>"+"分类："+value.guide_type 
+                        li.innerHTML ='<a class="mui-navigate-right"'+"<br>"+"序号："+"编辑者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time +"<br>"+"分类："+value.guide_type 
                                           +"<br>"+"标题："+value.guide_title+'</a>';
                         li.setAttribute("inforguide_text",li.textContent+"正文:"+value.guide_text+"图片地址:"+value.images[0])               
                         list.appendChild(li)

@@ -128,7 +128,7 @@
 						li.className = "mui-table-view-cell"
 						li.setAttribute("buss_id",value._id);
 						li.setAttribute("editor_name",value.add_user_name);
-						li.setAttribute("time",value.add_time);
+						li.setAttribute("time",value.last_updated_time);
 						li.setAttribute("buss_begintime",value.begin_time);
 						li.setAttribute("buss_endtime",value.end_time);
 						li.setAttribute("bussmen_name",value.business_staff);
@@ -137,7 +137,7 @@
 						li.setAttribute("buss_place",value.business_place)
 						li.setAttribute("buss_remark",value.remark)
 						
-						li.innerHTML = "编辑人："+value.add_user_name+"<br>"+"编辑时间："+value.add_time+"<br>"+"出差日期："
+						li.innerHTML = "编辑人："+value.add_user_name+"<br>"+"编辑时间："+value.last_updated_time+"<br>"+"出差日期："
 									+value.begin_time +"—"+value.end_time +"<br>" +value.business_staff
                                    +"<br>"+value.business_num+"人"+"&nbsp&nbsp"+value.business_reason+"&nbsp&nbsp"+value.business_place;
                         li.setAttribute("buss_text",li.textContent)
