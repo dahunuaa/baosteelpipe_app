@@ -46,6 +46,8 @@
         <br />
         <span >出差地:</span>&nbsp;&nbsp;&nbsp;<span id="buss_place"></span>   
         <br />
+        <span>备注：</span>&nbsp;&nbsp;&nbsp;<span id="buss_remark"></span>
+        <br />
         <br />
 		<span id="comment_area">评论区：</span>
 			
@@ -88,6 +90,7 @@
 					var accounts = document.getElementById("accounts");
 					var buss_reason = document.getElementById("buss_reason");
 					var buss_place = document.getElementById("buss_place");
+					var remark= document.getElementById("buss_remark")
 					
 					//获取前一个页面传过来的值
 					var self = plus.webview.currentWebview();//必须用plusReady 来获取前面传过来的值
@@ -100,6 +103,7 @@
 					var _accounts = self.accounts
 					var _buss_reason = self.buss_reason
 					var _buss_place = self.buss_place
+					var _buss_remark = self.remark
 				
 					buss_id.innerHTML=_buss_id
 					editor_name.innerHTML=_editor_name
@@ -109,6 +113,13 @@
 					accounts.innerHTML=_accounts
 					buss_reason.innerHTML = _buss_reason
 					buss_place.innerHTML = _buss_place
+					
+					if(_buss_remark==""||_buss_remark==NaN||_buss_remark==undefined){
+						remark.innerHTML=="无"
+					}else{
+						remark.innerHTML = _buss_remark	
+					}
+					
 					
 					//显示当前出差任务下的评论
 					var comment_list = document.getElementById("comments_list")
