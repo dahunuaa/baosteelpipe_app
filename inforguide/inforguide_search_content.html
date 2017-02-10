@@ -87,6 +87,7 @@
 							li.setAttribute("guide_text",value.guide_text)
 							li.setAttribute("time",value.last_updated_time)
 							li.setAttribute("pic_path",value.images[0])
+							li.setAttribute("pic_path2",value.images[1])
 		                    li.innerHTML ="编辑者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time +"<br>"+"分类："+value.guide_type 
 		                                          +"<br>"+"标题："+value.guide_title+'</a>';  
 		                                          
@@ -102,6 +103,7 @@
 							var guide_text = this.getAttribute("guide_text")
 							var time = this.getAttribute("time")
 							var pic_path = this.getAttribute("pic_path")
+							var pic_path2 = this.getAttribute("pic_path2")
 												
 							mui.openWindow({
 						    url:"detail_inforguide.html",
@@ -116,6 +118,7 @@
 						    	guide_text:guide_text,
 						    	guide_time:time,
 						    	pic_path:pic_path,
+						    	pic_path2:pic_path2,
 						    		}
 						     
 						            })
