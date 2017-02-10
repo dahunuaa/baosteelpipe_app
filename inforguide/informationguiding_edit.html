@@ -58,8 +58,9 @@
 				</div>
 				<label>&nbsp;&nbsp;&nbsp;上传图片（可选）</label>
 				<br />
-				<img class="picture" id="pic_1" src="../img/iconfont-tianjia.png" style="margin-left: 30px; height: 100px;">
-				<img class="picture" id="pic_2" src="../img/iconfont-tianjia.png" style="margin-left: 30px; height: 100px;">
+				<img class="picture" id="pic_1" src="../img/iconfont-tianjia.png" style="margin-left: 20px; height: 100px;">
+				<img class="picture" id="pic_2" src="../img/iconfont-tianjia.png" style="margin-left: 20px; height: 100px;">
+				<img class="picture" id="pic_3" src="../img/iconfont-tianjia.png" style="margin-left: 20px; height: 100px;">
 				<br/>    
         
 				<div class="mui-button-row">
@@ -132,6 +133,7 @@
 					var guide_text = self.guide_text
 					var pic_path =self.pic_path
 					var pic_path2 =self.pic_path2
+					var pic_path3 =self.pic_path3
 					//填写的用.value,选择的用.innerText
 //					editorBox.value=guide_editor
 //					editornameBox.value=guide_name
@@ -150,13 +152,12 @@
 					}else{
 						document.getElementById("pic_2").src=pic_path2
 					}
+					if(pic_path3=="undefined"||pic_path3==""||pic_path3==NaN){
+						document.getElementById("pic_3").src="../img/iconfont-tianjia.png"
+					}else{
+						document.getElementById("pic_3").src=pic_path3
+					}
 					
-					
-					
-					
-				
-				//图片处理
-						
 				//上传图片
 				var upload_img=""
 				var carmer_1 = doc.getElementById('pic_1')
@@ -168,24 +169,44 @@
 				carmer_2.addEventListener('tap', function(event) {
 					selectpic("pic_2");
 				});
+				
+				var carmer_3 = doc.getElementById('pic_3')
+				carmer_3.addEventListener('tap', function(event) {
+					selectpic("pic_3");
+				});
 					
 					inforguide_alterButton.addEventListener('tap', function(event) {
 						var f1 = localStorage.getItem("pic_1");
 						var f2 = localStorage.getItem("pic_2");
-						if (f1==""||f1=="undefined"||f1==null) {
+						var f3 = localStorage.getItem("pic_3");
+						
+						//当图片是撤销图片时候是“”，当图片是没有修改的时候是null
+						if (f1=="") {
 							var f1_base64 = ""
+						}else if(f1==null){
+							var f1_base64 =pic_path
 						} else{
 							var f1_base64 = f1.split(',')[1]
 						}
-						if (f2==""||f2=='undefined'||f2==null) {
+						if (f2=="") {
 							var f2_base64 = ""
+						}else if(f2==null){
+							var f2_base64 =pic_path2
 						} else{
 							var f2_base64 = f2.split(',')[1]
 						}
+						if (f3=="") {
+							var f3_base64 = ""
+						}else if(f3==null){
+							var f3_base64 =pic_path3
+						} else{
+							var f3_base64 = f3.split(',')[1]
+						}
 						
-						upload_img = [f1_base64,f2_base64,'']
+						upload_img = [f1_base64,f2_base64,f3_base64]
 						localStorage.removeItem("pic_1");
 						localStorage.removeItem("pic_2");
+						localStorage.removeItem("pic_3");
 						
 						if(titleBox.value==""){
 							plus.nativeUI.toast("请输入标题")
@@ -194,9 +215,9 @@
 						}else if(textareaBox.value==""){
 							plus.nativeUI.toast("请填写正文")
 						}else{
-						if(f1==null){
-							upload_img=[pic_path,'','']//编辑的时候如果有图片而且不修改图片放置图片被空值覆盖的处理方法
-						}
+//						if(f1==null){
+//							upload_img=[pic_path,'','']//编辑的时候如果有图片而且不修改图片放置图片被空值覆盖的处理方法
+//						}
 						var wt=plus.nativeUI.showWaiting("正在提交...");
 						$.ajax({
 						type: "PUT",

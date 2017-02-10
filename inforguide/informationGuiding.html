@@ -100,10 +100,11 @@
 						li.setAttribute("time",value.last_updated_time)
 						li.setAttribute("pic_path",value.images[0])
 						li.setAttribute("pic_path2",value.images[1])
+						li.setAttribute("pic_path3",value.images[2])
 
                         li.innerHTML ="编辑者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time +"<br>"+"分类："+value.guide_type 
                                           +"<br>"+"标题："+value.guide_title+'</a>';
-                        li.setAttribute("inforguide_text",li.textContent+"正文:"+value.guide_text+"图片地址:"+value.images[0])               
+                        li.setAttribute("inforguide_text",li.textContent+"正文:"+value.guide_text+"图片地址:"+value.images[0]+value.images[1]+value.images[2])               
                         list.appendChild(li)
 						})
 						
@@ -117,7 +118,7 @@
 								var time = this.getAttribute("time")
 								var pic_path = this.getAttribute("pic_path")
 								var pic_path2 = this.getAttribute("pic_path2")
-//								plus.nativeUI.toast(guide_id)
+								var pic_path3 = this.getAttribute("pic_path3")
 													
 								mui.openWindow({
 							    url:"detail_inforguide.html",
@@ -133,6 +134,7 @@
 							    	guide_time:time,
 							    	pic_path:pic_path,
 							    	pic_path2:pic_path2,
+							    	pic_path3:pic_path3,
 							    }
 							     
 							})
@@ -191,70 +193,7 @@
 						id:"inforguide_search",
 					})
 				})
-//				var list = document.getElementById("list")	
-//					list.innerHTML="";//解决刷新重复出出现的问题
-//					mui.ajax({
-//					type: "post",//后面必须加逗号！！！！！！！！
-//					url: "http://192.168.191.1:8080/baosteel/InformationGuiding",
-//					data:{
-//						
-//					},
-//					async:true,
-//					dataType:"json",
-//					success:function(data){
-//						
-//												            
-//						mui.each(data,function(key,value){
-//						var li = document.createElement("li")
-//						li.className="mui-table-view-cell"
-//						li.setAttribute("guide_id",value.guide_id);
-//						li.setAttribute("guide_editor",value.guide_editor)
-//						li.setAttribute("guide_name",value.guide_name)
-//						li.setAttribute("guide_title",value.guide_title)
-//						li.setAttribute("guide_category",value.guide_category)
-//						li.setAttribute("guide_text",value.guide_text)
-//						li.setAttribute("time",value.time)
-//
-//                      li.innerHTML ='<a class="mui-navigate-right"'+"<br>"+"序号："+value.guide_id+"&nbsp&nbsp&nbsp"+"编辑者："+value.guide_name +"<br>"+"编辑时间："+value.time +"<br>"+"分类："+value.guide_category 
-//                                        +"<br>"+"标题："+value.guide_title+'</a>';
-//                                     
-//                      list.appendChild(li)
-//						})
-//						
-//						mui("#list").on('tap','li',function(){
-//								var guide_id = this.getAttribute("guide_id")
-//								var guide_editor = this.getAttribute("guide_editor")
-//								var guide_name = this.getAttribute("guide_name")
-//								var guide_title = this.getAttribute("guide_title")
-//								var guide_category = this.getAttribute("guide_category")
-//								var guide_text = this.getAttribute("guide_text")
-//								var time = this.getAttribute("time")
-////								plus.nativeUI.toast(guide_id)
-//													
-//								mui.openWindow({
-//							    url:"detail_inforguide.html",
-//							    id:"detail_inforguide",
-//							    
-//							    extras:{
-//							    	guide_id:guide_id,
-//							    	guide_editor:guide_editor,
-//							    	guide_name:guide_name,
-//							    	guide_title:guide_title,
-//							    	guide_category:guide_category,
-//							    	guide_text:guide_text,
-//							    	guide_time:time,
-//							    }
-//							     
-////						        styles:{
-////						        top:'0px',//mui标题栏默认高度为45px；
-////						        bottom:'0px'//默认为0px，可不定义；
-////						      }
-//							})
-//		                  });											                                         			           		           
-//		   		        },
-//				  
-//				        });					
-//				     
+
 				inforguide_search.addEventListener("tap",function(event){
 					mui.openWindow({
 						

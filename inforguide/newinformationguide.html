@@ -52,8 +52,9 @@
 				
 				<label>&nbsp;&nbsp;&nbsp;上传图片（可选）</label>
 				<br />
-				<img class="picture" id="pic_1" src="../img/iconfont-tianjia.png" style="margin-left: 30px; height: 100px;">
-				<img class="picture" id="pic_2" src="../img/iconfont-tianjia.png" style="margin-left: 30px; height: 100px;">
+				<img class="picture" id="pic_1" src="../img/iconfont-tianjia.png" style="margin-left: 20px; height: 100px;">
+				<img class="picture" id="pic_2" src="../img/iconfont-tianjia.png" style="margin-left: 20px; height: 100px;">
+				<img class="picture" id="pic_3" src="../img/iconfont-tianjia.png" style="margin-left: 20px; height: 100px;">
 				<br/>        
 				<div class="mui-button-row">
 					<button id="newguide_submit" class="mui-btn mui-btn-primary" type="button" onclick="return true;">提交</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -120,6 +121,11 @@
 				carmer_2.addEventListener('tap', function(event) {
 					selectpic("pic_2");
 				});
+				
+				var carmer_3 = doc.getElementById('pic_3')
+				carmer_3.addEventListener('tap', function(event) {
+					selectpic("pic_3");
+				});
 
 				
 				
@@ -134,6 +140,7 @@
 					newguide_submitButton.addEventListener('tap', function(event) {
 						var f1 = localStorage.getItem("pic_1");
 						var f2 = localStorage.getItem("pic_2");
+						var f3 = localStorage.getItem("pic_3");
 						if (f1==""||f1=="undefined"||f1==null) {
 							var f1_base64 = ""
 						} else{
@@ -144,10 +151,16 @@
 						} else{
 							var f2_base64 = f2.split(',')[1]
 						}
+						if (f3==""||f3=='undefined'||f3==null) {
+							var f3_base64 = ""
+						} else{
+							var f3_base64 = f3.split(',')[1]
+						}
 						
-						upload_img = [f1_base64,f2_base64,'']
+						upload_img = [f1_base64,f2_base64,f3_base64]
 						localStorage.removeItem("pic_1");
 						localStorage.removeItem("pic_2");
+						localStorage.removeItem("pic_3");
 						
 						if(titleBox.value==""){
 							plus.nativeUI.toast("请输入标题")

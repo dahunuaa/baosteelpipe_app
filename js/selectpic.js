@@ -112,7 +112,7 @@ function selectpic(pic_id){//pic_id是所要选择图片的id值
 
 	function deleteImg(pic_id){
 		document.getElementById(pic_id).src="../img/iconfont-tianjia.png"
-		f1 = null
+		localStorage.setItem(pic_id,"")
 	}
 
 

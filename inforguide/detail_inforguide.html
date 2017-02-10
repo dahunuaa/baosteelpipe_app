@@ -48,6 +48,9 @@
 		<p style="display: none;" id="picture_down2">
 		<img id="picture_src2" src="" hspace="5" vspace="5"   style="width: -webkit-fill-available;" data-preview-src="" data-preview-group="1"></img>
 		</p>
+		<p style="display: none;" id="picture_down3">
+		<img id="picture_src3" src="" hspace="5" vspace="5"   style="width: -webkit-fill-available;" data-preview-src="" data-preview-group="1"></img>
+		</p>
 		<span id="comment_area">评论区：</span>
 			
 		<div id="comments" class="comment">
@@ -94,6 +97,7 @@
 					var guide_time = document.getElementById("guide_time");
 					var pic_path = document.getElementById("pic_path");
 					var pic_path2 = document.getElementById("pic_path2");
+					var pic_path3 = document.getElementById("pic_path3");
 					
 					//获取前一个页面传过来的值
 					var self = plus.webview.currentWebview();//必须用plusReady 来获取前面传过来的值
@@ -106,9 +110,7 @@
 					var time = self.guide_time
 					var pic_path = self.pic_path
 					var pic_path2 = self.pic_path2
-//					plus.nativeUI.toast(gatherinfor_time)
-
-					
+					var pic_path3 = self.pic_path3
 				
 					title.innerHTML=guideinfor_title
 					guide_id.innerHTML=guideinfor_id
@@ -119,6 +121,7 @@
 					
 					var pic_download = document.getElementById("picture_down")
 					var pic_download2 = document.getElementById("picture_down2")
+					var pic_download3 = document.getElementById("picture_down3")
 					if(pic_path!="null"&&pic_path!=""&&pic_path!="undefined"){
 					pic_download.style.display = "block"
 					document.getElementById("picture_src").src=pic_path
@@ -127,6 +130,11 @@
 					if(pic_path2!="null"&&pic_path2!=""&&pic_path2!="undefined"){
 					pic_download2.style.display = "block"
 					document.getElementById("picture_src2").src=pic_path2
+					
+					}
+					if(pic_path3!="null"&&pic_path3!=""&&pic_path3!="undefined"){
+					pic_download3.style.display = "block"
+					document.getElementById("picture_src3").src=pic_path3
 					
 					}
 					
