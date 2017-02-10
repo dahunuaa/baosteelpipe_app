@@ -69,7 +69,7 @@
 		<script src="../js/mui.picker.js"></script>
 		<script src="../js/mui.poppicker.js"></script>
 		<script src="../js/mui.view.js "></script>
-		<script src="../js/feedback-page.js"></script>
+		<!--<script src="../js/feedback-page.js"></script>-->
 		<script src="../js/mui.zoom.js"></script>
 		<script src="../js/mui.previewimage.js"></script>
 		<script type="text/javascript" src="../js/basepath.js" ></script>
@@ -132,8 +132,23 @@
 					
 					
 					newguide_submitButton.addEventListener('tap', function(event) {
+						var f1 = localStorage.getItem("pic_1");
+						var f2 = localStorage.getItem("pic_2");
+						if (f1==""||f1=="undefined"||f1==null) {
+							var f1_base64 = ""
+						} else{
+							var f1_base64 = f1.split(',')[1]
+						}
+						if (f2==""||f2=='undefined'||f2==null) {
+							var f2_base64 = ""
+						} else{
+							var f2_base64 = f2.split(',')[1]
+						}
 						
-						upload_img = [localStorage.getItem("pic_1").split(',')[1],localStorage.getItem("pic_2").split(',')[1],'']
+						upload_img = [f1_base64,f2_base64,'']
+						localStorage.removeItem("pic_1");
+						localStorage.removeItem("pic_2");
+						
 						if(titleBox.value==""){
 							plus.nativeUI.toast("请输入标题")
 						}else if(categoryBox.innerText==""){

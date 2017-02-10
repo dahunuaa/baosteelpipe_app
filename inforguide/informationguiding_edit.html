@@ -59,6 +59,7 @@
 				<label>&nbsp;&nbsp;&nbsp;上传图片（可选）</label>
 				<br />
 				<img class="picture" id="pic_1" src="../img/iconfont-tianjia.png" style="margin-left: 30px; height: 100px;">
+				<img class="picture" id="pic_2" src="../img/iconfont-tianjia.png" style="margin-left: 30px; height: 100px;">
 				<br/>    
         
 				<div class="mui-button-row">
@@ -73,10 +74,11 @@
 		<script src="../js/mui.picker.js"></script>
 		<script src="../js/mui.poppicker.js"></script>
 		<script src="../js/mui.view.js "></script>
-		<script src="../js/feedback-page.js"></script>
+		<!--<script src="../js/feedback-page.js"></script>-->
 		<script src="../js/mui.zoom.js"></script>
 		<script src="../js/mui.previewimage.js"></script>
 		<script type="text/javascript" src="../js/basepath.js" ></script>
+		<script type="text/javascript" src="../js/selectpic.js" ></script>
 		<script>
 		(function($, doc) {
 				$.init();
@@ -129,6 +131,7 @@
 					var guide_category = self.guide_category
 					var guide_text = self.guide_text
 					var pic_path =self.pic_path
+					var pic_path2 =self.pic_path2
 					//填写的用.value,选择的用.innerText
 //					editorBox.value=guide_editor
 //					editornameBox.value=guide_name
@@ -142,153 +145,48 @@
 						document.getElementById("pic_1").src=pic_path
 					}
 					
+					if(pic_path2=="undefined"||pic_path2==""||pic_path2==NaN){
+						document.getElementById("pic_2").src="../img/iconfont-tianjia.png"
+					}else{
+						document.getElementById("pic_2").src=pic_path2
+					}
+					
+					
+					
 					
 				
 				//图片处理
 						
 				//上传图片
+				var upload_img=""
 				var carmer_1 = doc.getElementById('pic_1')
 				carmer_1.addEventListener('tap', function(event) {
-					if(mui.os.plus){
-						var a = [{
-							title: "拍照"
-						}, {
-							title: "从手机相册选择"
-						},{
-							title:"撤销图片"
-						}];
-						plus.nativeUI.actionSheet({
-							cancel: "取消",
-							buttons: a
-						}, function(b) {
-							switch (b.index) {
-								case 0:
-									break;
-								case 1:
-									getImage();
-									break;
-								case 2:
-									galleryImg();
-									break;
-								case 3:
-									deleteImg();
-									break;
-								default:
-									break
-							}
-						})	
-					}
-					
+					selectpic("pic_1");
 				});
-		
-				//拍照
-				function getImage() {
-					var c = plus.camera.getCamera();
-					c.captureImage(function(e) {
-						plus.io.resolveLocalFileSystemURL(e, function(entry) {
-							var s = entry.toLocalURL() + "?version=" + new Date().getTime();
-							appendFile(s);
-							document.getElementById("pic_1").src = s;
-							//变更大图预览的src
-							//目前仅有一张图片，暂时如此处理，后续需要通过标准组件实现
-		//					document.querySelector("#__mui-imageview__group .mui-slider-item img").src = s + "?version=" + new Date().getTime();;;
-						}, function(e) {
-							console.log("读取拍照文件错误：" + e.message);
-						});
-					}, function(s) {
-						console.log("error" + s);
-					}, {
-						filename: "_doc/head.jpg"
-					})
-				}
-				//从相册选择图片
-				function galleryImg() {
-					plus.gallery.pick(function(a) {
-						plus.io.resolveLocalFileSystemURL(a, function(entry) {
-							plus.io.resolveLocalFileSystemURL("_doc/", function(root) {
-								root.getFile("head.jpg", {}, function(file) {
-									//文件已存在
-									file.remove(function() {
-										entry.copyTo(root, 'head.jpg', function(e) {
-												var e = e.fullPath + "?version=" + new Date().getTime();
-												appendFile(e);
-												document.getElementById("pic_1").src = e;
-												//变更大图预览的src
-												//目前仅有一张图片，暂时如此处理，后续需要通过标准组件实现
-		//										document.querySelector("#__mui-imageview__group .mui-slider-item img").src = e + "?version=" + new Date().getTime();;
-											},
-											function(e) {
-												console.log('copy image fail:' + e.message);
-											});
-									}, function() {
-										console.log("delete image fail:" + e.message);
-									});
-								}, function() {
-									//文件不存在
-									entry.copyTo(root, 'head.jpg', function(e) {
-											var path = e.fullPath + "?version=" + new Date().getTime();
-											appendFile(e)
-											document.getElementById("head-img1").src = path;
-											//变更大图预览的src
-											//目前仅有一张图片，暂时如此处理，后续需要通过标准组件实现
-											document.querySelector("#__mui-imageview__group .mui-slider-item img").src = path;
-										},
-										function(e) {
-											console.log('copy image fail:' + e.message);
-										});
-								});
-							}, function(e) {
-								console.log("get _www folder fail");
-							})
-						}, function(e) {
-							console.log("读取拍照文件错误：" + e.message);
-						});
-					}, function(a) {}, {
-						filter: "image"
-					})
-				};
 				
-				function deleteImg(path){
-					document.getElementById("pic_1").src="../img/iconfont-tianjia.png"
-					f1=null
-					pic_path='0'
-				}
-				
-		//		生成canvas	
-				var f1 = null;
-				var path_pic= "";
-				var upload_img="";
-				function appendFile(path){
-					var img = new Image();
-					path_pic = path;
-					img.src=path;
-					img.onload = function(){
-						var that = this;
-		//				生成比例
-						var w = that.width,
-							h = that.height,
-							scale = w/h;
-							w = 480 ||w;//480 你想压缩到多大 改这里
-							h = w/scale;
-		//				生成canvas
-		 				var canvas = document.createElement('canvas');
-		 				var ctx = canvas.getContext('2d');
-		 				canvas.width = w;
-		        		canvas.height = h;
-		 				ctx.drawImage(that,0,0,w,h);
-		 				var base64 = canvas.toDataURL('image/png',1||0.8);//1最清晰，越低越模糊。有一点不清楚这里明明设置的是png。弹出 base64 开头的一段 data：image/png;却是png。哎开心就好，开心就好
-						f1 = base64;//把base64数据丢过去，上传要用
-						pic1=f1.split(',')[1]
-						upload_img=[pic1,'','']
-						
-						//下面两行，就是显示当前所选取的图片，之前的方法里面已经实现
-		//				var pic = document.getElementById("x");
-		//				pic.src = base64; //这里丢到img 的 src 里面就能看到效果了
-							
-					}
-				}
+				var carmer_2 = doc.getElementById('pic_2')
+				carmer_2.addEventListener('tap', function(event) {
+					selectpic("pic_2");
+				});
 					
 					inforguide_alterButton.addEventListener('tap', function(event) {
+						var f1 = localStorage.getItem("pic_1");
+						var f2 = localStorage.getItem("pic_2");
+						if (f1==""||f1=="undefined"||f1==null) {
+							var f1_base64 = ""
+						} else{
+							var f1_base64 = f1.split(',')[1]
+						}
+						if (f2==""||f2=='undefined'||f2==null) {
+							var f2_base64 = ""
+						} else{
+							var f2_base64 = f2.split(',')[1]
+						}
+						
+						upload_img = [f1_base64,f2_base64,'']
+						localStorage.removeItem("pic_1");
+						localStorage.removeItem("pic_2");
+						
 						if(titleBox.value==""){
 							plus.nativeUI.toast("请输入标题")
 						}else if(categoryBox.innerText==""){

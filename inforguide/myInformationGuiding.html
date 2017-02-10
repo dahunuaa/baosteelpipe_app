@@ -77,6 +77,7 @@
 							li.setAttribute("guide_category",value.guide_type)
 							li.setAttribute("guide_text",value.guide_text)
 							li.setAttribute("pic_path",value.images[0])
+							li.setAttribute("pic_path2",value.images[1])
 							
 //							plus.nativeUI.toast(value.guide_id)
                             li.innerHTML ='<a class="mui-navigate-right"'+"<br>"+"序号："+"编辑者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time +"<br>"+"分类："+value.guide_type 
@@ -93,6 +94,7 @@
 								var guide_category = this.getAttribute("guide_category")
 								var guide_text = this.getAttribute("guide_text")
 								var pic_path = this.getAttribute("pic_path")
+								var pic_path2 = this.getAttribute("pic_path2")
 								
 													
 								mui.openWindow({
@@ -107,6 +109,7 @@
 							    	guide_category:guide_category,
 							    	guide_text:guide_text,
 							    	pic_path:pic_path,
+							    	pic_path2:pic_path2,
 							    }
 							     
 							})

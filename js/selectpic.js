@@ -5,6 +5,8 @@ function selectpic(pic_id){//pic_id是所要选择图片的id值
 			title: "拍照"
 		}, {
 			title: "从手机相册选择"
+		},{
+			title:"撤销图片"
 		}];
 		plus.nativeUI.actionSheet({
 			cancel: "取消",

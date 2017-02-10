@@ -381,7 +381,8 @@
 			"js/app.js",
 			"js/mui.min.js",
 			"css/app.css",
-			"fonts/mui.ttf"
+			"fonts/mui.ttf",
+			"js/selectpic.js"
 		]
 	},
 	"inforguide/inforguide_search_content.html": {

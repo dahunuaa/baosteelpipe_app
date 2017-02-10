@@ -1062,7 +1062,8 @@
 					"js/feedback-page.js",
 					"img/iconfont-tianjia.png",
 					"js/mui.view.js",
-					"js/basepath.js"
+					"js/basepath.js",
+					"js/selectpic.js"
 				],
 				"refer": [],
 				"priority": 0
