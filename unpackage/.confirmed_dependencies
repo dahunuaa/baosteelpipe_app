@@ -50,7 +50,10 @@
 			"inforguide/newinformationguide.html",
 			"selfsetting/selfsetting.html",
 			"bussinessinfo/createNewTask.html",
-			"inforguide/myInformationGuiding.html"
+			"inforguide/myInformationGuiding.html",
+			"inforgather/myinformationgathering.html",
+			"inforgather/newinformationgathering.html",
+			"notice/notice.html"
 		]
 	},
 	"inforgather/informationGathering.html": {
@@ -190,7 +193,8 @@
 			"js/mui.min.js",
 			"css/app.css",
 			"fonts/mui.ttf",
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"js/basepath.js"
 		],
 		"refer": [
 			"notice/notice_detail.html"
@@ -263,6 +267,9 @@
 			"css/mui.poppicker.css",
 			"css/mui.picker.css",
 			"js/basepath.js"
+		],
+		"refer": [
+			"inforguide/inforguide_search_content.html"
 		]
 	},
 	"inforguide/newinformationguide.html": {
@@ -283,7 +290,9 @@
 			"img/iconfont-tianjia.png",
 			"js/mui.view.js",
 			"js/basepath.js",
-			"inforguide/newinformationguide.html"
+			"inforguide/newinformationguide.html",
+			"js/img_select.js",
+			"js/selectpic.js"
 		],
 		"refer": [
 			"inforguide/newinformationguide.html"
@@ -373,6 +382,51 @@
 			"js/mui.min.js",
 			"css/app.css",
 			"fonts/mui.ttf"
+		]
+	},
+	"inforguide/inforguide_search_content.html": {
+		"resources": [
+			"css/mui.min.css",
+			"js/mui.js",
+			"js/basepath.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf"
+		],
+		"refer": [
+			"inforguide/detail_inforguide.html"
+		]
+	},
+	"inforgather/myinformationgathering.html": {
+		"resources": [
+			"js/basepath.js",
+			"js/app.js",
+			"js/mui.min.js",
+			"css/app.css",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		]
+	},
+	"inforgather/newinformationgathering.html": {
+		"resources": [
+			"js/basepath.js",
+			"js/mui.picker.js",
+			"js/app.js",
+			"js/mui.min.js",
+			"css/app.css",
+			"js/mui.poppicker.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/mui.poppicker.css",
+			"css/mui.picker.css"
+		]
+	},
+	"notice/notice.html": {
+		"resources": [
+			"js/basepath.js",
+			"js/mui.min.js",
+			"css/app.css",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
 		]
 	}
 }

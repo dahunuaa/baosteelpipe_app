@@ -99,8 +99,9 @@
 						li.setAttribute("guide_text",value.guide_text)
 						li.setAttribute("time",value.last_updated_time)
 						li.setAttribute("pic_path",value.images[0])
+						li.setAttribute("pic_path2",value.images[1])
 
-                        li.innerHTML ='<a class="mui-navigate-right"'+"<br>"+"序号："+"编辑者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time +"<br>"+"分类："+value.guide_type 
+                        li.innerHTML ="编辑者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time +"<br>"+"分类："+value.guide_type 
                                           +"<br>"+"标题："+value.guide_title+'</a>';
                         li.setAttribute("inforguide_text",li.textContent+"正文:"+value.guide_text+"图片地址:"+value.images[0])               
                         list.appendChild(li)
@@ -115,6 +116,7 @@
 								var guide_text = this.getAttribute("guide_text")
 								var time = this.getAttribute("time")
 								var pic_path = this.getAttribute("pic_path")
+								var pic_path2 = this.getAttribute("pic_path2")
 //								plus.nativeUI.toast(guide_id)
 													
 								mui.openWindow({
@@ -130,6 +132,7 @@
 							    	guide_text:guide_text,
 							    	guide_time:time,
 							    	pic_path:pic_path,
+							    	pic_path2:pic_path2,
 							    }
 							     
 							})

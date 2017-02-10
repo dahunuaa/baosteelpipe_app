@@ -43,6 +43,7 @@
 				pullRefresh: {
 					container: '#pullrefresh',
 					up: {
+						
 						contentrefresh: '正在加载...',
 						callback: pullupRefresh
 							}
@@ -61,31 +62,34 @@
 				count = count +1
 				setTimeout(function() {
 						$.ajax({
-						type: "post",
-						url: basepath+"baosteelpipe/Inforguide_search",
-						data: {
-							"inforguide_title":title,
-							"inforguide_category":category,
-							"inforguide_content":content,
-							"pull_count":count,
-						},
+						type: "get",
+//						url: basepath+"baosteelpipe/Inforguide_search",
+//						data: {
+//							"inforguide_title":title,
+//							"inforguide_category":category,
+//							"inforguide_content":content,
+//							"pull_count":count,
+//						},
+						url:basepath+"api/v1.0/inforguide?access_token="+localStorage.getItem("token")+"&page_size=15&page="+(count+1)
+							+"&guide_title="+title+"&guide_type="+category+"&guide_type="+category+"&guide_text^="+content,
 						async: true,
 						dataType:"json",
 						success: function(data) {
-							mui('#pullrefresh').pullRefresh().endPullupToRefresh((data ==""||null));
-							mui.each(data,function(key,value){
+							mui('#pullrefresh').pullRefresh().endPullupToRefresh((data.response.data ==""||null));
+							mui.each(data.response.data,function(key,value){
 							var li = document.createElement("li")
 							li.className="mui-table-view-cell"
-							li.setAttribute("guide_id",value.guide_id);
-							li.setAttribute("guide_editor",value.guide_editor)
-							li.setAttribute("guide_name",value.guide_name)
+							li.setAttribute("guide_id",value._id);
+							li.setAttribute("guide_editor",value.add_user_id)
+							li.setAttribute("guide_name",value.add_user_name)
 							li.setAttribute("guide_title",value.guide_title)
-							li.setAttribute("guide_category",value.guide_category)
+							li.setAttribute("guide_category",value.guide_type)
 							li.setAttribute("guide_text",value.guide_text)
-							li.setAttribute("time",value.time)
-							li.setAttribute("pic_path",value.pic_path)
-		                    li.innerHTML ='<a class="mui-navigate-right"'+"<br>"+"序号："+value.guide_id+"&nbsp&nbsp&nbsp"+"编辑者："+value.guide_name +"<br>"+"编辑时间："+value.time +"<br>"+"分类："+value.guide_category 
+							li.setAttribute("time",value.last_updated_time)
+							li.setAttribute("pic_path",value.images[0])
+		                    li.innerHTML ="编辑者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time +"<br>"+"分类："+value.guide_type 
 		                                          +"<br>"+"标题："+value.guide_title+'</a>';  
+		                                          
 		                    list.appendChild(li)
 							})
 							

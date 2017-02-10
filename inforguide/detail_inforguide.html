@@ -45,6 +45,9 @@
         <p style="display: none;" id="picture_down">
 		<img id="picture_src" src="" hspace="5" vspace="5"   style="width: -webkit-fill-available;" data-preview-src="" data-preview-group="1"></img>
 		</p>
+		<p style="display: none;" id="picture_down2">
+		<img id="picture_src2" src="" hspace="5" vspace="5"   style="width: -webkit-fill-available;" data-preview-src="" data-preview-group="1"></img>
+		</p>
 		<span id="comment_area">评论区：</span>
 			
 		<div id="comments" class="comment">
@@ -90,6 +93,7 @@
 					var guide_text = document.getElementById("guide_text");
 					var guide_time = document.getElementById("guide_time");
 					var pic_path = document.getElementById("pic_path");
+					var pic_path2 = document.getElementById("pic_path2");
 					
 					//获取前一个页面传过来的值
 					var self = plus.webview.currentWebview();//必须用plusReady 来获取前面传过来的值
@@ -101,6 +105,7 @@
 					var guideinfor_text = self.guide_text
 					var time = self.guide_time
 					var pic_path = self.pic_path
+					var pic_path2 = self.pic_path2
 //					plus.nativeUI.toast(gatherinfor_time)
 
 					
@@ -113,10 +118,13 @@
 					guide_text.innerHTML=guideinfor_text
 					
 					var pic_download = document.getElementById("picture_down")
+					var pic_download2 = document.getElementById("picture_down2")
 					if(pic_path!="null"){
 					pic_download.style.display = "block"
-//					document.getElementById("picture_src").src=basepath+"uploadimage/"+pic_path
+					pic_download2.style.display = "block"
 					document.getElementById("picture_src").src=pic_path
+					document.getElementById("picture_src2").src=pic_path2
+					
 					}
 						
 					//显示当前出差任务下的评论
