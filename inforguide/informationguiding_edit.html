@@ -221,16 +221,6 @@
 						var wt=plus.nativeUI.showWaiting("正在提交...");
 						$.ajax({
 						type: "PUT",
-//						url: basepath+"baosteelpipe/Inforguide_edit",
-//						data: {
-//							"guide_id":guide_id,
-//							"guide_title":titleBox.value,
-//							"guide_category":categoryBox.innerText,
-//							"guide_text":textareaBox.value,
-//							"pic":f1, 
-//							"pic_path":pic_path,
-//							
-//						},
 						url:basepath+"api/v1.0/inforguide/"+guide_id,
 						data:{
 							"access_token":localStorage.getItem("token"),
@@ -266,16 +256,10 @@
 							
 						$.ajax({
 						type: "DELETE",
-//						url: basepath+"baosteelpipe/Inforguide_delete",
-//						data: {
-//							"guide_id":guide_id,//后面必须加上逗号
-//						},
-						
 						url: basepath+"api/v1.0/inforguide/"+guide_id+"?access_token="+localStorage.getItem("token"),
 						async: true,
 						dataType:"json",
 						success: function(data) {
-//							plus.nativeUI.toast("服务器传回来的消息为:" +data);
 							if (data.response.success=="1")
 							{
 								plus.nativeUI.toast("删除信息指南成功");
@@ -294,10 +278,6 @@
 						
 						});
 			   
-//			   newguide_cancelButton.addEventListener('tap',function(event){
-//			   	mui.back();
-//			   })
-			
 				});
 			})(mui, document);
 		</script>

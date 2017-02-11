@@ -71,16 +71,16 @@
 						}else{
 							$.ajax({
 								type:"post",
-								url:basepath+"baosteelpipe/New_notice",
-								
+								url:basepath+"api/v1.0/notice",
 								data:{
-									"notice":notice.value,
+									"access_token":localStorage.getItem("token"),
 									"notice_title":notice_title.value,
+									"notice_text":notice.value,
 								},
 								async:true,
-								datatype:"text",
+								datatype:"json",
 								success:function(data){
-									if (data=="ok"){
+									if (data.response.success=="1"){
 										plus.nativeUI.toast("新建通知公告成功")
 										mui.back();
 									}else{

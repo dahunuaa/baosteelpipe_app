@@ -263,48 +263,7 @@
 				})
 
 				
-//			}(mui,document))
-			
-//			var processtext = document.getElementById("processtext")
-//			var dtask=null;
-//			var fileName="1_1474437773362_28.pdf";
-//			function createDownloadTask(){
-//				if ( dtask ) {
-//					outLine( "下载任务已创建！" );
-//					return;
-//				}
-//			    var url = "http://121.42.186.54:8081/uploadfiles/1_1474437773362_28.pdf";
-//			    var options = {method:"GET",filename:"_doc/"+fileName};
-//				dtask = plus.downloader.createDownload( url, options );
-//			    dtask.addEventListener( "statechanged", function(task,status){
-//			    	if(!dtask){return;}
-//			    	switch(task.state) {
-//			    		case 1: // 开始
-//			    			plus.nativeUI.toast("开始下载...");			    			
-//			    		break;
-//			    		case 2: // 已连接到服务器
-//			    			plus.nativeUI.toast("开始下载...");
-//			    		break;
-//			    		case 3:	// 已接收到数据
-//							processtext.innerHTML=task.downloadedSize+"/"+task.totalSize;
-//			    			
-//			    		break;
-//			    		case 4:	// 下载完成			    			
-//			    			processtext.innerHTML=parseInt(task.totalSize/1024)+"KB"
-//			    			plus.nativeUI.toast("下载完成!");
-//			    		break;
-//			    	}
-//			    } );
-//
-//			    dtask.start();
-//			    				    
-//			}
-//			function openTask(){
-//				plus.runtime.openFile("_doc/"+fileName, {},function(e){
-//			    			plus.nativeUI.toast("打开文件")
-//			    })
-//			}
-			
+
 		</script>
 		
 	</body>

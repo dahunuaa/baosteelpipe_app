@@ -90,7 +90,8 @@
 			"js/mui.min.js",
 			"fonts/mui.ttf",
 			"css/mui.min.css",
-			"js/basepath.js"
+			"js/basepath.js",
+			"js/copy.js"
 		],
 		"refer": [
 			"bussinessinfo/buss_detail.html",
@@ -184,7 +185,8 @@
 			"js/mui.min.js",
 			"css/app.css",
 			"fonts/mui.ttf",
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"js/basepath.js"
 		]
 	},
 	"notice/noticelist.html": {
@@ -306,12 +308,16 @@
 			"css/mui.min.css"
 		],
 		"refer": [
-			"selfsetting/feedback.html"
+			"selfsetting/feedback.html",
+			"selfsetting/changepsw.html"
 		]
 	},
 	"selfsetting/feedback.html": {
 		"resources": [
-			"js/app.js"
+			"js/app.js",
+			"js/basepath.js",
+			"css/app.css",
+			"css/mui.min.css"
 		]
 	},
 	"bussinessinfo/createNewTask.html": {
@@ -424,6 +430,54 @@
 	"notice/notice.html": {
 		"resources": [
 			"js/basepath.js",
+			"js/mui.min.js",
+			"css/app.css",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		],
+		"refer": [
+			"notice/new_notice.html",
+			"notice/noticelist.html",
+			"notice/mynotice.html"
+		]
+	},
+	"selfsetting/changepsw.html": {
+		"resources": [
+			"js/basepath.js",
+			"js/app.js",
+			"js/mui.min.js",
+			"css/app.css",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		]
+	},
+	"notice/new_notice.html": {
+		"resources": [
+			"js/app.js",
+			"css/app.css",
+			"css/mui.min.css",
+			"js/basepath.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf"
+		]
+	},
+	"notice/mynotice.html": {
+		"resources": [
+			"js/basepath.js",
+			"js/app.js",
+			"js/mui.min.js",
+			"css/app.css",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		],
+		"refer": [
+			"notice/notice_edit.html"
+		]
+	},
+	"notice/notice_edit.html": {
+		"resources": [
+			"js/basepath.js",
+			"js/app.js",
 			"js/mui.min.js",
 			"css/app.css",
 			"fonts/mui.ttf",

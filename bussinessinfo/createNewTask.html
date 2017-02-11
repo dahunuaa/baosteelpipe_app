@@ -163,18 +163,6 @@
 						
 						$.ajax({
 						type: "post",
-//						url: basepath+"baosteelpipe/createNewTask",
-//						data: {
-////							"buss_editor":editorBox.value,
-////							"buss_editor_name":editornameBox.value,
-//							"bussmen_name":nameBox.value,
-//							"buss_accounts":accountsBox.value,
-//							"buss_place":placeBox.value,
-//							"buss_reason":jobBox.value,
-//							"buss_begintime":timebegin.innerText,//可以获取到时间
-//							"buss_endtime":timeend.innerText,
-//							
-//						},
 						url: basepath+"api/v1.0/business",
 						data: {
 							"access_token":localStorage.getItem("token"),

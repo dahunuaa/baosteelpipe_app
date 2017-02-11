@@ -126,16 +126,12 @@
 							"mobile": accountBox.value,
 							"password": passwordBox.value
 						},
-//						url: basepath+"baosteelpipe/userslogin",
-//						data: {
-//							"name": accountBox.value,
-//							"pswd": passwordBox.value
-//						},
 						async: true,
 						dataType:"json",//后台传json的话这儿需要写成json
 						success: function(data) {
 							if (data.response.success=="1"){
 								localStorage.setItem("token",data.response.data.token)
+								localStorage.setItem("user_id",data.response.data._id)
 								mui.openWindow({
 									url:'main.html',
 									id:'main',

@@ -90,21 +90,17 @@
 						}else{
 						
 						$.ajax({
-						type: "post",
-						url: basepath+"baosteelpipe/Notice_edit",
-						data: {
-						
-							"notice":noticeBox.value,
+						type: "PUT",
+						url:basepath+"api/v1.0/notice/"+notice_id,
+						data:{
+							"access_token":localStorage.getItem("token"),
 							"notice_title":notice_titleBox.value,
-							"notice_id":notice_id,
-						
-							
+							"notice_text":noticeBox.value,
 						},
 						async: true,
-						dataType:"text",
+						dataType:"json",
 						success: function(data) {
-//							plus.nativeUI.toast("服务器传回来的消息为:" +data);
-							if (data=="ok")
+							if (data.response.success=="1")
 							{
 								plus.nativeUI.toast("修改公告成功");
 								mui.back();
@@ -125,16 +121,16 @@
 			   		deletenotice.addEventListener('tap', function(event) {
 						
 						$.ajax({
-						type: "post",
-						url: basepath+"baosteelpipe/Notice_delete",
-						data: {
-							"notice_id":notice_id,
+						type: "DELETE",
+						url:basepath+"api/v1.0/notice/"+notice_id,
+						data:{
+							"access_token":localStorage.getItem("token"),
 						},
 						async: true,
-						dataType:"text",
+						dataType:"json",
 						success: function(data) {
 //							plus.nativeUI.toast("服务器传回来的消息为:" +data);
-							if (data=="ok")
+							if (data.response.success=="1")
 							{
 								plus.nativeUI.toast("删除公告成功");
 								mui.back();

@@ -57,25 +57,22 @@
 				setTimeout(function() {
 					
 					mui.ajax({
-						type: "post",//后面必须加逗号！！！！！！！！
-						url: basepath+"baosteelpipe/Noticelist",
-						data:{
-							"pull_count":count,
-						},
+						type: "get",//后面必须加逗号！！！！！！！！
+						url:basepath+"api/v1.0/notice?access_token="+localStorage.getItem("token")+"&page_size=10&page="+(count+1),
 						async:true,
 						dataType:"json",
 						success:function(data){
-							mui('#pullrefresh').pullRefresh().endPullupToRefresh((data ==""||null));
-							mui.each(data,function(key,value){
+							mui('#pullrefresh').pullRefresh().endPullupToRefresh((data.response.data ==""||null));
+							mui.each(data.response.data,function(key,value){
 							var li = document.createElement("li")
 							li.className="mui-table-view-cell";
-							li.setAttribute("notice_id",value.notice_id);
-							li.setAttribute("name",value.name);
-							li.setAttribute("notice",value.notice);
+							li.setAttribute("notice_id",value._id);
+							li.setAttribute("name",value.add_user_name);
+							li.setAttribute("notice",value.notice_text);
 							li.setAttribute("notice_title",value.notice_title);
-							li.setAttribute("notice_time",value.time);
+							li.setAttribute("notice_time",value.last_updated_time);
 							
-                            li.innerHTML ='<a class="mui-navigate-right"'+"<br>"+ "公告序号："+value.notice_id+ "&nbsp&nbsp&nbsp"+"发布者："+value.name +"<br>"+"编辑时间："+value.time+"<br>"+"标题："+value.notice_title +'</a>';
+                            li.innerHTML ="发布者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time+"<br>"+"标题："+value.notice_title +'</a>';
                                                         
                             list.appendChild(li)
 							})

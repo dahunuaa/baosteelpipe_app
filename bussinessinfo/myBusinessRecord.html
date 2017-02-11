@@ -59,11 +59,7 @@
 					
 					mui.ajax({
 						type: "get",//后面必须加逗号！！！！！！！！
-//						url: basepath+"baosteelpipe/myBusinessRecord",
-//						data:{
-//							"pull_count":count,
-//						},
-						url: basepath+"api/v1.0/business?access_token="+localStorage.getItem("token")+"&page_size=10&page="+(count+1),
+						url: basepath+"api/v1.0/business?access_token="+localStorage.getItem("token")+"&page_size=10&page="+(count+1)+"&add_user_id="+localStorage.getItem("user_id"),
 						data:{},
 						async:true,
 						dataType:"json",
@@ -123,10 +119,6 @@
 							    	_remark:remark,
 							    }
 							    
-//						        styles:{
-//						        top:'0px',//mui标题栏默认高度为45px；
-//						        bottom:'0px'//默认为0px，可不定义；
-//						      }
 							})
 		                  });										                                         			         			           
 			   		},

@@ -206,17 +206,6 @@
 						
 						$.ajax({
 						type: "PUT",
-//						url: basepath+"baosteelpipe/Buss_edit",
-//						data: {
-//							"buss_id":_id,//后面必须加上逗号
-//							"bussmen_name":nameBox.value,
-//							"buss_accounts":accountsBox.value,
-//							"buss_place":placeBox.value,
-//							"buss_reason":jobBox.value,
-//							"buss_begintime":timebeginBox.innerText,//可以获取到时间
-//							"buss_endtime":timeend.innerText,
-//							
-//						},
 						url:basepath +"api/v1.0/business/"+_id,
 						data:{
 							"access_token":localStorage.getItem("token"),
@@ -252,11 +241,6 @@
 						
 						$.ajax({
 						type: "DELETE",
-//						url: basepath+"baosteelpipe/Buss_delete",
-//						data: {
-//							"buss_id":_id,//后面必须加上逗号
-//						},
-						
 						url: basepath +"api/v1.0/business/"+_id+"?access_token="+localStorage.getItem("token"),
 						async: true,
 						dataType:"json",

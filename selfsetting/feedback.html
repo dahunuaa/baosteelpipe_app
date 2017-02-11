@@ -70,15 +70,21 @@
 						}else{
 							$.ajax({
 								type:"post",
-								url:basepath+"baosteelpipe/Feedback",
+//								url:basepath+"baosteelpipe/Feedback",
+//								data:{
+//									"feedback":content.value,
+//									"contact":contact.value,
+//								},
+								url:basepath+"api/v1.0/feedback",
 								data:{
-									"feedback":content.value,
+									"access_token":localStorage.getItem("token"),
+									"feedback_content":content.value,
 									"contact":contact.value,
 								},
 								async:true,
-								datatype:"text",
+								datatype:"json",
 								success:function(data){
-									if (data == "ok"){
+									if (data.response.success == "1"){
 										plus.nativeUI.toast("感谢您的意见反馈！祝您工作顺利！")
 										mui.back();
 									}else{

@@ -65,16 +65,6 @@
 				setTimeout(function() {
 						$.ajax({
 						type: "get",
-//						url: basepath+"baosteelpipe/Buss_search",
-//						data: {
-//							"bussmen_name":bussmen_name,
-//							"buss_accounts":buss_accounts,
-//							"buss_place":buss_place,
-//							"buss_reason":buss_reason,
-//							"buss_begintime":buss_begintime,
-//							"buss_endtime":buss_endtime,
-//							"pull_count":count,
-//						},
 						url: basepath+"api/v1.0/business?access_token="+localStorage.getItem("token")+"&page_size=15&page="+(count+1)
 							+"&business_staff="+bussmen_name+"&business_num="+buss_accounts+"&business_place="+buss_place+
 							"&business_reason="+buss_reason+"&begin_time@>"+buss_begintime+"&end_time@<"+buss_endtime,

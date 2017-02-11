@@ -62,7 +62,7 @@
 					
 					mui.ajax({
 						type: "get",//后面必须加逗号！！！！！！！！
-						url: basepath+"api/v1.0/inforguide?access_token="+localStorage.getItem("token")+"&page_size=10&page="+(count+1),
+						url: basepath+"api/v1.0/inforguide?access_token="+localStorage.getItem("token")+"&page_size=10&page="+(count+1)+"&add_user_id="+localStorage.getItem("user_id"),
 						async:true,
 						dataType:"json",
 						success:function(data){

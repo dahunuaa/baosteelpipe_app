@@ -715,7 +715,8 @@
 					"js/mui.min.js",
 					"css/app.css",
 					"fonts/mui.ttf",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"js/basepath.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -726,7 +727,8 @@
 					"js/mui.min.js",
 					"css/app.css",
 					"fonts/mui.ttf",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"js/basepath.js"
 				],
 				"refer": [
 					"notice/notice_edit.html"
@@ -739,7 +741,8 @@
 					"js/mui.min.js",
 					"css/app.css",
 					"fonts/mui.ttf",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"js/basepath.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -750,7 +753,8 @@
 					"js/mui.min.js",
 					"css/app.css",
 					"fonts/mui.ttf",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"js/basepath.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -772,7 +776,8 @@
 					"js/mui.min.js",
 					"css/app.css",
 					"fonts/mui.ttf",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"js/basepath.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -798,7 +803,8 @@
 					"css/app.css",
 					"fonts/mui.ttf",
 					"css/mui.min.css",
-					"js/app.js"
+					"js/app.js",
+					"js/basepath.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -834,7 +840,8 @@
 					"css/mui.min.css",
 					"css/iconfont.css",
 					"fonts/iconfont.ttf",
-					"js/basepath.js"
+					"js/basepath.js",
+					"js/copy.js"
 				],
 				"refer": [
 					"bussinessinfo/buss_search.html",

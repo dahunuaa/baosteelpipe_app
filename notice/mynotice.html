@@ -56,28 +56,27 @@
 				count = count+1
 				setTimeout(function(){
 					mui.ajax({
-						type:"post",
-						url:basepath"baosteelpipe/Mynotice",
-						data:{
-							"pull_count":count,
-						},
+						type:"get",
+//						url:basepath"baosteelpipe/Mynotice",
+//						data:{
+//							"pull_count":count,
+//						},
+						url:basepath+"api/v1.0/notice?access_token="+localStorage.getItem("token")+"&page_size=10&page="+(count+1)+"&add_user_id="+localStorage.getItem("user_id"),
 						async:true,
 						dataType:"json",
 						success:function(data){
-							mui('#pullrefresh').pullRefresh().endPullupToRefresh((data ==""||null));
-							mui.each(data,function(key,value){
+							mui('#pullrefresh').pullRefresh().endPullupToRefresh((data.response.data ==""||null));
+							mui.each(data.response.data,function(key,value){
 							var li = document.createElement("li")
 							li.className="mui-table-view-cell";
-							li.setAttribute("notice_id",value.notice_id);
-							li.setAttribute("publisher",value.publisher);
-							li.setAttribute("notice",value.notice);
+							li.setAttribute("notice_id",value._id);
+							li.setAttribute("name",value.add_user_name);
+							li.setAttribute("notice",value.notice_text);
 							li.setAttribute("notice_title",value.notice_title);
-							li.setAttribute("notice_time",value.time);
+							li.setAttribute("notice_time",value.last_updated_time);
 							
-							
-//							plus.nativeUI.toast(value.buss_id)
-                            li.innerHTML ='<a class="mui-navigate-right"'+"<br>"+ "公告序号："+value.notice_id+ "&nbsp&nbsp&nbsp"+"发布者："+value.name +"<br>"+"编辑时间："+value.time+"<br>"+"标题："+value.notice_title +'</a>';
-                                                                  
+                            li.innerHTML ="发布者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time+"<br>"+"标题："+value.notice_title +'</a>';
+                                                                 
                             list.appendChild(li)
 							})
 							
