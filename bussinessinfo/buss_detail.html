@@ -125,23 +125,19 @@
 					var comment_list = document.getElementById("comments_list")
 					mui.ajax({
 					type:"get",
-					url:basepath+"baosteelpipe/Comment_list",
-					data:{
-						"type":"buss",
-						"buss_id":_buss_id,
-					},
+					url:basepath+"api/v1.0/comment?access_token="+localStorage.getItem('token')+"&comment_type=bussiness&text_id="+_buss_id,
 					async:true,
 					dataType:"json",
 					success:function(data){
-						if(data==""||data==NaN||data==undefined){
+						if(data.response.data==""||data.response.data==NaN||data.response.data==undefined){
 							document.getElementById("comment_area").style.display="none"
 						}
-						mui.each(data,function(key,value){
+						mui.each(data.response.data,function(key,value){
 						var li = document.createElement("li")
 						li.className="mui-table-view-cell"
-						li.setAttribute("comment_id",value.comment_id);
+						li.setAttribute("comment_id",value._id);
 						li.setAttribute("user_id",value.user_id);
-						li.innerHTML="<span id='com_name'>"+value.name+"</span>"+"&nbsp;&nbsp;&nbsp;"+"<span id='com_time'>"+value.time
+						li.innerHTML="<span id='com_name'>"+value.add_user_name+"</span>"+"&nbsp;&nbsp;&nbsp;"+"<span id='com_time'>"+value.add_time
 										+"</span>"+"<br>"+"<span id='com_text'>"+value.text+"</span>";
 
                         comment_list.appendChild(li)
@@ -155,20 +151,18 @@
 						mui.confirm('删除此评论？', '', btnArray, function(e) {
 							if (e.index == 1) {
 								mui.ajax({
-									type:"post",
-									url:basepath+"baosteelpipe/Del_comment",
+									type:"delete",
+									url:basepath+"api/v1.0/comment/"+comment_id+"?access_token="+localStorage.getItem("token"),
 									data:{
-										"type":"buss",
-										"user_id":user_id,
-										"comment_id":comment_id,
+										"user_id":localStorage.getItem("mobile")
 									},
 									async:true,
-									dataTyoe:"text",
+									dataTyoe:"json",
 									success:function(data){
-										if(data=="ok"){
+										if(data.response.success=="1"){
 											plus.nativeUI.toast("该评论已删除~")
 											plus.webview.getWebviewById("buss_detail").reload()
-										}else if(data =="fail"){
+										}else if(data.response.success=="0"){
 											plus.nativeUI.toast("您无权限删除此评论！")
 										}else{
 											plus.nativeUI.toast("出现异常，请重试~")
@@ -195,16 +189,18 @@
 						}else{
 							mui.ajax({
 							type:"post",
-							url:basepath+"baosteelpipe/Add_comment",
+							url:basepath+"api/v1.0/comment",
 							data:{
-								"type":"buss",
-								"buss_id":_buss_id,
-								"comment_text":comment_text.value,
+								"access_token":localStorage.getItem("token"), 
+								"comment_type":"bussiness",
+								"text_id":_buss_id,
+								"user_id":localStorage.getItem("mobile"),
+								"text":comment_text.value,
 							},
 							async:true,
-							dataType:"text",
+							dataType:"json",
 							success:function(data){
-							 	if (data == "ok"){
+							 	if (data.response.success == "1"){
 										plus.nativeUI.toast("评论成功~")
 										plus.webview.getWebviewById("buss_detail").reload()
 									}else{

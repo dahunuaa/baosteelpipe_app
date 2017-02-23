@@ -937,7 +937,8 @@
 					"fonts/mui.ttf",
 					"js/mui.min.js",
 					"css/mui.min.css",
-					"js/basepath.js"
+					"js/basepath.js",
+					"js/copy.js"
 				],
 				"refer": [
 					"inforguide/detail_inforguide.html",
@@ -1240,7 +1241,8 @@
 					"js/mui.min.js",
 					"fonts/mui.ttf",
 					"css/mui.min.css",
-					"js/basepath.js"
+					"js/basepath.js",
+					"js/copy.js"
 				],
 				"refer": [
 					"inforgather/detail_inforgather.html"

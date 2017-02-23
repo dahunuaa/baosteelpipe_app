@@ -130,8 +130,10 @@
 						dataType:"json",//后台传json的话这儿需要写成json
 						success: function(data) {
 							if (data.response.success=="1"){
-								localStorage.setItem("token",data.response.data.token)
-								localStorage.setItem("user_id",data.response.data._id)
+								localStorage.setItem("token",data.response.data.token);
+								localStorage.setItem("user_id",data.response.data._id);
+								localStorage.setItem("mobile",data.response.data.mobile);
+								localStorage.setItem("name",data.response.data.name);
 								mui.openWindow({
 									url:'main.html',
 									id:'main',
