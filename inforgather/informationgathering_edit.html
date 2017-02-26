@@ -181,6 +181,7 @@
 						}else{
 							var  file = document.getElementById("file_up").files[0];
 							var formData = new FormData($("#uploadForm")[0]);
+							formData.append("access_token",localStorage.getItem("token"))
 							var wt  = plus.nativeUI.showWaiting("正在提交...");
 							if(file !=""&&file !=undefined){
 								origin_name=file.name
