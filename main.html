@@ -19,6 +19,30 @@
 				bottom: 0px;
 				left: 0px;
 			}
+			#notice{
+				position: absolute;
+				top: 0px;
+				right: 5px;
+			}
+			#notice_remind{
+				-webkit-animation: twinkling 1s infinite ease-in-out; 
+				display: block;
+				background: #FF0000;
+				border-radius: 100%;
+				width: 8px;
+				height: 8px;
+				top: 4px;
+				right: 10px;
+				position: absolute;
+			}
+			@-webkit-keyframes twinkling{
+			  0% {
+			      opacity: 0; 
+			  }
+			  100% {
+			      opacity: 1; 
+			  }
+			}
 		</style>
     </head>
 
@@ -28,8 +52,7 @@
 					<a class=" mui-pull-left"><div style="margin:10px 0px 0px 0px; font: '楷体';font-size: 20px; font-style:oblique;color: #000000;">宝钢</div></a>
 					<!--<a class=" mui-btn mui-btn-link mui-pull-right"id="quit">关闭</a>-->
 					<a id="notice" class="mui-tab-item mui-active">
-						<span id="notices" class="mui-icon mui-icon-chat mui-pull-right"></span>
-						<!--<span id="amounts" class="mui-badge">0</span>-->
+						<span id="notices" class="mui-icon mui-icon-chat mui-pull-right"><span id="notice_remind"></span></span>
 					</a>
 					<h1  id="title" class="mui-title">出差信息</h1>
 					<!--在上面的h1中加入id=“title” 下main配置更换标题就可以了-->

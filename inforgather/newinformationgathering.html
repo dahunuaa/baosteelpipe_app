@@ -150,7 +150,7 @@
 							//必须把下面两行代码放在这儿 如果放在刚开始不行
 							var  file = document.getElementById("file_up").files[0];
 							var formData = new FormData($("#uploadForm")[0]);
-							formData.append("access_token",localStorage.getItem("token"))//上传的formData可以添加json数组
+							formData.append("access_token",localStorage.getItem("token"))//上传的formData可以添加json数组，下面的另一个ajax完全可以直接添加进来
 							var wt  = plus.nativeUI.showWaiting("正在提交...");
 							if(file !=""&&file !=undefined){
 								origin_name=file.name
