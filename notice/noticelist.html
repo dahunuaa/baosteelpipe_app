@@ -11,7 +11,22 @@
 			body {
 				background-color:#efeff4;
 			}
-		   
+			.mui-table-view-cell{
+		    	/*border-radius: 30px;*/
+		    	margin-left: 10px;
+		    	/*margin-right: 20px;*/
+		    	/*background-color:#D8D8D8;*/
+		    	margin-bottom: 10px;
+		    }
+		   .mui-icon-unread{
+		   	  height: 10px;
+		   	  width: 10px;
+		      margin-right: 0px;
+		      background-color:red;
+		      border-radius: 15px;
+		      float:left;/*先将前面的符号改成浮动型的再改margin-top就可以和数据对齐了*/
+		      margin-top:40px;
+		    }
 		</style>
 
 	</head>
@@ -55,6 +70,7 @@
 			var list = document.getElementById("list")
 			var count = -1;
 			
+			
 			function pullupRefresh() {
 				count = count +1
 				setTimeout(function() {
@@ -66,18 +82,27 @@
 						dataType:"json",
 						success:function(data){
 							mui('#pullrefresh').pullRefresh().endPullupToRefresh((data.response.data ==""||null));
-							mui.each(data.response.data,function(key,value){
-							var li = document.createElement("li")
-							li.className="mui-table-view-cell";
-							li.setAttribute("notice_id",value._id);
-							li.setAttribute("name",value.add_user_name);
-							li.setAttribute("notice",value.notice_text);
-							li.setAttribute("notice_title",value.notice_title);
-							li.setAttribute("notice_time",value.last_updated_time);
 							
-                            li.innerHTML ="发布者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time+"<br>"+"标题："+value.notice_title +'</a>';
-                                                        
-                            list.appendChild(li)
+							unread_msg = data.response.unread.unread_msg
+							mui.each(data.response.data,function(key,value){
+								var li = document.createElement("li")
+								li.className="mui-table-view-cell";
+								li.setAttribute("notice_id",value._id);
+								li.setAttribute("name",value.add_user_name);
+								li.setAttribute("notice",value.notice_text);
+								li.setAttribute("notice_title",value.notice_title);
+								li.setAttribute("notice_time",value.last_updated_time);
+								
+								var unread_msg_icon = document.createElement("icon")
+								if(unread_msg.indexOf(value._id)>=0){
+									li.innerHTML = "发布者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time+"<br>"+"标题："+value.notice_title +'</a>';
+									unread_msg_icon.className="mui-icon-unread"
+								}else{
+									li.innerHTML ="发布者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time+"<br>"+"标题："+value.notice_title +'</a>';	
+								}
+	                            
+	                            list.appendChild(unread_msg_icon)                           
+	                            list.appendChild(li)
 							})
 							
 							mui("#list").on('tap','li',function(){
@@ -103,6 +128,25 @@
 							    }
 							    
 							})
+								
+								$.ajax({
+									type: "PUT",
+									url:basepath +"api/v1.0/noticeread/minus",
+									data:{
+										"access_token":localStorage.getItem("token"),
+										"user_id":localStorage.getItem("mobile"),
+										"msg_id":notice_id,
+										
+									},
+									async: true,
+									dataType:"json",
+									success: function(data) {
+										
+									},
+									error: function() {
+										plus.nativeUI.toast("请求服务器出现失败!");
+									}
+								});
 		                  });										                                         			         			           
 			   		},
 				  

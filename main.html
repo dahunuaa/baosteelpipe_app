@@ -81,32 +81,29 @@
 		<script src="js/mui.min.js"></script>
 		<script src="js/app.js"></script>
 		<script src="js/mui.enterfocus.js"></script>
+		<script type="text/javascript" src="js/basepath.js" ></script>
 		<script>
 		(function ($, doc) {
 			//mui初始化
-			$.init();
+			$.init(
+				mui.ajax({
+				type:"get",
+				url:basepath+"api/v1.0/noticeread?access_token="+localStorage.getItem("token")+"&user_id="+localStorage.getItem("mobile"),
+				async:false,
+				dataType:"json",
+				success:function(data){
+					if(data.response.data[0].unread_msg == null||data.response.data[0].unread_msg == ""){//读取list的时候需要跟上下标
+						document.getElementById("notice_remind").style.display="none"
+					}
+				},
+				error: function() {
+						plus.nativeUI.toast("请求服务器出现失败!");
+					}
+			})
+			);
+			
+			
 			$.plusReady(function(){
-//			now = new Date()
-//				hour = now.getHours()
-//				if(hour<6){
-//					gesture ="凌晨好!"
-//				}else if(hour<9){
-//					gesture = "早上好!"
-//				}else if(hour<12){
-//					gesture="上午好！"
-//				}else if(hour<14){
-//					gesture="中午好！"
-//				}else if(hour<17){
-//					gesture="下午好！"
-//				}else if(hour<19){
-//					gesture="傍晚好！"
-//				}else{
-//					gesture="晚上好！"
-//				}
-//			var self = plus.webview.currentWebview()
-//			window.user_name = self.user_name
-//			plus.nativeUI.toast(gesture+user_name)
-//			localStorage.setItem("user_name",user_name)
 			var subpages = ['bussinessinfo/businessInformation.html', 'inforgather/informationGathering.html', 'inforguide/informationGuiding.html','selfInformation.html'];
 			var subpage_style = {
 				top: '45px',
@@ -177,11 +174,29 @@
 			//公告通知提示数量
 			var notices = document.getElementById("notices");
 //			notices.innerHTML="1"
+			var unread_msg =[] 
 			notices.addEventListener('tap',function(){
+				mui.ajax({
+				type:"get",
+				url:basepath+"api/v1.0/noticeread?access_token="+localStorage.getItem("token")+"&user_id="+localStorage.getItem("mobile"),
+				async:false,
+				dataType:"json",
+				success:function(data){
+					var unread_msg =data.response.data[0].unread_msg
+//					alert(typeof unread_msg)
+					
+				},
+				error: function() {
+						plus.nativeUI.toast("请求服务器出现失败!");
+					}
+			})
+				
 				mui.openWindow({
 					url:"notice/notice_main.html",
 					id:"noticelist",
+					
 				});
+				
 			});
 			
 			
