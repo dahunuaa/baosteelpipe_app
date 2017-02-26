@@ -287,7 +287,8 @@
 					"examples/informationGathering.html",
 					"notice/noticelist.html",
 					"selfInformation.html",
-					null
+					null,
+					"notice/notice_main.html"
 				],
 				"priority": 0
 			},
@@ -1351,6 +1352,17 @@
 					"css/mui.min.css",
 					"css/comment.css",
 					"js/basepath.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"notice/notice_main.html": {
+				"resources": [
+					"notice/noticelist.html",
+					"js/mui.min.js",
+					"css/app.css",
+					"fonts/mui.ttf",
+					"css/mui.min.css"
 				],
 				"refer": [],
 				"priority": 0
