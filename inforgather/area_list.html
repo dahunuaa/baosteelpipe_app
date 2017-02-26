@@ -58,6 +58,11 @@
 					}
 				}
 			});
+			$.init( { //需要先定义longtap
+				gestureConfig:{
+				   tap: true, //默认为true
+				   longtap: true, //默认为false
+				  }}) 
 			var self = plus.webview.currentWebview();//必须用plusReady 来获取前面传过来的值
 			var area =self.area
 			var list = document.getElementById("list")	
@@ -70,19 +75,13 @@
 				setTimeout(function() {
 					
 					mui.ajax({
-					type: "post",//后面必须加逗号！！！！！！！！
-					url: basepath+"baosteelpipe/InforGather_dongbei",
-					data:{
-						"area":area,
-						"pull_count":count,
-						
-					},
+					type: "get",//后面必须加逗号！！！！！！！！
+					url:basepath+"api/v1.0/inforgather?access_token="+localStorage.getItem("token")+"&gather_area="+area+"&page_size=10&page="+(count+1),
 					async:true,
 					dataType:"json",
 					success:function(data){
-						
-						mui('#pullrefresh').pullRefresh().endPullupToRefresh((data ==""||null));
-						mui.each(data,function(key,value){
+						mui('#pullrefresh').pullRefresh().endPullupToRefresh((data.response.data ==""||null));
+						mui.each(data.response.data,function(key,value){
 						var li = document.createElement("li")
 						 li.className="mui-table-view-cell"
 						 li.setAttribute("gather_id",value.gather_id);
@@ -94,11 +93,12 @@
 						 li.setAttribute("gathering_text",value.gathering_text);
 						 li.setAttribute("gather_oil_field",value.gather_oil_field);
 						 li.setAttribute("time",value.time);
-						 li.setAttribute("origin_file_name",value.origin_file_name);
-						 li.setAttribute("new_file_name",value.new_file_name);
-                          li.innerHTML ='<a class="mui-navigate-right"'+"<br>"+"序号："+value.gather_id+"&nbsp&nbsp&nbsp"+"编辑者："+value.gather_editor_name +"<br>"+"编辑时间："+value.time+"<br>" +"标题："+value.gather_title 
-                                          +"<br>"+"区域："+value.area+'</a>';
-                        list.appendChild(li)
+						 li.setAttribute("filename",value.filename);
+						 li.setAttribute("filepath",value.filepath);
+                         li.innerHTML ='<a class="mui-navigate-right"'+"&nbsp&nbsp&nbsp"+"编辑者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time+"<br>" +"标题："+value.gather_title 
+                                          +"<br>"+"区域："+value.gather_area+'</a>';
+                         list.appendChild(li)
+						li.setAttribute("inforgather_text",li.textContent+"地址："+value.gather_address+"油田："+value.gather_oilfield+"正文："+value.gather_text+"文件地址："+basepath+value.filepath)
 						})
 						mui("#list").on('tap','li',function(){
 								var gather_id = this.getAttribute("gather_id")
@@ -110,8 +110,8 @@
 								var gather_text = this.getAttribute("gathering_text")
 								var gather_oil_field = this.getAttribute("gather_oil_field")
 								var time = this.getAttribute("time")
-								var origin_file_name = this.getAttribute("origin_file_name")
-								var new_file_name = this.getAttribute("new_file_name")
+								var filename = this.getAttribute("filename")
+								var filepath = this.getAttribute("filepath")
 													
 								mui.openWindow({
 							    url:"detail_inforgather.html",
@@ -127,11 +127,16 @@
 							    	gather_text:gather_text,
 							    	gather_oil_field:gather_oil_field,
 							    	gather_time:time,
-							    	origin_file_name:origin_file_name,
-							    	new_file_name:new_file_name,
+							    	filename:filename,
+							    	filepath:filepath,
 							    }
 							})
-		                  });											                                         			           		           
+		                  });
+		                  //长按复制  
+		                mui("#list").on("longtap","li",function(){
+	                 	inforgather_text = this.getAttribute("inforgather_text")
+	                 	copy(inforgather_text)
+	                 })
 		   		        },
 				  
 				        });	

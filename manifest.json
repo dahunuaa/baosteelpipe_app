@@ -905,7 +905,8 @@
 					"js/common.js",
 					"js/defined_downloadfile.js",
 					"css/common.css",
-					"css/comment.css"
+					"css/comment.css",
+					"js/basepath.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -1116,7 +1117,8 @@
 					"fonts/mui.ttf",
 					"css/mui.min.css",
 					"css/mui.poppicker.css",
-					"css/mui.picker.css"
+					"css/mui.picker.css",
+					"js/basepath.js"
 				],
 				"refer": [],
 				"priority": 0

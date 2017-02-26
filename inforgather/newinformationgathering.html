@@ -155,7 +155,6 @@
 								origin_name=file.name
 								$.ajax({
 								type:"post",
-//								url:basepath+"baosteelpipe/uploadfile",
 								url:basepath+"api/v1.0/file/upload",
 								data:formData,
 								async: false,//想把data值赋给一个全局变量 然后给下一个ajax里面用，必须将此处改为false，应为js是非阻塞的，会同时执行多个ajax
@@ -183,8 +182,8 @@
 								"gather_area":areaBox.innerText,
 								"gather_text":textareaBox.value,
 								"gather_oilfield":oil_fieldBox.value,
-								"filename":filename,
-								"filepath":filepath,
+								"filename":window.filename,
+								"filepath":window.filepath,
 							},
 							async: false,
 							dataType:"json",

@@ -79,10 +79,6 @@
 					
 					mui.ajax({
 					type: "get",//后面必须加逗号！！！！！！！！
-//					url: basepath+"baosteelpipe/InformationGuiding",
-//					data:{
-//						"pull_count":count,
-//					},
 					url: basepath+"api/v1.0/inforguide?access_token="+localStorage.getItem("token")+"&page_size=10&page="+(count+1),
 					async:true,
 					dataType:"json",

@@ -63,13 +63,6 @@
 				setTimeout(function() {
 						$.ajax({
 						type: "get",
-//						url: basepath+"baosteelpipe/Inforguide_search",
-//						data: {
-//							"inforguide_title":title,
-//							"inforguide_category":category,
-//							"inforguide_content":content,
-//							"pull_count":count,
-//						},
 						url:basepath+"api/v1.0/inforguide?access_token="+localStorage.getItem("token")+"&page_size=15&page="+(count+1)
 							+"&guide_title="+title+"&guide_type="+category+"&guide_type="+category+"&guide_text^="+content,
 						async: true,

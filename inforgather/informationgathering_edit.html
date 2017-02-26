@@ -35,14 +35,6 @@
 		</header>
 		<div class="mui-content">
 			<form class="mui-input-group">
-				<!--<div class="mui-input-row">
-					<label>编辑者工号</label>
-					<input id="editor" type="text" class="mui-input-clear" placeholder="编辑人工号">
-				</div>
-				<div class="mui-input-row">
-					<label>编辑人姓名</label>
-					<input id="editor_name" type="text" class="mui-input-clear" placeholder="编辑人姓名">
-				</div>-->
 				<div class="mui-input-row">
 					<label>标题</label>
 					<input id="title" type="text" class="mui-input-clear" placeholder="请输入情报搜集标题">
@@ -150,10 +142,10 @@
 					var gather_address = self.gather_address
 					var gather_text = self.gather_text
 					var gather_oil_field = self.gather_oil_field
-					var origin_name = self.origin_file_name
-					var new_file_name = self.new_file_name
-					if(origin_name!=""&&origin_name!="null"){
-						plus.nativeUI.toast("已选择文件："+origin_name)
+					var filename = self.filename
+					var filepath = self.filepath
+					if(filename!=""&&filename!="null"){
+						plus.nativeUI.toast("已选择文件："+filename)
 					}
 					
 					//填写的用.value,选择的用.innerText
@@ -170,13 +162,12 @@
 					document.getElementById("cancel_file").addEventListener('tap',function(e){
 		          		var obj= document.getElementById("file_up");
 		          		obj.outerHTML = obj.outerHTML
-		          		if(origin_name ==""||origin_name=="null"){
+		          		if(filename ==""||filename=="null"){
 		          			plus.nativeUI.toast("未选择文件！")
 		          		}else{
-							plus.nativeUI.toast("已删除文件："+origin_name)		          			
+							plus.nativeUI.toast("已删除文件："+filename)		          			
 		          		}
-		          		origin_name = ""
-		          		window.new_file_name=""
+		          		filename = ""
 					})
 					
 					
@@ -191,22 +182,20 @@
 							var  file = document.getElementById("file_up").files[0];
 							var formData = new FormData($("#uploadForm")[0]);
 							var wt  = plus.nativeUI.showWaiting("正在提交...");
-							window.new_file_name=new_file_name;
 							if(file !=""&&file !=undefined){
-								window.origin_name="";
 								origin_name=file.name
 								$.ajax({
 								type:"post",
-								url:basepath+"baosteelpipe/uploadfile",
+								url:basepath+"api/v1.0/file/upload",
 								data:formData,
 								async: false,//想把data值赋给一个全局变量 然后给下一个ajax里面用，必须将此处改为false，应为js是非阻塞的，会同时执行多个ajax
-								cache:false,
+//								cache:false,
 								contentType:false,
 								processData:false,
-	//							dataType:"text",
+								dataType:"json",
 								success:function(data){
-								   window.new_file_name = data;
-									
+									window.filepath = data.response.data.file_path
+									window.filename = data.response.data.file_name
 								},
 								error:function(data){
 									plus.nativeUI.toast("上传失败！");
@@ -214,24 +203,23 @@
 							});	
 							}
 							$.ajax({
-							type: "post",
-							url: basepath+"baosteelpipe/Inforgathering_edit",
+							type: "PUT",
+							url: basepath+"api/v1.0/inforgather/"+gather_id,
 							data: {
-								"gather_id":gather_id,
+								"access_token":localStorage.getItem("token"),
 								"gather_title":titleBox.value,
 								"gather_address":addressBox.value,
 								"gather_area":areaBox.innerText,
 								"gather_text":textareaBox.value,
-								"gather_oil_field":oil_fieldBox.value,
-								"origin_file_name":origin_name,
-								"new_file_name":window.new_file_name,
+								"gather_oilfield":oil_fieldBox.value,
+								"filename":window.filename,
+								"filepath":window.filepath,
 								
 							},
 							async: true,
-							dataType:"text",
+							dataType:"json",
 							success: function(data) {
-	//							plus.nativeUI.toast("服务器传回来的消息为:" +data);
-								if (data=="ok")
+								if (data.response.success=="1")
 								{	
 									wt.close("新建情报搜集成功");
 									plus.nativeUI.toast("修改情报搜集成功");
@@ -253,18 +241,13 @@
 			   	inforgather_deleteButton.addEventListener('tap', function(event) {
 							
 						$.ajax({
-						type: "post",
-						url: basepath+"baosteelpipe/Inforgathering_delete",
-						data: {
-							"gather_id":gather_id,//后面必须加上逗号
-							
-							
-						},
+						type: "DELETE",
+						url: basepath+"api/v1.0/inforgather/"+gather_id+"?access_token="+localStorage.getItem("token"),
 						async: true,
-						dataType:"text",
+						dataType:"json",
 						success: function(data) {
 //							plus.nativeUI.toast("服务器传回来的消息为:" +data);
-							if (data=="ok")
+							if (data.response.success=="1")
 							{
 								plus.nativeUI.toast("删除情报搜集成功");
 								mui.back();

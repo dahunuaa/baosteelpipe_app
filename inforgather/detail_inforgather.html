@@ -105,10 +105,10 @@
 					var inforgather_text = self.gather_text
 					var infor_gather_oil_field = self.gather_oil_field
 					var time = self.gather_time
-					var origin_file_name = self.origin_file_name
-					var new_file_name = self.new_file_name
-					if(origin_file_name == "null"||origin_file_name ==""){
-						origin_file_name = "无"
+					var file_name = self.filename
+					var filepath = self.filepath
+					if(file_name == "null"||file_name ==""){
+						file_name = ""
 						document.getElementById("processspan").style.display="none"
 						document.getElementById("downloadfile").style.display ="none"
 						document.getElementById("openfile").style.display="none"
@@ -121,19 +121,20 @@
 					gather_address.innerHTML=inforgather_address
 					gather_oil_field.innerHTML=infor_gather_oil_field
 					gather_text.innerHTML=inforgather_text
-					file_to_download.innerHTML=origin_file_name
+					file_to_download.innerHTML=file_name
 		      	
 		      		var processtext = document.getElementById("processtext")
 					var dtask=null;
-					var fileName=origin_file_name;
+					var fileName=file_name;
 					document.getElementById("downloadfile").addEventListener('tap',function(e){
-						if(origin_file_name=="无"){
+						if(file_name==""){
 							plus.nativeUI.toast("无文件可下载！")
 						}else{
-							var url = basepath+"uploadfiles/"+new_file_name;
+							var url = filepath;
 						    var options = {method:"GET",filename:"_doc/"+fileName};
-							dtask = plus.downloader.createDownload( url, options );
+							dtask = plus.downloader.createDownload(url, options);//目前这种方式仅支持网络文件，本地文件不可以
 						    dtask.addEventListener( "statechanged", function(task,status){
+//						    	alert(task.totalSize)
 						    	if(!dtask){return;}
 						    	switch(task.state) {
 						    		case 1: // 开始
