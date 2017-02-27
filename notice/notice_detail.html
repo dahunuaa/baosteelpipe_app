@@ -53,7 +53,16 @@
 		<script type="text/javascript" src="../js/basepath.js" ></script>
 		<script>
 			(function($,doc){
-				$.init();
+				mui.init({
+					
+					//mui下面添加beforeback参数，用list.reload(true)，5+的重载方法
+					beforeback:function(){
+						//获得列表页面的webview
+						 var list = plus.webview.getWebviewById("noticelist");
+						 list.reload(true)
+
+					}
+				});
 				$.plusReady(function(){
 //					var title = document.getElementById('title');
 			        var notice_id = document.getElementById('notice_id');
@@ -79,7 +88,10 @@
 					title.innerHTML=notice_title_infor;
 					publish_time.innerHTML=notice_time;
 					
+//					mui.back()
+					
 				})
+				
 			}(mui,document))
 		</script>
 		

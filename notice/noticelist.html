@@ -65,7 +65,14 @@
 						contentrefresh: '正在加载...',
 						callback: pullupRefresh
 					}
+				},
+				
+				beforeback:function(){
+					//获得列表页面的webview
+					 var list = plus.webview.getWebviewById("main");
+					 list.reload(true)
 				}
+			
 			});
 			var list = document.getElementById("list")
 			var count = -1;
@@ -175,6 +182,8 @@
 					mui('#pullrefresh').pullRefresh().pullupLoading();
 				});
 			}
+			
+			
 		}(mui,document))
 		</script>
 	</body>

@@ -67,7 +67,10 @@
 			"img/huadong.png",
 			"img/huazhong.png",
 			"img/dongbei.png",
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"js/app.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf"
 		],
 		"refer": [
 			"inforgather/inforgather_list.html",
@@ -445,7 +448,8 @@
 		"refer": [
 			"notice/new_notice.html",
 			"notice/noticelist.html",
-			"notice/mynotice.html"
+			"notice/mynotice.html",
+			"notice/notice_main.html"
 		]
 	},
 	"selfsetting/changepsw.html": {

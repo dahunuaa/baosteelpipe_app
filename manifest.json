@@ -692,7 +692,8 @@
 				"refer": [
 					"notice/new_notice.html",
 					"notice/mynotice.html",
-					"notice/noticelist.html"
+					"notice/noticelist.html",
+					"notice/notice_main.html"
 				],
 				"priority": 0
 			},
