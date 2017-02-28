@@ -934,7 +934,9 @@
 					"css/feedback-page.css",
 					"css/image_preview.css",
 					"css/comment.css",
-					"js/basepath.js"
+					"js/basepath.js",
+					"fonts/mui-icons-extra.ttf",
+					"css/icons-extra.css"
 				],
 				"refer": [],
 				"priority": 0

@@ -8,12 +8,19 @@
         <link rel="stylesheet" type="text/css" href="../css/app.css"/>
         <link rel="stylesheet" href="../css/image_preview.css" />
         <link rel="stylesheet" href="../css/comment.css" />
+        <link rel="stylesheet" type="text/css" href="../css/icons-extra.css" />
 		<style type="text/css">
 			body {
 				background-color:#efeff4;
 			}
 		    div{
 		    	background-color: #EEEEEE;
+		    }
+		    .guide-nolike{
+		    	color: #8F8F94;
+		    }
+		    .guide-like{
+		    	color: red;
 		    }
 		   
 		</style>
@@ -25,6 +32,10 @@
 			 <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			 <!--<a class="mui-icon mui-icon-reload mui-pull-right" id="refresh"><div style="margin:-18px 10px 10px 30px; font: '楷体';font-size: 18px;">刷新</div></a>-->
 			<h1 class="mui-title">信息指南详情</h1>
+			<span class="mui-pull-right" style="margin-top: 10px;">
+				<a class="guide-nolike" id="like" ><span class="mui-icon-extra mui-icon-extra-heart-filled"></span></a>
+			</span>
+			
 			
 		</header>
 		
@@ -33,8 +44,6 @@
         <h3 id="title" style="text-align:center"></h3>    
         <span >信息指南序号:</span>&nbsp;&nbsp;&nbsp;<span id="guide_id"></span>
         <br>
-        <!--<span >编辑者工号:</span>&nbsp;&nbsp;&nbsp;<span id="guide_editor"></span>
-        <br>-->
         <span >编辑者:</span>&nbsp;&nbsp;&nbsp;<span id="guide_name"></span>
         <br>
         <span >编辑时间:</span>&nbsp;&nbsp;&nbsp;<span id="guide_time"></span>   
@@ -76,8 +85,6 @@
 		<script src="../js/app.js"></script>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/mui.view.js "></script>
-		<!--<script src='../js/feedback.js'></script>-->
-		<!--<script src="../js/feedback-page.js"></script>-->
 		<script src="../js/mui.zoom.js"></script>
 		<script src="../js/mui.previewimage.js"></script>
 		<script type="text/javascript" src="../js/basepath.js" ></script>
@@ -89,7 +96,9 @@
 						 var list = plus.webview.getWebviewById("inforguide_main_base");
 						 list.reload(true)
 					}
+					
 				});
+				
 				
 				$.plusReady(function(){
 					var title = document.getElementById('title');
@@ -141,6 +150,84 @@
 					document.getElementById("picture_src3").src=pic_path3
 					
 					}
+					//收藏操作
+					like_style = document.getElementById("like")
+					mui.ajax({
+						type:"get",
+						url:basepath+"api/v1.0/like?access_token="+localStorage.getItem("token")+"&user_id="+localStorage.getItem("mobile"),
+						async:true,
+						dataType:"json",
+						success:function(data){
+							guide_like = data.response.data[0].guide_like//注意data中list和dict的区别
+							if(guide_like.indexOf(guideinfor_id)>=0){
+								like_style.className="guide-like"
+							}else{
+								like_style.className="guide-nolike"
+							}
+							
+						},
+						error: function() {
+							plus.nativeUI.toast("请求服务器出现失败!");
+						}
+						
+					})
+					
+					
+					like_style.addEventListener('tap',function(){
+						if(like_style.className=="guide-nolike"){//注意复制和判断是否相等
+							like_style.className="guide-like"
+							mui.ajax({
+								type:"PUT",
+								url:basepath+"api/v1.0/like/alter",
+								data:{
+									"access_token":localStorage.getItem("token"),
+									"user_id":localStorage.getItem("mobile"),
+									"type":"inforguide",
+									"like_id":guideinfor_id,
+								},
+								async:true,
+								dataType:"json",
+								success:function(data){
+									if(data.response.success == "1"){
+										plus.nativeUI.toast("已收藏")
+									}else{
+										plus.nativeUI.toast("操作失败")
+									}
+								},
+								error:function(){
+									plus.nativeUI.toast("请求服务器失败!")
+								}
+							})
+							
+							
+						}else{
+							like_style.className = "guide-nolike"
+							mui.ajax({
+								type:"put",
+								url:basepath+"api/v1.0/like/alter",
+								data:{
+									"access_token":localStorage.getItem("token"),
+									"user_id":localStorage.getItem("mobile"),
+									"type":"inforguide",
+									"like_id":guideinfor_id,
+								},
+								async:true,
+								dataType:"json",
+								success:function(data){
+									if(data.response.success == "1"){
+										plus.nativeUI.toast("已取消收藏")
+									}else{
+										plus.nativeUI.toast("操作失败")
+									}
+								},
+								error:function(){
+									plus.nativeUI.toast("请求服务器失败!")
+								}
+							})
+							
+						}
+					})
+					
 					
 						
 					//显示当前出差任务下的评论
