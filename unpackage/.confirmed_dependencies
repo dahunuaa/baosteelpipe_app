@@ -24,7 +24,8 @@
 			"js/app.js",
 			"js/mui.min.js",
 			"fonts/mui.ttf",
-			"js/mui.enterfocus.js"
+			"js/mui.enterfocus.js",
+			"js/basepath.js"
 		],
 		"refer": [
 			"inforguide/informationGuiding.html",
@@ -32,7 +33,9 @@
 			"inforgather/informationGathering.html",
 			"bussinessinfo/businessInformation.html",
 			"notice/noticelist.html",
-			"notice/notice_main.html"
+			"notice/notice_main.html",
+			"inforguide/inforguide_main.html",
+			"inforguide/informationguiding_edit.html"
 		]
 	},
 	"selfInformation.html": {
@@ -70,7 +73,8 @@
 			"css/mui.min.css",
 			"js/app.js",
 			"js/mui.min.js",
-			"fonts/mui.ttf"
+			"fonts/mui.ttf",
+			"js/basepath.js"
 		],
 		"refer": [
 			"inforgather/inforgather_list.html",
@@ -261,7 +265,8 @@
 			"fonts/mui.ttf",
 			"css/mui.min.css",
 			"css/mui.poppicker.css",
-			"css/mui.picker.css"
+			"css/mui.picker.css",
+			"js/basepath.js"
 		]
 	},
 	"inforguide/inforguide_search.html": {
@@ -519,6 +524,34 @@
 		],
 		"refer": [
 			"notice/noticelist.html"
+		]
+	},
+	"inforguide/inforguide_main.html": {
+		"resources": [
+			"fonts/mui.ttf",
+			"img/xinan.png",
+			"img/dongbei.png",
+			"css/mui.min.css",
+			"js/basepath.js",
+			"js/app.js",
+			"js/mui.min.js"
+		],
+		"refer": [
+			"inforguide/informationGuiding.html",
+			"inforguide/inforguide_main_base.html",
+			"inforguide/inforguide_search.html"
+		]
+	},
+	"inforguide/inforguide_main_base.html": {
+		"resources": [
+			"inforguide/informationGuiding.html",
+			"css/mui.min.css",
+			"js/mui.min.js",
+			"css/app.css",
+			"fonts/mui.ttf"
+		],
+		"refer": [
+			"inforguide/informationGuiding.html"
 		]
 	}
 }

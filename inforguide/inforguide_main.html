@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>inforguide_main</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<style>
+			html,
+			body {
+				background-color:#efeff4;
+			}
+			/*#msg_remind{
+				display: block;
+				background: #FF0000;
+				border-radius: 100%;
+				width: 11px;
+				height: 11px;
+				top: 0px;
+				right: 0px;
+				position: absolute;
+			}*/
+		</style>
+   </head>
+	<body>
+
+		<div align="center" style="background-color:#FAFAFA">
+			<input type="search" id="inforguide_search" class="mui-icon mui-icon-search" placeholder="请输入搜索内容" style="width:250px;height:35px; background-color:#E8E8E8; margin-top: 10px;margin-bottom: 5px;"/>
+			<a id="inforguide_search"><span class="mui-icon mui-icon-search"></span></a>
+			<hr>
+		</div>
+		<div class="mui-content" style=" margin-top:-23px;">
+		        <ul class="mui-table-view mui-grid-view mui-grid-9">
+		           <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+						<span class="mui-icon mui-icon-list" id="inforguide_list" style="margin: 3px;"><span id="msg_remind"></span></span>
+						<div class="mui-media-body" >指南列表</div>
+				    </li>
+				    <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+							<img src="../img/dongbei.png"  id="dongbei"/>
+							<div class="mui-media-body">东北</div></li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+			                <img src="../img/xinan.png" id="xinan" />
+			                <div class="mui-media-body">西南</div></li>
+		        </ul> 
+		</div>
+		
+	    <script src="../js/mui.min.js"></script>
+		<script src="../js/app.js"></script>
+		<script type="text/javascript" src="../js/basepath.js" ></script>
+		<script>
+		(function($,doc){
+			$.init();
+			
+			$.plusReady(function(){
+				var inforguide_list = document.getElementById("inforguide_list")
+				inforguide_list.addEventListener('tap',function(event){
+					mui.openWindow({
+						url:"inforguide_main_base.html",
+						id:"inforguide_main_base",
+					})
+				})
+				
+			var inforguide_search=document.getElementById("inforguide_search")
+				inforguide_search.addEventListener("tap",function(event){
+					mui.openWindow({
+						url:"inforguide_search.html",
+						id:"inforguide_search"
+					})
+				})
+			});
+		}(mui,document))
+		</script>
+	</body>
+</html>

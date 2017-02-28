@@ -272,7 +272,8 @@
 					"inforguide/informationGuiding.html",
 					"js/mui.js",
 					"css/iconfont.css",
-					"fonts/iconfont.ttf"
+					"fonts/iconfont.ttf",
+					"js/basepath.js"
 				],
 				"refer": [
 					"setting.html",
@@ -288,7 +289,9 @@
 					"notice/noticelist.html",
 					"selfInformation.html",
 					null,
-					"notice/notice_main.html"
+					"notice/notice_main.html",
+					"inforguide/inforguide_main.html",
+					"inforguide/informationguiding_edit.html"
 				],
 				"priority": 0
 			},
@@ -826,7 +829,8 @@
 					"img/huazhong.png",
 					"img/dongbei.png",
 					"fonts/mui.ttf",
-					"inforgather/area_list.html"
+					"inforgather/area_list.html",
+					"js/basepath.js"
 				],
 				"refer": [
 					"inforgather/inforGathering_search.html",
@@ -875,7 +879,8 @@
 					"css/app.css",
 					"js/mui.poppicker.js",
 					"css/mui.poppicker.css",
-					"css/mui.picker.css"
+					"css/mui.picker.css",
+					"js/basepath.js"
 				],
 				"refer": [
 					"inforgather/detail_inforgather.html",
@@ -1364,6 +1369,34 @@
 					"css/app.css",
 					"fonts/mui.ttf",
 					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"inforguide/inforguide_main.html": {
+				"resources": [
+					"fonts/mui.ttf",
+					"img/xinan.png",
+					"img/dongbei.png",
+					"css/mui.min.css",
+					"js/basepath.js",
+					"js/app.js",
+					"js/mui.min.js"
+				],
+				"refer": [
+					"inforguide/informationGuiding.html",
+					"inforguide/inforguide_main_base.html",
+					"inforguide/inforguide_search.html"
+				],
+				"priority": 0
+			},
+			"inforguide/inforguide_main_base.html": {
+				"resources": [
+					"inforguide/informationGuiding.html",
+					"css/mui.min.css",
+					"js/mui.min.js",
+					"css/app.css",
+					"fonts/mui.ttf"
 				],
 				"refer": [],
 				"priority": 0

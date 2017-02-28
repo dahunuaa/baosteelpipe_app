@@ -16,6 +16,16 @@
 			div{
 				font-style:italic;
 			}
+			/*#msg_remind{
+				display: block;
+				background: #FF0000;
+				border-radius: 100%;
+				width: 11px;
+				height: 11px;
+				top: 0px;
+				right: 0px;
+				position: absolute;
+			}*/
 		</style>
    </head>
 	<body>
@@ -54,7 +64,7 @@
 		                   <img src="../img/xibei.png" id="xibei" />
 		                    <div class="mui-media-body">西北</div></a></li>
 		           <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-							<span class="mui-icon mui-icon-list" id="inforgather_list" style="margin: 3px;"></span>
+							<span class="mui-icon mui-icon-list" id="inforgather_list" style="margin: 3px;"><span id="msg_remind"></span></span>
 							<div class="mui-media-body" >情报列表</div>
 								</a>
 							</li>
@@ -63,10 +73,12 @@
 		
 	    <script src="../js/mui.min.js"></script>
 		<script src="../js/app.js"></script>
+		<script type="text/javascript" src="../js/basepath.js" ></script>
 		<script>
 		(function($,doc){
 			$.init();
-			$.ready(function(){
+			
+			$.plusReady(function(){
 				//情报搜集搜索
 				var inforgather_search=document.getElementById("inforgather_search")
 				inforgather_search.addEventListener("tap",function(event){

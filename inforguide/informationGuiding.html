@@ -23,12 +23,18 @@
 		    	background-color:#D8D8D8;
 		    	margin-bottom: 10px;
 		    }
+		    .mui-icon-unread{
+		   	  height: 10px;
+		   	  width: 10px;
+		      margin-right: 0px;
+		      background-color:red;
+		      border-radius: 15px;
+		      float:left;/*先将前面的符号改成浮动型的再改margin-top就可以和数据对齐了*/
+		      margin-top:40px;
+		    }
 		</style>
     </head>
 	<body>
-		<header>
-			
-		</header>
 		<div align="center" style="background-color:#FAFAFA">
 			
 			<input type="search" id="inforguide_search" class="mui-icon mui-icon-search" placeholder="请输入搜索内容" style="width:250px;height:35px; background-color:#E8E8E8; margin-top: 10px;margin-bottom: 5px;"/>
@@ -61,13 +67,19 @@
 						contentrefresh: '正在加载...',
 						callback: pullupRefresh
 					}
-				}
-			});
-			$.init( { //需要先定义longtap
-					gestureConfig:{
+				},
+				
+				gestureConfig:{
 					   tap: true, //默认为true
 					   longtap: true, //默认为false
-					  }}) 
+					  }
+			});
+			
+//			$.init( { //需要先定义longtap
+//					gestureConfig:{
+//					   tap: true, //默认为true
+//					   longtap: true, //默认为false
+//					  }}) 
 			var list = document.getElementById("list")	
 			var count = -1;
 			/**
@@ -84,7 +96,8 @@
 					dataType:"json",
 					success:function(data){
 						
-						mui('#pullrefresh').pullRefresh().endPullupToRefresh((data.response.data==""||null))						            
+						mui('#pullrefresh').pullRefresh().endPullupToRefresh((data.response.data==""||null))
+						unread_msg = data.response.unread.guide_unread
 						mui.each(data.response.data,function(key,value){
 						var li = document.createElement("li")
 						li.className="mui-table-view-cell"
@@ -98,10 +111,18 @@
 						li.setAttribute("pic_path",value.images[0])
 						li.setAttribute("pic_path2",value.images[1])
 						li.setAttribute("pic_path3",value.images[2])
-
-                        li.innerHTML ="编辑者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time +"<br>"+"分类："+value.guide_type 
+						var unread_msg_icon = document.createElement("icon")
+						 if(unread_msg.indexOf(value._id)>=0){
+							li.innerHTML ="编辑者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time +"<br>"+"分类："+value.guide_type 
                                           +"<br>"+"标题："+value.guide_title+'</a>';
+							unread_msg_icon.className="mui-icon-unread"
+						}else{
+							li.innerHTML ="编辑者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time +"<br>"+"分类："+value.guide_type 
+                                          +"<br>"+"标题："+value.guide_title+'</a>';
+						}
+                         
                         li.setAttribute("inforguide_text",li.textContent+"正文:"+value.guide_text+"图片地址:"+value.images[0]+value.images[1]+value.images[2])               
+                        list.appendChild(unread_msg_icon)
                         list.appendChild(li)
 						})
 						
@@ -135,6 +156,25 @@
 							    }
 							     
 							})
+							$.ajax({
+								type: "PUT",
+								url:basepath +"api/v1.0/msgunread/minus",
+								data:{
+									"access_token":localStorage.getItem("token"),
+									"user_id":localStorage.getItem("mobile"),
+									"type":"inforguide",
+									"msg_id":guide_id,
+									
+								},
+								async: true,
+								dataType:"json",
+								success: function(data) {
+									
+								},
+								error: function() {
+									plus.nativeUI.toast("请求服务器出现失败!");
+								}
+							});
 		                  });	
 		                  
 		                //长按复制  
@@ -177,14 +217,6 @@
 					mui.openWindow({
 						url:"inforguide_search.html",
 						id:"inforguide_search",
-					})
-				})
-
-				inforguide_search.addEventListener("tap",function(event){
-					mui.openWindow({
-						
-						url:"inforguide_search.html",
-						id:"inforguide_search"
 					})
 				})
 				});

@@ -76,12 +76,26 @@
 		<script>
 		 //点击下载和打开按钮中的onclick时间的tap按钮不能放在（function（$,doc）{mui,document}下面 要不然不好使）
 //			(function($,doc){
-//				$.init();
-				mui.init( { //需要先定义longtap
+			(function($,doc){
+				$.init({
+					beforeback:function(){
+						//获得列表页面的webview
+						 var list = plus.webview.getWebviewById("inforgather_list");
+						 list.reload(true)
+					}
+				});
+			}(mui, document));
+				
+				
+				mui.init({ //需要先定义longtap
 					gestureConfig:{
 					   tap: true, //默认为true
 					   longtap: true, //默认为false
-					  }}) 
+					  }}); 
+					  
+				
+					
+				
 				mui.plusReady(function(){
 					var gather_title = document.getElementById('gather_title');
 			        var gather_id = document.getElementById('gather_id');
@@ -107,8 +121,8 @@
 					var time = self.gather_time
 					var file_name = self.filename
 					var filepath = self.filepath
-					if(file_name == "null"||file_name ==""){
-						file_name = ""
+					if(file_name == "null"||file_name ==""||file_name=="undefined"){
+						file_name = "无"
 						document.getElementById("processspan").style.display="none"
 						document.getElementById("downloadfile").style.display ="none"
 						document.getElementById("openfile").style.display="none"
@@ -121,7 +135,8 @@
 					gather_address.innerHTML=inforgather_address
 					gather_oil_field.innerHTML=infor_gather_oil_field
 					gather_text.innerHTML=inforgather_text
-					file_to_download.innerHTML=file_name
+					file_to_download.innerHTML=file_name	
+					
 		      	
 		      		var processtext = document.getElementById("processtext")
 					var dtask=null;
