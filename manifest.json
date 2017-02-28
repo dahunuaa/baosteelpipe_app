@@ -1383,12 +1383,15 @@
 					"css/mui.min.css",
 					"js/basepath.js",
 					"js/app.js",
-					"js/mui.min.js"
+					"js/mui.min.js",
+					"fonts/mui-icons-extra.ttf",
+					"css/icons-extra.css"
 				],
 				"refer": [
 					"inforguide/informationGuiding.html",
 					"inforguide/inforguide_main_base.html",
-					"inforguide/inforguide_search.html"
+					"inforguide/inforguide_search.html",
+					"inforguide/inforguide_like_base.html"
 				],
 				"priority": 0
 			},
@@ -1397,6 +1400,47 @@
 					"inforguide/informationGuiding.html",
 					"css/mui.min.css",
 					"js/mui.min.js",
+					"css/app.css",
+					"fonts/mui.ttf"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"inforguide/inforguide_like_base.html": {
+				"resources": [
+					"css/app.css",
+					"css/mui.min.css",
+					"inforguide/inforguide_like.html",
+					"js/mui.min.js",
+					"fonts/mui.ttf"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"inforguide/inforguide_like.html": {
+				"resources": [
+					"js/basepath.js",
+					"js/app.js",
+					"css/mui.min.css",
+					"js/copy.js",
+					"js/mui.min.js"
+				],
+				"refer": [
+					"inforguide/detail_inforguide.html",
+					"inforguide/like_detail_inforguide.html"
+				],
+				"priority": 0
+			},
+			"inforguide/like_detail_inforguide.html": {
+				"resources": [
+					"css/comment.css",
+					"css/image_preview.css",
+					"js/mui.zoom.js",
+					"css/mui.min.css",
+					"js/mui.previewimage.js",
+					"css/icons-extra.css",
+					"js/mui.view.js",
+					"fonts/mui-icons-extra.ttf",
 					"css/app.css",
 					"fonts/mui.ttf"
 				],

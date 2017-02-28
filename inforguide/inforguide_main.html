@@ -8,6 +8,7 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
 		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" type="text/css" href="../css/icons-extra.css" />
 		<style>
 			html,
 			body {
@@ -35,15 +36,15 @@
 		<div class="mui-content" style=" margin-top:-23px;">
 		        <ul class="mui-table-view mui-grid-view mui-grid-9">
 		           <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-						<span class="mui-icon mui-icon-list" id="inforguide_list" style="margin: 3px;"><span id="msg_remind"></span></span>
+						<span class="mui-icon mui-icon-list" id="inforguide_list" style="margin: 3px; color:#2AC845;" ><span id="msg_remind"></span></span>
 						<div class="mui-media-body" >指南列表</div>
 				    </li>
 				    <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-							<img src="../img/dongbei.png"  id="dongbei"/>
-							<div class="mui-media-body">东北</div></li>
+							<span class="mui-icon mui-icon-star" style="margin-top: 3px;color: red;" id="like"></span>
+							<div class="mui-media-body">我的收藏</div></li>
 					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-			                <img src="../img/xinan.png" id="xinan" />
-			                <div class="mui-media-body">西南</div></li>
+			                <span class="mui-icon-extra mui-icon-extra-trend" style="margin-top: 3px; font-size: 40px; color: #0062CC;" id="statistic"></span>
+			                <div class="mui-media-body">数据统计</div></li>
 		        </ul> 
 		</div>
 		
@@ -70,6 +71,14 @@
 						id:"inforguide_search"
 					})
 				})
+				
+			var guide_like = document.getElementById("like")
+			guide_like.addEventListener('tap',function(event){
+				mui.openWindow({
+					url:"inforguide_like_base.html",
+					id:"inforguide_like_base"
+				})
+			})
 			});
 		}(mui,document))
 		</script>

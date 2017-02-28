@@ -91,7 +91,6 @@
 							mui('#pullrefresh').pullRefresh().endPullupToRefresh((data.response.data ==""||null));
 							
 							unread_msg = data.response.unread.unread_msg
-							alert(data.response.unread.unread_msg)
 							mui.each(data.response.data,function(key,value){
 								var li = document.createElement("li")
 								li.className="mui-table-view-cell";
