@@ -8,6 +8,7 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
 		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" type="text/css" href="../css/icons-extra.css" />
 		<style>
 			html,
 			body {
@@ -16,16 +17,10 @@
 			div{
 				font-style:italic;
 			}
-			/*#msg_remind{
-				display: block;
-				background: #FF0000;
-				border-radius: 100%;
-				width: 11px;
-				height: 11px;
-				top: 0px;
-				right: 0px;
-				position: absolute;
-			}*/
+			.mui-popover {
+				height: 300px;
+			}
+			
 		</style>
    </head>
 	<body>
@@ -35,40 +30,51 @@
 			<a id="inforgather_search"><span class="mui-icon mui-icon-search"></span></a>
 			<hr>
 		</div>
-		<!--<img src="../img/bs_5.png" style="width: 359px;height: 75px; "/>-->
 		<div class="mui-content" style=" margin-top:-23px;">
 
 		        <ul class="mui-table-view mui-grid-view mui-grid-9">
-		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-							<img src="../img/dongbei.png"  id="dongbei"/>
-							<div class="mui-media-body">东北</div></a></li>
-					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-			                <img src="../img/xinan.png" id="xinan" />
-			                <div class="mui-media-body">西南</div></a></li>
-			        <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-		                    <img src="../img/donghai.png" id="zhonghaiyou" />
-		                    <div class="mui-media-body">中海油</div></a></li>
-		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-		                    <img src="../img/huabei.png" id="huabei" />
-		                    <div class="mui-media-body">华北</div></a></li>
-		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-		                   <img src="../img/huazhong.png" id="huazhong" />
-		                    <div class="mui-media-body">华中</div></a></li>
-		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-		                    <img src="../img/huadong.png" id="huadong" />
-		                    <div class="mui-media-body">华东</div></a></li>
-		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-		                    <img src="../img/xinjiang.png" id="xinjiang" />
-		                    <div class="mui-media-body">新疆</div></a></li>
-		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-		                   <img src="../img/xibei.png" id="xibei" />
-		                    <div class="mui-media-body">西北</div></a></li>
 		           <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-							<span class="mui-icon mui-icon-list" id="inforgather_list" style="margin: 3px;"><span id="msg_remind"></span></span>
+							<span class="mui-icon mui-icon-list" id="inforgather_list" style="margin: 3px;color: blue"><span id="msg_remind"></span></span>
 							<div class="mui-media-body" >情报列表</div>
 								</a>
 							</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+						<!--<a href="#middlePopover" class="mui-btn mui-btn-primary mui-btn-block mui-btn-outlined" style="padding: 5px 20px;">打开弹出菜单</a>-->
+							<a href="#middlePopover"><span class="mui-icon-extra mui-icon-extra-filter"id="rapid_search" style="margin-top: -10px;font-size: 35px;color: green;"></span></a>
+							<div class="mui-media-body" >快速查询</div>
+								</a>
+					</li>
+					
+					
 		        </ul> 
+		</div>
+		
+		<div id="middlePopover" class="mui-popover">
+			<div class="mui-popover-arrow"></div>
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell"><a href="#" id="dongbei">东北</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#" id="xinan">西南</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#" id="zhonghaiyou">中海油</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#" id="huabei">华北</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#" id="huazhong">华中</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#" id="huadong">华东</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#" id="xinjiang">新疆</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#" id="xibei">西北</a>
+						</li>
+						
+					</ul>
+				</div>
+			</div>
+
 		</div>
 		
 	    <script src="../js/mui.min.js"></script>

@@ -830,7 +830,8 @@
 					"img/dongbei.png",
 					"fonts/mui.ttf",
 					"inforgather/area_list.html",
-					"js/basepath.js"
+					"js/basepath.js",
+					"css/icons-extra.css"
 				],
 				"refer": [
 					"inforgather/inforGathering_search.html",
