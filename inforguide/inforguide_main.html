@@ -41,10 +41,16 @@
 				    </li>
 				    <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
 							<span class="mui-icon mui-icon-star" style="margin-top: 3px;color: red;" id="like"></span>
-							<div class="mui-media-body">我的收藏</div></li>
+							<div class="mui-media-body">我的收藏</div>
+				    </li>
 					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
 			                <span class="mui-icon-extra mui-icon-extra-trend" style="margin-top: 3px; font-size: 40px; color: #0062CC;" id="statistic"></span>
-			                <div class="mui-media-body">数据统计</div></li>
+			                <div class="mui-media-body">数据统计</div>
+					</li>
+			        <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+			                <span class="mui-icon-extra mui-icon-extra-topic" style="margin-top: 3px; font-size: 40px; color: #0062CC;" id="export"></span>
+			                <div class="mui-media-body">报表导出</div>
+			        </li>
 		        </ul> 
 		</div>
 		
@@ -81,6 +87,11 @@
 			})
 			
 			var statistic = document.getElementById("statistic")
+			statistic.addEventListener('tap',function(event){
+				plus.nativeUI.toast("敬请期待~~")
+			})
+			
+			var statistic = document.getElementById("export")
 			statistic.addEventListener('tap',function(event){
 				plus.nativeUI.toast("敬请期待~~")
 			})

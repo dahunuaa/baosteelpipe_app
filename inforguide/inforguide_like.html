@@ -20,15 +20,7 @@
 		    	background-color:#D8D8D8;
 		    	margin-bottom: 10px;
 		    }
-		    .mui-icon-unread{
-		   	  height: 10px;
-		   	  width: 10px;
-		      margin-right: 0px;
-		      background-color:red;
-		      border-radius: 15px;
-		      float:left;/*先将前面的符号改成浮动型的再改margin-top就可以和数据对齐了*/
-		      margin-top:40px;
-		    }
+		    
 		</style>
     </head>
 	<body>
@@ -68,7 +60,7 @@
 					}
 					mui.each(guide_like,function(key,value){
 					var li = document.createElement("li")
-					li.className="mui-table-view-cell"
+					 li.className="mui-table-view-cell"
 					li.setAttribute("guide_id",value._id);
 					li.setAttribute("guide_editor",value.add_user_jobno)
 					li.setAttribute("guide_name",value.add_user_name)
@@ -79,11 +71,12 @@
 					li.setAttribute("pic_path",value.images[0])
 					li.setAttribute("pic_path2",value.images[1])
 					li.setAttribute("pic_path3",value.images[2])
-					li.innerHTML ="编辑者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time +"<br>"+"分类："+value.guide_type 
-                                  +"<br>"+"标题："+value.guide_title+'</a>';
+					 li.innerHTML ="编辑者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time +"<br>"+"分类："+value.guide_type 
+                                          +"<br>"+"标题："+value.guide_title+'</a>';
                      
-                    li.setAttribute("inforguide_text",li.textContent+"正文:"+value.guide_text+"图片地址:"+value.images[0]+value.images[1]+value.images[2])               
-                    list.appendChild(li)
+                     li.setAttribute("inforguide_text",li.textContent+"正文:"+value.guide_text+"图片地址:"+value.images[0]+value.images[1]+value.images[2])               
+                       list.appendChild(li)	
+					
 					})
 					
 					mui("#list").on('tap','li',function(){

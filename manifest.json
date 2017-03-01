@@ -831,11 +831,13 @@
 					"fonts/mui.ttf",
 					"inforgather/area_list.html",
 					"js/basepath.js",
-					"css/icons-extra.css"
+					"css/icons-extra.css",
+					"fonts/mui-icons-extra.ttf"
 				],
 				"refer": [
 					"inforgather/inforGathering_search.html",
-					"inforgather/inforgather_list.html"
+					"inforgather/inforgather_list.html",
+					"inforgather/gather_like_base.html"
 				],
 				"priority": 0
 			},
@@ -914,7 +916,9 @@
 					"js/defined_downloadfile.js",
 					"css/common.css",
 					"css/comment.css",
-					"js/basepath.js"
+					"js/basepath.js",
+					"fonts/mui-icons-extra.ttf",
+					"css/icons-extra.css"
 				],
 				"refer": [],
 				"priority": 0
@@ -1444,6 +1448,43 @@
 					"fonts/mui-icons-extra.ttf",
 					"css/app.css",
 					"fonts/mui.ttf"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"inforgather/gather_like.html": {
+				"resources": [
+					"js/copy.js",
+					"css/mui.min.css",
+					"js/basepath.js",
+					"js/app.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf"
+				],
+				"refer": [
+					"inforgather/like_detail_inforgather.html"
+				],
+				"priority": 0
+			},
+			"inforgather/gather_like_base.html": {
+				"resources": [
+					"css/app.css",
+					"inforgather/gather_like.html",
+					"css/mui.min.css",
+					"js/mui.min.js",
+					"fonts/mui.ttf"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"inforgather/like_detail_inforgather.html": {
+				"resources": [
+					"fonts/mui-icons-extra.ttf",
+					"css/comment.css",
+					"js/common.js",
+					"css/app.css",
+					"css/icons-extra.css",
+					"css/mui.min.css"
 				],
 				"refer": [],
 				"priority": 0

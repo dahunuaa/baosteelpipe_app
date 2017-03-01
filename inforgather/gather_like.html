@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>informationGuiding</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<style>
+			html,
+			body {
+				background-color:#efeff4;
+			}
+		    .mui-table-view-cell{
+		    	border-radius: 10px;
+		    	margin-left: 10px;
+		    	margin-right: 10px;
+		    	background-color:#D8D8D8;
+		    	margin-bottom: 10px;
+		    }
+		    
+		</style>
+    </head>
+	<body>
+		<!--下拉刷新容器-->
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<ul class="mui-table-view mui-table-view-chevron" id="list">
+					
+				</ul>
+			</div>
+		</div>
+	
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/app.js"></script>
+	<script type="text/javascript" src="../js/basepath.js" ></script>
+	<script type="text/javascript" src="../js/copy.js" ></script>
+	<script>
+		(function($,doc){
+			mui.init({
+				gestureConfig:{
+					   tap: true, //默认为true
+					   longtap: true, //默认为false
+					  }
+			})
+			$.plusReady(function(){
+				mui.ajax({
+				type: "get",//后面必须加逗号！！！！！！！！
+				url: basepath+"api/v1.0/like/list?access_token="+localStorage.getItem("token")+"&user_id="+localStorage.getItem("mobile"),
+				async:true,
+				dataType:"json",
+				success:function(data){
+					gather_like = data.response.data.gather_like_detail
+//					alert(gather_like)
+					if(gather_like==""){
+						plus.nativeUI.toast("你还没有收藏任何消息")
+						mui.back()
+					}
+					mui.each(gather_like,function(key,value){
+					var li = document.createElement("li")
+					li.className="mui-table-view-cell"
+					 li.setAttribute("gather_id",value._id);
+					 li.setAttribute("gather_editor",value.add_user_id);
+					 li.setAttribute("gather_editor_name",value.add_user_name);
+					 li.setAttribute("gather_title",value.gather_title);
+					 li.setAttribute("gather_area",value.gather_area);
+					 li.setAttribute("gather_address",value.gather_address);
+					 li.setAttribute("gathering_text",value.gather_text);
+					 li.setAttribute("gather_oil_field",value.gather_oilfield);
+					 li.setAttribute("time",value.last_updated_time);
+					 li.setAttribute("filename",value.filename);
+					 li.setAttribute("filepath",value.filepath);
+					li.innerHTML ='<a class="mui-navigate-right"'+"&nbsp&nbsp&nbsp"+"编辑者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time+"<br>" +"标题："+value.gather_title 
+                                          +"<br>"+"区域："+value.gather_area+'</a>';
+                     
+                    li.setAttribute("inforgather_text",li.textContent+"地址："+value.gather_address+"油田："+value.gather_oilfield+"正文："+value.gather_text+"文件地址："+basepath+value.filepath)               
+                    list.appendChild(li)
+					})
+					
+					mui("#list").on('tap','li',function(){
+							var gather_id = this.getAttribute("gather_id")
+							var gather_editor = this.getAttribute("gather_editor")
+							var gather_editor_name = this.getAttribute("gather_editor_name")
+							var gather_title = this.getAttribute("gather_title")
+							var gather_area = this.getAttribute("gather_area")
+							var gather_address = this.getAttribute("gather_address")
+							var gather_text = this.getAttribute("gathering_text")
+							var gather_oil_field = this.getAttribute("gather_oil_field")
+							var time = this.getAttribute("time")
+							var filename = this.getAttribute("filename")
+							var filepath = this.getAttribute("filepath")
+												
+							mui.openWindow({
+						    url:"like_detail_inforgather.html",
+						    id:"like_detail_inforgather",
+						    
+						    extras:{
+						    	gather_id:gather_id,
+						    	gather_editor:gather_editor,
+						    	gather_editor_name:gather_editor_name,
+						    	gather_title:gather_title,
+						    	gather_area:gather_area,
+						    	gather_address:gather_address,
+						    	gather_text:gather_text,
+						    	gather_oil_field:gather_oil_field,
+						    	gather_time:time,
+						    	filename:filename,
+						    	filepath:filepath,
+						    }
+						     
+						})
+	                  });	
+		                  
+		                //长按复制  
+		                mui("#list").on("longtap","li",function(){
+	                 	inforgather_text = this.getAttribute("inforgather_text")
+	                 	copy(inforgather_text)
+	                 	var btnArray = ['否','是'];
+	                 })
+		   		        },
+				  
+				        });	
+			});
+		}(mui,document))
+		</script>
+
+  </body>
+</html>
