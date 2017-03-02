@@ -76,13 +76,15 @@
 			"fonts/mui.ttf",
 			"js/basepath.js",
 			"css/icons-extra.css",
-			"fonts/mui-icons-extra.ttf"
+			"fonts/mui-icons-extra.ttf",
+			"js/common.js"
 		],
 		"refer": [
 			"inforgather/inforgather_list.html",
 			"inforgather/area_list.html",
 			"inforgather/inforGathering_search.html",
-			"inforgather/gather_like_base.html"
+			"inforgather/gather_like_base.html",
+			"inforgather/report.html"
 		]
 	},
 	"echart.html": {
@@ -636,6 +638,20 @@
 			"css/app.css",
 			"css/icons-extra.css",
 			"css/mui.min.css"
+		]
+	},
+	"inforgather/report.html": {
+		"resources": [
+			"css/comment.css",
+			"css/mui.min.css",
+			"js/basepath.js",
+			"fonts/mui-icons-extra.ttf",
+			"js/app.js",
+			"js/common.js",
+			"js/mui.min.js",
+			"css/app.css",
+			"fonts/mui.ttf",
+			"css/icons-extra.css"
 		]
 	}
 }

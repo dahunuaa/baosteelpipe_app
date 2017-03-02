@@ -832,12 +832,14 @@
 					"inforgather/area_list.html",
 					"js/basepath.js",
 					"css/icons-extra.css",
-					"fonts/mui-icons-extra.ttf"
+					"fonts/mui-icons-extra.ttf",
+					"js/common.js"
 				],
 				"refer": [
 					"inforgather/inforGathering_search.html",
 					"inforgather/inforgather_list.html",
-					"inforgather/gather_like_base.html"
+					"inforgather/gather_like_base.html",
+					"inforgather/report.html"
 				],
 				"priority": 0
 			},
@@ -1485,6 +1487,22 @@
 					"css/app.css",
 					"css/icons-extra.css",
 					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"inforgather/report.html": {
+				"resources": [
+					"css/comment.css",
+					"css/mui.min.css",
+					"js/basepath.js",
+					"fonts/mui-icons-extra.ttf",
+					"js/app.js",
+					"js/common.js",
+					"js/mui.min.js",
+					"css/app.css",
+					"fonts/mui.ttf",
+					"css/icons-extra.css"
 				],
 				"refer": [],
 				"priority": 0
