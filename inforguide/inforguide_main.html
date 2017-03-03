@@ -88,7 +88,10 @@
 			
 			var statistic = document.getElementById("statistic")
 			statistic.addEventListener('tap',function(event){
-				plus.nativeUI.toast("敬请期待~~")
+				mui.openWindow({
+					url:"statistic.html",
+					id:"statistic"
+				})
 			})
 			
 			var statistic = document.getElementById("export")

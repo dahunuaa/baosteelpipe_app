@@ -1402,7 +1402,8 @@
 					"inforguide/informationGuiding.html",
 					"inforguide/inforguide_main_base.html",
 					"inforguide/inforguide_search.html",
-					"inforguide/inforguide_like_base.html"
+					"inforguide/inforguide_like_base.html",
+					"inforguide/statistic.html"
 				],
 				"priority": 0
 			},
@@ -1560,6 +1561,48 @@
 					"css/app.css",
 					"css/mui.min.css",
 					"css/icons-extra.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"inforguide/statistic.html": {
+				"resources": [
+					"css/comment.css",
+					"js/common.js",
+					"css/app.css",
+					"css/mui.min.css",
+					"css/icons-extra.css",
+					"js/basepath.js",
+					"js/app.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf"
+				],
+				"refer": [
+					"inforguide/guide_type_list_base.html"
+				],
+				"priority": 0
+			},
+			"inforguide/guide_type_list.html": {
+				"resources": [
+					"js/copy.js",
+					"js/basepath.js",
+					"js/app.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css"
+				],
+				"refer": [
+					"inforguide/detail_inforguide.html"
+				],
+				"priority": 0
+			},
+			"inforguide/guide_type_list_base.html": {
+				"resources": [
+					"inforguide/guide_type_list.html",
+					"js/mui.min.js",
+					"css/app.css",
+					"fonts/mui.ttf",
+					"css/mui.min.css"
 				],
 				"refer": [],
 				"priority": 0
