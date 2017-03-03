@@ -23,13 +23,6 @@
 		</style>
     </head>
 	<body>
-		<header class="mui-bar mui-bar-nav">
-			 
-			 <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			 <!--<a class="mui-icon mui-icon-reload mui-pull-right" id="refresh"><div style="margin:-18px 10px 10px 30px; font: '楷体';font-size: 18px;">刷新</div></a>-->
-			<h1 class="mui-title">情报搜集</h1>
-			
-		</header>
 		<!--下拉刷新容器-->
 		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
@@ -63,8 +56,6 @@
 				   tap: true, //默认为true
 				   longtap: true, //默认为false
 				  }}) 
-			var self = plus.webview.currentWebview();//必须用plusReady 来获取前面传过来的值
-			var area =self.area
 			var list = document.getElementById("list")	
 			var count = -1;
 			/**
@@ -76,7 +67,7 @@
 					
 					mui.ajax({
 					type: "get",//后面必须加逗号！！！！！！！！
-					url:basepath+"api/v1.0/inforgather?access_token="+localStorage.getItem("token")+"&gather_area="+area+"&page_size=10&page="+(count+1),
+					url:basepath+"api/v1.0/inforgather?access_token="+localStorage.getItem("token")+"&gather_area="+localStorage.getItem("area")+"&page_size=10&page="+(count+1),
 					async:true,
 					dataType:"json",
 					success:function(data){
@@ -84,19 +75,19 @@
 						mui.each(data.response.data,function(key,value){
 						var li = document.createElement("li")
 						 li.className="mui-table-view-cell"
-						 li.setAttribute("gather_id",value.gather_id);
-						 li.setAttribute("gather_editor",value.gather_editor);
-						 li.setAttribute("gather_editor_name",value.gather_editor_name);
+						 li.setAttribute("gather_id",value._id);
+						 li.setAttribute("gather_editor",value.add_user_id);
+						 li.setAttribute("gather_editor_name",value.add_user_name);
 						 li.setAttribute("gather_title",value.gather_title);
-						 li.setAttribute("gather_area",value.area);
-						 li.setAttribute("gather_address",value.address);
-						 li.setAttribute("gathering_text",value.gathering_text);
-						 li.setAttribute("gather_oil_field",value.gather_oil_field);
-						 li.setAttribute("time",value.time);
+						 li.setAttribute("gather_area",value.gather_area);
+						 li.setAttribute("gather_address",value.gather_address);
+						 li.setAttribute("gathering_text",value.gather_text);
+						 li.setAttribute("gather_oil_field",value.gather_oilfield);
+						 li.setAttribute("time",value.last_updated_time);
 						 li.setAttribute("filename",value.filename);
 						 li.setAttribute("filepath",value.filepath);
                          li.innerHTML ='<a class="mui-navigate-right"'+"&nbsp&nbsp&nbsp"+"编辑者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time+"<br>" +"标题："+value.gather_title 
-                                          +"<br>"+"区域："+value.gather_area+'</a>';
+                                          +"<br>"+"区域："+value.gather_area+'</a>';	
                          list.appendChild(li)
 						li.setAttribute("inforgather_text",li.textContent+"地址："+value.gather_address+"油田："+value.gather_oilfield+"正文："+value.gather_text+"文件地址："+basepath+value.filepath)
 						})
@@ -114,8 +105,8 @@
 								var filepath = this.getAttribute("filepath")
 													
 								mui.openWindow({
-							    url:"detail_inforgather.html",
-							    id:"detail_inforgather",
+							    url:"area_detail_inforgather.html",
+							    id:"area_detail_inforgather",
 							    
 							    extras:{
 							    	gather_id:gather_id,

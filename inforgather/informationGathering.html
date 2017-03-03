@@ -136,31 +136,31 @@
 				//情报搜集东北 西南等情报列表
 				var dongbei_list=document.getElementById("dongbei")
 				dongbei_list.addEventListener("tap",function(event){
+					localStorage.setItem("area","东北")
 					mui.openWindow({
-						url:"area_list.html",
-						id:"area_list",
+						url:"area_list_base.html",
+						id:"area_list_base",
 						
-					extras:{
-							  area:"东北"
-							    }
+//					extras:{
+//							  area:"东北"
+//							    }
 					})
 				})
 				var xinan_list=document.getElementById("xinan")
 				xinan_list.addEventListener("tap",function(event){
+					localStorage.setItem("area","西南")
 					mui.openWindow({
-						url:"area_list.html",
-						id:"area_list",
+						url:"area_list_base.html",
+						id:"area_list_base",
 						
-					extras:{
-							  area:"西南"
-							    }
 					})
 				})
 				var zhonghaiyou_list=document.getElementById("zhonghaiyou")
 				zhonghaiyou_list.addEventListener("tap",function(event){
+					localStorage.setItem("area","中海油")
 					mui.openWindow({
-						url:"area_list.html",
-						id:"area_list",
+						url:"area_list_base.html",
+						id:"area_list_base",
 						
 					extras:{
 							  area:"中海油"
@@ -169,65 +169,58 @@
 				})
 				var huabei_list=document.getElementById("huabei")
 				huabei_list.addEventListener("tap",function(event){
+					localStorage.setItem("area","华北")
 					mui.openWindow({
-						url:"area_list.html",
-						id:"area_list",
-						
-					extras:{
-							  area:"华北"
-							    }
+						url:"area_list_base.html",
+						id:"area_list_base",
+			
 					})
 				})
 				var huazhong_list=document.getElementById("huazhong")
 				huazhong_list.addEventListener("tap",function(event){
+					localStorage.setItem("area","华中")
 					mui.openWindow({
-						url:"area_list.html",
-						id:"area_list",
+						url:"area_list_base.html",
+						id:"area_list_base",
 						
-					extras:{
-							  area:"华中"
-							    }
+					
 					})
 				})
 				var huadong_list=document.getElementById("huadong")
 				huadong_list.addEventListener("tap",function(event){
+					localStorage.setItem("area","华东")
 					mui.openWindow({
-						url:"area_list.html",
-						id:"area_list",
+						url:"area_list_base.html",
+						id:"area_list_base",
 						
-					extras:{
-							  area:"华东"
-							    }
+					
 					})
 				})
 				var xinjiang_list=document.getElementById("xinjiang")
 				xinjiang_list.addEventListener("tap",function(event){
+					localStorage.setItem("area","新疆")
 					mui.openWindow({
-						url:"area_list.html",
-						id:"area_list",
-						
-					extras:{
-							  area:"新疆"
-							    }
+						url:"area_list_base.html",
+						id:"area_list_base",
+					
 					})
 				})
 				var xibei_list=document.getElementById("xibei")
 				xibei_list.addEventListener("tap",function(event){
+					localStorage.setItem("area","西北")
 					mui.openWindow({
-						url:"area_list.html",
-						id:"area_list",
+						url:"area_list_base.html",
+						id:"area_list_base",
 						
-					extras:{
-							  area:"西北"
-							    }
+			
 					})
 				})
 				
 				var inforgather_list = document.getElementById("inforgather_list")
 				inforgather_list.addEventListener('tap',function(event){
 					mui.openWindow({
-						url:"inforgather_list.html",
-						id:"inforgather_list",
+						url:"gather_list_base.html",
+						id:"gather_list_base",
 					})
 				})
 				
@@ -241,7 +234,10 @@
 				
 				var statistic = document.getElementById("statistic")
 					statistic.addEventListener('tap',function(event){
-						plus.nativeUI.toast("敬请期待~~")
+						mui.openWindow({
+							url:"statistic.html",
+							id:"statistic"
+						})
 						
 						
 					})

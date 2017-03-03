@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>detail_inforguide</title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="../css/app.css"/>
+        <link rel="stylesheet" href="../css/comment.css" />
+        <link rel="stylesheet" type="text/css" href="../css/icons-extra.css" />
+		<style type="text/css">
+			body {
+				background-color:#efeff4;
+			}
+		    div{
+		    	background-color: #EEEEEE;
+		    }
+		    
+		    
+		   
+		</style>
+
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			 
+			 <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			 <!--<a class="mui-icon mui-icon-reload mui-pull-right" id="refresh"><div style="margin:-18px 10px 10px 30px; font: '楷体';font-size: 18px;">刷新</div></a>-->
+			<h1 class="mui-title">情报搜集信息统计</h1>
+			
+		</header>		
+		
+		<div class="mui-content" >
+			<table border="2" style="width: -webkit-fill-available;">
+			  <tr>
+			    <th>油田区块</th>
+			    <th>信息数量</th>
+			    <th>查看详情</th>
+			  </tr>
+			  <tr style="text-align: center;">
+			    <td>东北</td>
+			    <td><span id="dongbei"></span></td>
+			    <td><button  id="dongbei_detail" style=" color: blue;">查看详情</button></td>
+			  </tr>
+			  <tr style="text-align: center;">
+			    <td>西南</td>
+			    <td><span id="xinan"></span></td>
+			    <td><button  id="xinan_detail" style=" color: blue;">查看详情</button></td>
+			  </tr>
+			  <tr style="text-align: center;">
+			    <td>中海油</td>
+			    <td><span id="zhonghaiyou"></span></td>
+			    <td><button  id="zhonghaiyou_detail" style=" color: blue;">查看详情</button></td>
+			  </tr>
+			  <tr style="text-align: center;">
+			    <td>华北</td>
+			    <td><span id="huabei"></span></td>
+			    <td><button  id="huabei_detail" style=" color: blue;">查看详情</button></td>
+			  </tr>
+			  <tr style="text-align: center;">
+			    <td>华中</td>
+			    <td><span id="huazhong"></span></td>
+			    <td><button  id="huazhong_detail" style=" color: blue;">查看详情</button></td>
+			  </tr>
+			  <tr style="text-align: center;">
+			    <td>华东</td>
+			    <td><span id="huadong"></span></td>
+			    <td><button  id="huadong_detail" style=" color: blue;">查看详情</button></td>
+			  </tr>
+			  <tr style="text-align: center;">
+			    <td>新疆</td>
+			    <td><span id="xinjiang"></span></td>
+			    <td><button  id="xinjiang_detail" style=" color: blue;">查看详情</button></td>
+			  </tr>
+			</table>
+	        
+		</div>
+		
+		<script src="../js/app.js"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/common.js"></script>
+		<script type="text/javascript" src="../js/basepath.js" ></script>
+		<script>
+		
+			(function($,doc){
+				$.init({
+					
+				});
+				mui.plusReady(function(){
+					dongbei = document.getElementById("dongbei")
+					xinan = document.getElementById("xinan")
+					zhonghaiyou = document.getElementById("zhonghaiyou")
+					huabei = document.getElementById("huabei")
+					huazhong = document.getElementById("huazhong")
+					huadong = document.getElementById("huadong")
+					xinjiang = document.getElementById("xinjiang")
+					
+					mui.ajax({
+						type:"get",
+						url:basepath+"api/v1.0/inforgather/classify?access_token="+localStorage.getItem("token"),
+						async:false,
+						dataType:"json",
+						success:function(data){
+							result = data.response.data
+							dongbei.innerHTML=result["dongbei"]
+							xinan.innerHTML=result["xinan"]
+							zhonghaiyou.innerHTML=result["zhonghaiyou"]
+							huabei.innerHTML=result["huabei"]
+							huazhong.innerHTML=result["huazhong"]
+							huadong.innerHTML=result["huadong"]
+							xinjiang.innerHTML=result["xinjiang"]
+						},
+						error:function(){
+							plus.nativeUI.toast("加载失败，请重新刷新~")
+						}
+					})
+					
+					dongbei_detail = document.getElementById("dongbei_detail")
+					dongbei_detail.addEventListener('tap',function(){
+						localStorage.setItem("area","东北")
+						mui.openWindow({
+							url:"area_list_base.html",
+							id:"area_list_base"
+						})
+						
+					})
+					
+					xinan_detail = document.getElementById("xinan_detail")
+					xinan_detail.addEventListener('tap',function(){
+						localStorage.setItem("area","西南")
+						mui.openWindow({
+							url:"area_list_base.html",
+							id:"area_list_base"
+						})
+						
+					})
+					
+					zhonghaiyou_detail = document.getElementById("zhonghaiyou_detail")
+					zhonghaiyou_detail.addEventListener('tap',function(){
+						localStorage.setItem("area","中海油")
+						mui.openWindow({
+							url:"area_list_base.html",
+							id:"area_list_base"
+						})
+						
+					})
+					
+					huabei_detail = document.getElementById("huabei_detail")
+					huabei_detail.addEventListener('tap',function(){
+						localStorage.setItem("area","华北")
+						mui.openWindow({
+							url:"area_list_base.html",
+							id:"area_list_base"
+						})
+						
+					})
+					
+					huazhong_detail = document.getElementById("huazhong_detail")
+					huazhong_detail.addEventListener('tap',function(){
+						localStorage.setItem("area","华中")
+						mui.openWindow({
+							url:"area_list_base.html",
+							id:"area_list_base"
+						})
+						
+					})
+					
+					huadong_detail = document.getElementById("huadong_detail")
+					huadong_detail.addEventListener('tap',function(){
+						localStorage.setItem("area","华东")
+						mui.openWindow({
+							url:"area_list_base.html",
+							id:"area_list_base"
+						})
+						
+					})
+					
+					xinjiang_detail = document.getElementById("xinjiang_detail")
+					xinjiang_detail.addEventListener('tap',function(){
+						localStorage.setItem("area","新疆")
+						mui.openWindow({
+							url:"area_list_base.html",
+							id:"area_list_base"
+						})
+						
+					})
+					
+					})
+			}(mui, document));
+				
+		</script>
+		
+	</body>
+</html>

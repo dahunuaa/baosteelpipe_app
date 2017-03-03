@@ -84,7 +84,10 @@
 			"inforgather/area_list.html",
 			"inforgather/inforGathering_search.html",
 			"inforgather/gather_like_base.html",
-			"inforgather/report.html"
+			"inforgather/report.html",
+			"inforgather/statistic.html",
+			"inforgather/gather_list_base.html",
+			"inforgather/area_list_base.html"
 		]
 	},
 	"echart.html": {
@@ -183,7 +186,8 @@
 			"js/basepath.js"
 		],
 		"refer": [
-			"inforgather/detail_inforgather.html"
+			"inforgather/detail_inforgather.html",
+			"inforgather/area_detail_inforgather.html"
 		]
 	},
 	"bussinessinfo/buss_detail.html": {
@@ -651,6 +655,58 @@
 			"js/mui.min.js",
 			"css/app.css",
 			"fonts/mui.ttf",
+			"css/icons-extra.css"
+		]
+	},
+	"inforgather/statistic.html": {
+		"resources": [
+			"js/basepath.js",
+			"fonts/mui-icons-extra.ttf",
+			"js/app.js",
+			"css/comment.css",
+			"js/common.js",
+			"js/mui.min.js",
+			"css/app.css",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/icons-extra.css"
+		],
+		"refer": [
+			"inforgather/area_list.html",
+			"inforgather/area_list_base.html"
+		]
+	},
+	"inforgather/gather_list_base.html": {
+		"resources": [
+			"css/app.css",
+			"css/mui.min.css",
+			"inforgather/inforgather_list.html",
+			"js/mui.min.js",
+			"fonts/mui.ttf"
+		],
+		"refer": [
+			"inforgather/inforgather_list.html"
+		]
+	},
+	"inforgather/area_list_base.html": {
+		"resources": [
+			"inforgather/area_list.html",
+			"js/mui.min.js",
+			"css/app.css",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		],
+		"refer": [
+			"inforgather/area_list.html"
+		]
+	},
+	"inforgather/area_detail_inforgather.html": {
+		"resources": [
+			"fonts/mui-icons-extra.ttf",
+			"css/comment.css",
+			"js/common.js",
+			"css/app.css",
+			"css/mui.min.css",
 			"css/icons-extra.css"
 		]
 	}
