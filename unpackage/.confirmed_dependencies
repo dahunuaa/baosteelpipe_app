@@ -107,7 +107,9 @@
 			"fonts/mui.ttf",
 			"css/mui.min.css",
 			"js/basepath.js",
-			"js/copy.js"
+			"js/copy.js",
+			"fonts/mui-icons-extra.ttf",
+			"css/icons-extra.css"
 		],
 		"refer": [
 			"bussinessinfo/buss_detail.html",
@@ -334,7 +336,8 @@
 		],
 		"refer": [
 			"selfsetting/feedback.html",
-			"selfsetting/changepsw.html"
+			"selfsetting/changepsw.html",
+			"selfsetting/about_baosteel.html"
 		]
 	},
 	"selfsetting/feedback.html": {
@@ -737,7 +740,8 @@
 			"css/mui.min.css"
 		],
 		"refer": [
-			"inforguide/detail_inforguide.html"
+			"inforguide/detail_inforguide.html",
+			"inforguide/guide_type_detail.html"
 		]
 	},
 	"inforguide/guide_type_list_base.html": {
@@ -750,6 +754,28 @@
 		],
 		"refer": [
 			"inforguide/guide_type_list.html"
+		]
+	},
+	"selfsetting/about_baosteel.html": {
+		"resources": [
+			"js/app.js",
+			"css/app.css",
+			"css/mui.min.css",
+			"js/mui.min.js",
+			"fonts/mui.ttf"
+		]
+	},
+	"inforguide/guide_type_detail.html": {
+		"resources": [
+			"fonts/mui-icons-extra.ttf",
+			"css/comment.css",
+			"css/image_preview.css",
+			"js/mui.zoom.js",
+			"css/app.css",
+			"css/mui.min.css",
+			"js/mui.previewimage.js",
+			"css/icons-extra.css",
+			"js/mui.view.js"
 		]
 	}
 }

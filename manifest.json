@@ -855,7 +855,9 @@
 					"css/iconfont.css",
 					"fonts/iconfont.ttf",
 					"js/basepath.js",
-					"js/copy.js"
+					"js/copy.js",
+					"fonts/mui-icons-extra.ttf",
+					"css/icons-extra.css"
 				],
 				"refer": [
 					"bussinessinfo/buss_search.html",
@@ -1592,7 +1594,8 @@
 					"css/mui.min.css"
 				],
 				"refer": [
-					"inforguide/detail_inforguide.html"
+					"inforguide/detail_inforguide.html",
+					"inforguide/guide_type_detail.html"
 				],
 				"priority": 0
 			},
@@ -1603,6 +1606,21 @@
 					"css/app.css",
 					"fonts/mui.ttf",
 					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"inforguide/guide_type_detail.html": {
+				"resources": [
+					"fonts/mui-icons-extra.ttf",
+					"css/comment.css",
+					"css/image_preview.css",
+					"js/mui.zoom.js",
+					"css/app.css",
+					"css/mui.min.css",
+					"js/mui.previewimage.js",
+					"css/icons-extra.css",
+					"js/mui.view.js"
 				],
 				"refer": [],
 				"priority": 0

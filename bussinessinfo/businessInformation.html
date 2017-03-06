@@ -8,7 +8,8 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
 		<link rel="stylesheet" href="../css/mui.min.css">
-		<link rel="stylesheet" href="../css/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="../css/icons-extra.css" />
+		
 		<style>
 			html,
 			body {
@@ -45,20 +46,53 @@
 		    /*#pullrefresh{
 		    	margin:50px 0px 0px 0px;//苹果版本
 		    }*/
+		   .buss_main{
+			width: 100%;
+			height: 140px;
+			padding-right:0px;
+			position: fixed;
+		   	/*background-color: #E8E8E8;*/
+		   }
+		   #buss_search{
+		   	font-size: 15px;
+		   	
+		   }
+   		   
+		   
 		</style>
     </head>
 	<body>
 		<header>
 			
 		</header>
-		<div align="center" style="background-color:#FAFAFA ">
-			<input type="search" id="buss_search" class="mui-icon mui-icon-search" placeholder="请输入搜索内容" style="width:250px;height:35px; background-color:#E8E8E8; margin-top: 10px;margin-bottom: 5px;"/>
-			<a id="icon-search"><span class="mui-icon mui-icon-search"></span></a>
-			<!--<a class="mui-pull-left" style="margin:15px 15px 15px 15px;" id="refresh">刷新</a>-->
-			<hr />
-		</div>
+		
 		<div class="mui-content" style="font-size: 15px;" >
-		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+		<span id="main_area" class="buss_main mui-bar" style="margin-top: 0px;">
+			<div align="center">
+				<input type="search" id="buss_search" class="mui-icon mui-icon-search" placeholder="请输入搜索内容" style="width:250px;height:35px; background-color:#E8E8E8; margin-top: 10px;margin-bottom: 5px;"/>
+				<a id="icon-search"><span class="mui-icon mui-icon-search"></span></a>
+			</div>
+			<ul class="mui-table-view mui-grid-view mui-grid-9" style="height: 0px;">
+	           <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-1">
+						<span class="mui-icon mui-icon-flag" id="sign" style="margin-top: -7px;color: blue;font-size: 30px;"><span id="msg_remind"></span>
+						<span class="mui-media-body" style="font-size: 11px;">签到</span></span>
+						</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-1">
+						<span class="mui-icon mui-icon-person" style="margin-top: -7px;color: red;font-size: 30px;" id="like">
+						<span class="mui-media-body" style="font-size: 11px;">我的</span></span>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-1">
+						<span class="mui-icon-extra mui-icon-extra-topic" style="margin-top: 10px;color: green;font-size: 23px;" id="like">
+						<span class="mui-media-body" style="font-size: 11px;">数据导出</span></span>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-1">
+						<span class="mui-icon-extra mui-icon-extra-trend" style="margin-top: 10px;color: green;font-size: 23px;" id="like">
+						<span class="mui-media-body" style="font-size: 11px;">数据导出</span></span>
+				</li>
+	        </ul> 
+			
+		</div>
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper" style="position: absolute;margin-top: 145px;">
 			<div class="mui-scroll">
 				<ul class="mui-table-view mui-table-view-chevron" id="list" style="background-color:#efeff4">
 					
