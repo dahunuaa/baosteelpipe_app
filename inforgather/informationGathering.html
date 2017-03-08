@@ -19,7 +19,7 @@
 			}
 			#middlePopover {
 				height: 300px;
-				width: 100px;
+				width: 150px;
 				text-align:center;
 			}
 			#reportPopover{
@@ -44,12 +44,15 @@
 							<span class="mui-icon mui-icon-list" id="inforgather_list" style="margin: 3px;color: blue"><span id="msg_remind"></span></span>
 							<div class="mui-media-body" >情报列表</div>
 								</a>
-							</li>
+					</li>
 					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-						<!--<a href="#middlePopover" class="mui-btn mui-btn-primary mui-btn-block mui-btn-outlined" style="padding: 5px 20px;">打开弹出菜单</a>-->
 							<a href="#middlePopover"><span class="mui-icon-extra mui-icon-extra-filter"id="rapid_search" style="margin-top: -10px;font-size: 35px;color: green;"></span></a>
 							<div class="mui-media-body" >快速查询</div>
 								</a>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+			                <span class="mui-icon mui-icon-compose" style="margin-top: 3px; font-size: 40px; color: #0062CC;" id="new_gather"></span>
+			                <div class="mui-media-body">新建情报搜集</div>
 					</li>
 					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
 							<span class="mui-icon mui-icon-star" style="margin-top: 4px;color: red;" id="like"></span>
@@ -63,6 +66,7 @@
 			                <a href="#reportPopover"><span class="mui-icon-extra mui-icon-extra-topic" style="margin-top: -10px; font-size: 35px; color: #0062CC;" id="report"></span></a>
 			                <div class="mui-media-body">报表导出</div>
 			        </li>
+			        
 					
 					
 		        </ul> 
@@ -73,6 +77,8 @@
 			<div class="mui-scroll-wrapper">
 				<div class="mui-scroll">
 					<ul class="mui-table-view">
+						<li class="mui-table-view-cell"><a href="#" id="my_inforgather">我的情报搜集</a>
+						</li>
 						<li class="mui-table-view-cell"><a href="#" id="dongbei">东北</a>
 						</li>
 						<li class="mui-table-view-cell"><a href="#" id="xinan">西南</a>
@@ -133,6 +139,23 @@
 					})
 					
 				})
+				//新建情报搜集
+				document.getElementById("new_gather").addEventListener('tap',function(){
+					mui.openWindow({
+						url:"newinformationgathering.html",
+						id:"newinformationgathering",
+					})
+				})
+				//我的情报搜集
+				document.getElementById("my_inforgather").addEventListener('tap',function(){
+					mui.openWindow({
+						url:"myinformationgathering.html",
+						id:"myinformationgathering",
+					})
+				})
+				
+				
+				
 				//情报搜集东北 西南等情报列表
 				var dongbei_list=document.getElementById("dongbei")
 				dongbei_list.addEventListener("tap",function(event){

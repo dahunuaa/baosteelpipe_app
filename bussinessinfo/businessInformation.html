@@ -48,7 +48,7 @@
 		    }*/
 		   .buss_main{
 			width: 100%;
-			height: 140px;
+			height: 240px;
 			padding-right:0px;
 			position: fixed;
 		   	/*background-color: #E8E8E8;*/
@@ -57,6 +57,15 @@
 		   	font-size: 15px;
 		   	
 		   }
+		   #sign_choose{
+				height: 50px;
+				width:170px;
+				color: green;
+				text-align:center;
+			}
+			#mine{
+				width:200px
+			}
    		   
 		   
 		</style>
@@ -73,26 +82,56 @@
 				<a id="icon-search"><span class="mui-icon mui-icon-search"></span></a>
 			</div>
 			<ul class="mui-table-view mui-grid-view mui-grid-9" style="height: 0px;">
-	           <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-1">
-						<span class="mui-icon mui-icon-flag" id="sign" style="margin-top: -7px;color: blue;font-size: 30px;"><span id="msg_remind"></span>
-						<span class="mui-media-body" style="font-size: 11px;">签到</span></span>
-						</li>
-				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-1">
-						<span class="mui-icon mui-icon-person" style="margin-top: -7px;color: red;font-size: 30px;" id="like">
-						<span class="mui-media-body" style="font-size: 11px;">我的</span></span>
+	           <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+						<a href="#sign_choose"><span class="mui-icon mui-icon-flag" id="sign" style="margin-top: -17px;color: blue;font-size: 30px;"></span></a>
+						<span class="mui-media-body" style="font-size: 11px;margin-top: -11px;height:25px;">签到</span>
 				</li>
-				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-1">
+				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+						<a href="#mine"><span class="mui-icon mui-icon-person" style="margin-top: -17px;color: red;font-size: 30px;"></a>
+						<span class="mui-media-body" style="font-size: 11px;margin-top: -11px;height:25px;">我的</span></span>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
 						<span class="mui-icon-extra mui-icon-extra-topic" style="margin-top: 10px;color: green;font-size: 23px;" id="like">
-						<span class="mui-media-body" style="font-size: 11px;">数据导出</span></span>
+						<span class="mui-media-body" style="font-size: 11px;height: 20px;">数据导出</span></span>
 				</li>
-				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-1">
+				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
 						<span class="mui-icon-extra mui-icon-extra-trend" style="margin-top: 10px;color: green;font-size: 23px;" id="like">
 						<span class="mui-media-body" style="font-size: 11px;">数据导出</span></span>
 				</li>
 	        </ul> 
 			
 		</div>
-		<div id="pullrefresh" class="mui-content mui-scroll-wrapper" style="position: absolute;margin-top: 145px;">
+		<div id="sign_choose" class="mui-popover">
+			<div class="mui-popover-arrow"></div>
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view" >
+						<br />
+						<li class="mui-button-row" id="rapid_sign">快速签到</li>
+						<br />
+						<li class="mui-button-row" id="sign_list">我的签到记录</li>
+						<br />
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<div id="mine" class="mui-popover">
+			<div class="mui-popover-arrow"></div>
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view" >
+						<br />
+						<li class="mui-button-row" id="create_buss">新建出差任务</li>
+						<br />
+						<li class="mui-button-row" id="my_buss_list">我的出差记录</li>
+						<br />
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper" style="position: absolute;margin-top: 245px;">
 			<div class="mui-scroll">
 				<ul class="mui-table-view mui-table-view-chevron" id="list" style="background-color:#efeff4">
 					
@@ -108,6 +147,7 @@
 	<script src="../js/app.js"></script>
 	<script type="text/javascript" src="../js/basepath.js" ></script>
 	<script type="text/javascript" src="../js/copy.js" ></script>
+	<script type="text/javascript" src="../js/geolocation.js" ></script>
 	<script>
 		(function($,doc){
 			mui.init({
@@ -128,10 +168,75 @@
 					   tap: true, //默认为true
 					   longtap: true, //默认为false
 					  }}) 
-
+			
+			//我的
+			document.getElementById("create_buss").addEventListener('tap',function () {
+				mui.openWindow({
+			    url:"createNewTask.html",
+			    id:"createNewTask",
+				})
+			})
+			
+			document.getElementById("my_buss_list").addEventListener('tap',function () {
+				mui.openWindow({
+			    url:"myBusinessRecord.html",
+			    id:"myBusinessRecord",
+				})
+			})
+			
+			
+			//快速签到
+			var geolo=""
+			var pos
+			document.getElementById("rapid_sign").addEventListener('tap',function(e){
+				plus.geolocation.getCurrentPosition(function (p){
+					geolo = "地址:"+p.addresses;
+					pos=p;
+				})
+				 mui.confirm(geolo ,"快速签到",["取消","签到"],function(e){
+						if(e.index == 1){
+							mui.ajax({
+								type:"post",
+								url:basepath+"api/v1.0/sign",
+								data:{
+									"access_token":localStorage.getItem("token"),
+									"address":JSON.stringify(pos.address),
+									"lat":pos.coords.latitude,
+									"long":pos.coords.longitude,
+									"addresses":pos.addresses,
+								},
+								async:true,
+								dataType:"json",
+								success:function(data){
+									if(data.response.success =="1")
+									{
+										plus.nativeUI.toast("已经签到")
+									}else{
+										plus.nativeUI.toast("签到失败，请重试！")
+									}
+								},
+								error:function(){
+									plus.nativeUI.toast("请求服务器失败!");
+								}
+								
+							})
+							
+						}
+						
+					});
+				
+			})
+			
+			document.getElementById("sign_list").addEventListener('tap',function(){
+				mui.openWindow({
+					url:"sign_list.html",
+					id:"sign_list"
+				})
+			})
+			
+			
 			var list = document.getElementById("list")	
 			var count = -1;
-			
 			
 			/**
 			 * 上拉加载具体业务实现

@@ -14,16 +14,11 @@
 			body {
 				background-color:#efeff4;
 			}
-			/*#msg_remind{
-				display: block;
-				background: #FF0000;
-				border-radius: 100%;
-				width: 11px;
-				height: 11px;
-				top: 0px;
-				right: 0px;
-				position: absolute;
-			}*/
+			#middlePopover {
+				height: 270px;
+				width: 150px;
+				text-align:center;
+			}
 		</style>
    </head>
 	<body>
@@ -40,6 +35,10 @@
 						<div class="mui-media-body" >指南列表</div>
 				    </li>
 				    <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+			                <span class="mui-icon mui-icon-compose" style="margin-top: 3px; font-size: 40px; color: #0062CC;" id="new_guide"></span>
+			                <div class="mui-media-body">新建信息指南</div>
+					</li>
+				    <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
 							<span class="mui-icon mui-icon-star" style="margin-top: 3px;color: red;" id="like"></span>
 							<div class="mui-media-body">我的收藏</div>
 				    </li>
@@ -47,11 +46,39 @@
 			                <span class="mui-icon-extra mui-icon-extra-trend" style="margin-top: 3px; font-size: 40px; color: #0062CC;" id="statistic"></span>
 			                <div class="mui-media-body">数据统计</div>
 					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+							<a href="#middlePopover"><span class="mui-icon-extra mui-icon-extra-filter"id="rapid_search" style="margin-top: -10px;font-size: 35px;color: green;"></span></a>
+							<div class="mui-media-body" >快速查询</div>
+								</a>
+					</li>
 			        <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
 			                <span class="mui-icon-extra mui-icon-extra-topic" style="margin-top: 3px; font-size: 40px; color: #0062CC;" id="export"></span>
 			                <div class="mui-media-body">报表导出</div>
 			        </li>
 		        </ul> 
+		</div>
+		<div id="middlePopover" class="mui-popover">
+			<div class="mui-popover-arrow"></div>
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell"><a href="#" id="my_inforguide">我的信息指南</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#" id="bijixiaojie">笔记小结</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#" id="yonghuxinxi">用户信息</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#" id="chanpinxinxi">产品信息</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#" id="hangyexinxi">行业信息</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#" id="gongsixinwen">公司新闻</a>
+						</li>
+						
+					</ul>
+				</div>
+			</div>
+
 		</div>
 		
 	    <script src="../js/mui.min.js"></script>
@@ -62,13 +89,67 @@
 			$.init();
 			
 			$.plusReady(function(){
-				var inforguide_list = document.getElementById("inforguide_list")
-				inforguide_list.addEventListener('tap',function(event){
+			var inforguide_list = document.getElementById("inforguide_list")
+			inforguide_list.addEventListener('tap',function(event){
+				mui.openWindow({
+					url:"inforguide_main_base.html",
+					id:"inforguide_main_base",
+				})
+				})
+			//新建信息指南
+			document.getElementById("new_guide").addEventListener('tap',function(event){
+				mui.openWindow({
+					url:"newinformationguide.html",
+					id:"newinformationguide",
+				})
+				})
+			//快速查询
+			document.getElementById("my_inforguide").addEventListener('tap',function(event){
+				mui.openWindow({
+					url:"myInformationGuiding.html",
+					id:"myInformationGuiding",
+				})
+				})
+			document.getElementById("bijixiaojie").addEventListener('tap',function(){
+					localStorage.setItem("guide_type","笔记小结")
 					mui.openWindow({
-						url:"inforguide_main_base.html",
-						id:"inforguide_main_base",
+						url:"guide_type_list_base.html",
+						id:"guide_type_list_base"
 					})
 				})
+			
+			document.getElementById("yonghuxinxi").addEventListener('tap',function(){
+					localStorage.setItem("guide_type","用户信息")
+						mui.openWindow({
+							url:"guide_type_list_base.html",
+							id:"guide_type_list_base"
+						})
+				})
+			
+			document.getElementById("chanpinxinxi").addEventListener('tap',function(){
+					localStorage.setItem("guide_type","产品信息")
+						mui.openWindow({
+							url:"guide_type_list_base.html",
+							id:"guide_type_list_base"
+						})
+				})
+			
+			document.getElementById("hangyexinxi").addEventListener('tap',function(){
+					localStorage.setItem("guide_type","行业信息")
+						mui.openWindow({
+							url:"guide_type_list_base.html",
+							id:"guide_type_list_base"
+						})
+				})
+			
+			document.getElementById("gongsixinwen").addEventListener('tap',function(){
+					localStorage.setItem("guide_type","公司新闻")
+						mui.openWindow({
+							url:"guide_type_list_base.html",
+							id:"guide_type_list_base"
+						})
+				})
+			
 				
 			var inforguide_search=document.getElementById("inforguide_search")
 				inforguide_search.addEventListener("tap",function(event){

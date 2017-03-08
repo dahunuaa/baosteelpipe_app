@@ -87,7 +87,9 @@
 			"inforgather/report.html",
 			"inforgather/statistic.html",
 			"inforgather/gather_list_base.html",
-			"inforgather/area_list_base.html"
+			"inforgather/area_list_base.html",
+			"inforgather/newinformationgathering.html",
+			"inforgather/myinformationgathering.html"
 		]
 	},
 	"echart.html": {
@@ -109,11 +111,15 @@
 			"js/basepath.js",
 			"js/copy.js",
 			"fonts/mui-icons-extra.ttf",
-			"css/icons-extra.css"
+			"css/icons-extra.css",
+			"js/geolocation.js"
 		],
 		"refer": [
 			"bussinessinfo/buss_detail.html",
-			"bussinessinfo/buss_search.html"
+			"bussinessinfo/buss_search.html",
+			"bussinessinfo/sign_list.html",
+			"bussinessinfo/createNewTask.html",
+			"bussinessinfo/myBusinessRecord.html"
 		]
 	},
 	"inforguide/detail_inforguide.html": {
@@ -559,7 +565,9 @@
 			"inforguide/inforguide_main_base.html",
 			"inforguide/inforguide_search.html",
 			"inforguide/inforguide_like_base.html",
-			"inforguide/statistic.html"
+			"inforguide/statistic.html",
+			"inforguide/newinformationguide.html",
+			"inforguide/myInformationGuiding.html"
 		]
 	},
 	"inforguide/inforguide_main_base.html": {
@@ -776,6 +784,17 @@
 			"js/mui.previewimage.js",
 			"css/icons-extra.css",
 			"js/mui.view.js"
+		]
+	},
+	"bussinessinfo/sign_list.html": {
+		"resources": [
+			"css/mui.min.css",
+			"js/basepath.js",
+			"js/app.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"js/mui.js",
+			"js/copy.js"
 		]
 	}
 }

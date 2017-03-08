@@ -134,7 +134,7 @@
                                           +"<br>"+"区域："+value.gather_area+'</a>';	
 						}
                         
-                         list.appendChild(unread_msg_icon)                           
+                         list.appendChild(unread_msg_icon) 
                          list.appendChild(li)
                          
                          li.setAttribute("inforgather_text",li.textContent+"地址："+value.gather_address+"油田："+value.gather_oilfield+"正文："+value.gather_text+"文件地址："+basepath+value.filepath)
@@ -170,6 +170,7 @@
 							    	filename:filename,
 							    	filepath:filepath,
 							    }
+							    
 							})
 								
 								$.ajax({
