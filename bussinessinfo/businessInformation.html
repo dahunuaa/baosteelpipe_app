@@ -63,9 +63,12 @@
 				color: green;
 				text-align:center;
 			}
-			#mine{
+		   #mine{
 				width:200px
 			}
+		   #reportPopover{
+		   	width: 150px;
+		   }
    		   
 		   
 		</style>
@@ -91,12 +94,12 @@
 						<span class="mui-media-body" style="font-size: 11px;margin-top: -11px;height:25px;">我的</span></span>
 				</li>
 				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-						<span class="mui-icon-extra mui-icon-extra-topic" style="margin-top: 10px;color: green;font-size: 23px;" id="like">
-						<span class="mui-media-body" style="font-size: 11px;height: 20px;">数据导出</span></span>
+						<a href="#reportPopover"><span class="mui-icon-extra mui-icon-extra-topic" style="margin-top: -17px;color: green;font-size: 23px;" id="report"></a>
+						<span class="mui-media-body" style="font-size: 11px;height: 20px;">报表导出</span></span>
 				</li>
 				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-						<span class="mui-icon-extra mui-icon-extra-trend" style="margin-top: 10px;color: green;font-size: 23px;" id="like">
-						<span class="mui-media-body" style="font-size: 11px;">数据导出</span></span>
+						<span class="mui-icon-extra mui-icon-extra-trend" style="margin-top: 0px;color: green;font-size: 23px;" id="statistic">
+						<span class="mui-media-body" style="font-size: 11px;height: 20px;">数据导出</span></span>
 				</li>
 	        </ul> 
 			
@@ -138,6 +141,21 @@
 				</ul>
 			</div>
 		</div>	
+		</div>
+		
+		<div id="reportPopover" class="mui-popover">
+			<div class="mui-popover-arrow"></div>
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view">
+						<br />
+						<li class="mui-button-row" id="download">下载报表</li>
+						<br />
+						<li class="mui-button-row" id="open">打开报表</li>
+						<br />
+					</ul>
+				</div>
+			</div>
 		</div>
 		<!--下拉刷新容器-->
 		
@@ -362,6 +380,60 @@
 				})
 					
 				});
+				
+		 //下载文件
+		 var dtask=null;
+				var file_name="";
+				var download = document.getElementById("download")
+				download.addEventListener('tap',function(event){
+					mui.ajax({
+							type:"get",
+							url:basepath+"api/v1.0/report/business?access_token="+localStorage.getItem("token"),
+							async:false,
+							dataType:"json",
+							success:function(data){
+								var download_path = data.response.data.download_path
+								file_name = data.response.data.file_name
+//								alert(download_path+"..."+file_name)
+								
+								var url = download_path;
+							    var options = {method:"GET",file_name:"_doc/"+file_name};
+								dtask = plus.downloader.createDownload(url, options);//目前这种方式仅支持网络文件，本地文件不可以
+							    dtask.addEventListener( "statechanged", function(task,status){
+//						    	alert(task.totalSize)
+						    	if(!dtask){return;}
+						    	switch(task.state) {
+						    		case 1: // 开始
+						    			plus.nativeUI.toast("开始下载...");			    			
+						    		break;
+						    		case 2: // 已连接到服务器
+						    			plus.nativeUI.toast("开始下载...");
+						    		break;
+						    		case 3:	// 已接收到数据
+										plus.nativeUI.toast("下载进度：" +task.downloadedSize+"/"+task.totalSize) 
+						    			
+						    		break;
+						    		case 4:	// 下载完成			    			
+//						    			plus.nativeUI.toast(parseInt(task.totalSize/1024)+"KB") 
+						    			plus.nativeUI.toast("下载完成!点击打开报表，完成查看！");
+						    		break;
+						    	}
+						    } );
+			
+						    dtask.start();
+							},
+							error:function(){
+								plus.nativeUI.toast("服务器连接失败")
+							}
+						})
+				})
+				
+				var openfile = document.getElementById("open")
+				openfile.addEventListener('tap',function(event){
+					plus.runtime.openFile("_doc/"+file_name,{},function(event){
+						plus.nativeUI.toast("打开失败，请重新下载！")
+				    })
+				})
 		}(mui,document))
 		</script>
 

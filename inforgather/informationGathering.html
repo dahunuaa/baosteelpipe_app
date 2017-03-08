@@ -114,7 +114,6 @@
 					</ul>
 				</div>
 			</div>
-
 		</div>
 		
 	    <script src="../js/mui.min.js"></script>
@@ -271,7 +270,7 @@
 				download.addEventListener('tap',function(event){
 					mui.ajax({
 							type:"get",
-							url:basepath+"api/v1.0/report/business?access_token="+localStorage.getItem("token"),
+							url:basepath+"api/v1.0/report/inforgather?access_token="+localStorage.getItem("token"),
 							async:false,
 							dataType:"json",
 							success:function(data){
