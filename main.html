@@ -92,6 +92,7 @@
 				async:false,
 				dataType:"json",
 				success:function(data){
+//					console.info(JSON.stringify(data))
 					if(data.response.data[0].unread_msg == null||data.response.data[0].unread_msg == ""){//读取list的时候需要跟上下标
 						document.getElementById("notice_remind").style.display="none"
 					}

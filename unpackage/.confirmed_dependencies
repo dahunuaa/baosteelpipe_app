@@ -57,7 +57,8 @@
 			"inforguide/myInformationGuiding.html",
 			"inforgather/myinformationgathering.html",
 			"inforgather/newinformationgathering.html",
-			"notice/notice.html"
+			"notice/notice.html",
+			"admin/manage_user.html"
 		]
 	},
 	"inforgather/informationGathering.html": {
@@ -795,6 +796,44 @@
 			"fonts/mui.ttf",
 			"js/mui.js",
 			"js/copy.js"
+		]
+	},
+	"admin/manage_user.html": {
+		"refer": [
+			"admin/add_user.html",
+			"admin/users_list.html"
+		],
+		"resources": [
+			"js/basepath.js",
+			"js/app.js",
+			"js/mui.min.js",
+			"css/app.css",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		]
+	},
+	"admin/add_user.html": {
+		"resources": [
+			"js/mui.picker.js",
+			"js/mui.poppicker.js",
+			"css/mui.min.css",
+			"css/mui.poppicker.css",
+			"css/mui.picker.css",
+			"js/basepath.js",
+			"js/app.js",
+			"js/mui.min.js",
+			"css/app.css",
+			"fonts/mui.ttf"
+		]
+	},
+	"admin/users_list.html": {
+		"resources": [
+			"js/basepath.js",
+			"js/app.js",
+			"js/mui.min.js",
+			"css/app.css",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
 		]
 	}
 }

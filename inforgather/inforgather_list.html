@@ -107,7 +107,8 @@
 					async:true,
 					dataType:"json",
 					success:function(data){
-						
+//						console.info(localStorage.getItem("job_no"))
+//						console.info(JSON.stringify(data))
 						mui('#pullrefresh').pullRefresh().endPullupToRefresh((data.response.data==""||null))	
 						unread_msg = data.response.unread.gather_unread
 						mui.each(data.response.data,function(key,value){

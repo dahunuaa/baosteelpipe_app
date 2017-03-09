@@ -90,10 +90,10 @@
 			
 			
 			$.plusReady(function() {
-					mui.preload({
-						"id": 'main',
-						"url": 'main.html',
-					});
+//					mui.preload({
+//						"id": 'main',
+//						"url": 'main.html',
+//					});
 					
 					//检查 "登录状态/锁屏状态" 结束
 					var loginButton = doc.getElementById('login');
@@ -130,11 +130,13 @@
 						dataType:"json",//后台传json的话这儿需要写成json
 						success: function(data) {
 							if (data.response.success=="1"){
+//								console.info(JSON.stringify(data))
 								localStorage.setItem("token",data.response.data.token);
 								localStorage.setItem("user_id",data.response.data._id);
 								localStorage.setItem("mobile",data.response.data.mobile);
 								localStorage.setItem("name",data.response.data.name);
 								localStorage.setItem("job_no",data.response.data.job_no);
+								localStorage.setItem("scope",data.response.data.scope);
 								mui.openWindow({
 									url:'main.html',
 									id:'main',

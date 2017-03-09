@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>changepsw</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<!--App自定义的css-->
+		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
+		<link href="../css/mui.picker.css" rel="stylesheet" />
+		<link href="../css/mui.poppicker.css" rel="stylesheet" />
+		<style>
+			html,body {
+				background-color: #efeff4;
+			}
+			li{
+				list-style-type:none;/*去掉li前面的小黑点*/
+			}
+			
+		</style>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">新增用户</h1>
+		</header>
+		<div class="mui-content">
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+					<label>工号</label>
+					<input id="job_no" type="text" class="mui-input-clear" placeholder="输入工号" />
+				</div>
+				<div class="mui-input-row">
+					<label>姓名</label>
+					<input id="name" type="text" class="mui-input-clear" placeholder="输入姓名" />
+				</div>
+				<div class="mui-input-row">
+					<label>初始密码</label>
+					<input id="psw" type="text" class="mui-input-clear" placeholder="输入初始密码" />
+				</div>
+				<li class="mui-table-view-cell">
+					<a id="selectusertype" class="mui-navigate-right">
+						用户类型<span id="usertype"style="padding: 0px 0px 0px 45px;"></span>
+					</a>
+				</li>
+				
+			</form>
+			<div class="mui-button-row">
+					<button id="submit" class="mui-btn mui-btn-primary" type="button" onclick="return true;">提交</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button id="cancel" class="mui-btn mui-btn-danger" type="button" onclick="return false;">取消</button>
+				</div>
+		</div>
+
+		</div>
+		<script src="../js/app.js"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/mui.picker.js"></script>
+		<script src="../js/mui.poppicker.js"></script>
+		<script type="text/javascript" src="../js/basepath.js" ></script>
+		<script>
+			(function($,doc){
+				$.init();
+				$.ready(function(){
+					
+					//选择用户类型
+					var user_type = new $.PopPicker();
+					user_type.setData([{
+						value: 'normal',
+						text: '普通用户'
+					},{
+						value: 'backend',
+						text: '后台用户'
+					}]);
+					var showUserPickerButton = doc.getElementById('selectusertype');
+					var usertype = doc.getElementById('usertype');
+					showUserPickerButton.addEventListener('tap', function(event) {
+						user_type.show(function(items) {
+							usertype.innerText = items[0].text;
+							//返回 false 可以阻止选择框的关闭
+//							return false;
+						});
+					}, false);
+					
+					var job_no = document.getElementById("job_no");
+					var name=document.getElementById("name");
+					var psw= document.getElementById("psw");
+					var mobile = document.getElementById("mobile");
+					var scope = document.getElementById("usertype")
+					
+					
+					document.getElementById("submit").addEventListener('tap',function(){
+						if(scope.innerHTML == "普通用户"){
+							var user_scope ="normal"
+						}else if(scope.innerHTML == "后台用户"){
+							var user_scope ="backend"
+						}
+						if(job_no.value==""){
+							plus.nativeUI.toast("请输入工号")
+						}else if(name.value==""){
+							plus.nativeUI.toast("请填写姓名")
+						}else if(psw.value==""){
+							plus.nativeUI.toast("请填写密码")
+						}else if(scope.innerText==""){
+							plus.nativeUI.toast("请选择用户类型")
+						}else{
+						mui.ajax({
+							type:"post",
+							url:basepath+"api/v1.0/user/register",
+							data:{
+								"job_no":job_no.value,
+								"password":psw.value,
+								"name":name.value,
+								"scope":user_scope,
+								"mobile":job_no.value,
+							},
+							dataType:"json",
+							async:"true",
+							success:function(data){
+								if(data.response.success=="1"){
+									plus.nativeUI.toast("新增用户成功！")
+									mui.back()
+								}else{
+									plus.nativeUI.toast(data.response.return_code)
+								}
+							},error:function(){
+								
+							}
+						})
+						}
+					})
+					 document.getElementById("cancel").addEventListener('tap',function(event){
+					   	mui.back();
+					   })
+					
+				});
+				
+			})(mui,document)
+		</script>
+	</body>
+</html>

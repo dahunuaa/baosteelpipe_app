@@ -1177,7 +1177,8 @@
 					"fileupload.html",
 					"downloadfile.html",
 					"user_account.html",
-					"echart.html"
+					"echart.html",
+					"admin/manage_user.html"
 				],
 				"priority": 0
 			},
@@ -1642,6 +1643,49 @@
 					"fonts/mui.ttf",
 					"js/mui.js",
 					"js/copy.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"admin/manage_user.html": {
+				"resources": [
+					"js/basepath.js",
+					"js/app.js",
+					"js/mui.min.js",
+					"css/app.css",
+					"fonts/mui.ttf",
+					"css/mui.min.css"
+				],
+				"refer": [
+					"admin/add_user.html",
+					"admin/users_list.html"
+				],
+				"priority": 0
+			},
+			"admin/add_user.html": {
+				"resources": [
+					"js/mui.picker.js",
+					"js/mui.poppicker.js",
+					"css/mui.min.css",
+					"css/mui.poppicker.css",
+					"css/mui.picker.css",
+					"js/basepath.js",
+					"js/app.js",
+					"js/mui.min.js",
+					"css/app.css",
+					"fonts/mui.ttf"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"admin/users_list.html": {
+				"resources": [
+					"js/basepath.js",
+					"js/app.js",
+					"js/mui.min.js",
+					"css/app.css",
+					"fonts/mui.ttf",
+					"css/mui.min.css"
 				],
 				"refer": [],
 				"priority": 0
