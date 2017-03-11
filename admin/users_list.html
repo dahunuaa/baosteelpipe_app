@@ -114,7 +114,10 @@
 								
 								mui.confirm("是否删除该用户？","",["取消","删除"],function(e){
 									if(e.index==1){
-										mui.ajax({
+										if(scope == "admin"){
+											plus.nativeUI.toast("您无权限删除该用户！");
+										}else{
+											mui.ajax({
 											type:"delete",
 											url:basepath+"api/v1.0/user/"+id+"?access_token="+localStorage.getItem("token"),
 											data:{
@@ -135,6 +138,8 @@
 												plus.nativeUI.toast("请求服务器失败!");
 											}
 										})
+										}
+										
 									}
 								})
 								
