@@ -44,7 +44,7 @@
 				</div>
 				<li class="mui-table-view-cell">
 					<a id="selectusertype" class="mui-navigate-right">
-						用户类型<span id="usertype"style="padding: 0px 0px 0px 45px;"></span>
+						用户类型<span id="usertype"style="padding: 0px 0px 0px 45px;" ></span>
 					</a>
 				</li>
 				
@@ -70,13 +70,14 @@
 					var user_type = new $.PopPicker();
 					user_type.setData([{
 						value: 'normal',
-						text: '普通用户'
+						text: '普通用户',
 					},{
 						value: 'backend',
 						text: '后台用户'
 					}]);
 					var showUserPickerButton = doc.getElementById('selectusertype');
 					var usertype = doc.getElementById('usertype');
+					usertype.innerText = "普通用户";
 					showUserPickerButton.addEventListener('tap', function(event) {
 						user_type.show(function(items) {
 							usertype.innerText = items[0].text;

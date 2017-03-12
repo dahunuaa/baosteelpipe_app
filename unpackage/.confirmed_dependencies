@@ -834,6 +834,19 @@
 			"css/app.css",
 			"fonts/mui.ttf",
 			"css/mui.min.css"
+		],
+		"refer": [
+			"admin/user_search.html"
+		]
+	},
+	"admin/user_search.html": {
+		"resources": [
+			"css/app.css",
+			"css/mui.min.css",
+			"js/basepath.js",
+			"js/app.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf"
 		]
 	}
 }

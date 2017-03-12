@@ -11,22 +11,7 @@
 			body {
 				background-color:#efeff4;
 			}
-			.mui-table-view-cell{
-		    	/*border-radius: 30px;*/
-		    	margin-left: 10px;
-		    	/*margin-right: 20px;*/
-		    	/*background-color:#D8D8D8;*/
-		    	margin-bottom: 10px;
-		    }
-		   .mui-icon-unread{
-		   	  height: 10px;
-		   	  width: 10px;
-		      margin-right: 0px;
-		      background-color:red;
-		      border-radius: 15px;
-		      float:left;/*先将前面的符号改成浮动型的再改margin-top就可以和数据对齐了*/
-		      margin-top:40px;
-		    }
+			
 		</style>
 
 	</head>
@@ -40,7 +25,7 @@
 		
 		<div class="mui-content" style="font-size: 16px;" >
 			<div align="center" style="background-color:#FAFAFA">
-				<input type="search" id="inforguide_search" class="mui-icon mui-icon-search" placeholder="请输入搜索内容" style="width:250px;height:35px; background-color:#E8E8E8; margin-top: 10px;margin-bottom: 5px;"/>
+				<a href="#user_search_pop"><input type="search" id="user_search" class="mui-icon mui-icon-search" placeholder="请输入搜索内容" style="width:250px;height:35px; background-color:#E8E8E8; margin-top: 10px;margin-bottom: 5px;"/></a>
 				<a id="icon-search"><span class="mui-icon mui-icon-search"></span></a>
 				<hr />
 			</div>
@@ -52,7 +37,23 @@
 			</div>
 		</div>
 		</div>
-		
+		<div id="user_search_pop" class="mui-popover">
+			<br />
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+					<label>工号</label>
+					<input id="job_no" type="text" class="mui-input-clear" placeholder="输入工号" />
+				</div>
+				<div class="mui-input-row">
+					<label>姓名</label>
+					<input id="name" type="text" class="mui-input-clear" placeholder="输入姓名" />
+				</div>
+			</form>
+			<div class="mui-button-row">
+				<button id="submit" class="mui-btn mui-btn-primary" type="button">查询</button>
+			</div>
+			<br />
+		</div>
 		
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/app.js"></script>
@@ -172,7 +173,20 @@
 					mui('#pullrefresh').pullRefresh().pullupLoading();
 				});
 			}
-			
+			var job_no =document.getElementById("job_no");
+			var name =document.getElementById("name");
+			document.getElementById("submit").addEventListener('tap',function(){
+				mui.openWindow({
+					url:"user_search.html",
+					id:"user_search",
+					
+				extras:{
+					job_no:job_no.value,
+					name:name.value
+				}
+				
+				})
+			})
 			
 		}(mui,document))
 		</script>
