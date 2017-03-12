@@ -932,7 +932,11 @@
 					"css/comment.css",
 					"js/basepath.js",
 					"fonts/mui-icons-extra.ttf",
-					"css/icons-extra.css"
+					"css/icons-extra.css",
+					"js/mui.zoom.js",
+					"js/mui.previewimage.js",
+					"js/mui.view.js",
+					"css/image_preview.css"
 				],
 				"refer": [],
 				"priority": 0
@@ -1116,7 +1120,12 @@
 					"css/mui.min.css",
 					"css/mui.poppicker.css",
 					"css/mui.picker.css",
-					"js/basepath.js"
+					"js/basepath.js",
+					"img/iconfont-tianjia.png",
+					"js/mui.zoom.js",
+					"js/selectpic.js",
+					"js/mui.previewimage.js",
+					"js/mui.view.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -1146,7 +1155,12 @@
 					"css/mui.min.css",
 					"css/mui.poppicker.css",
 					"css/mui.picker.css",
-					"js/basepath.js"
+					"js/basepath.js",
+					"img/iconfont-tianjia.png",
+					"js/mui.zoom.js",
+					"js/selectpic.js",
+					"js/mui.previewimage.js",
+					"js/mui.view.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -1259,7 +1273,8 @@
 					"css/mui.min.css",
 					"js/mui.js",
 					"js/mui.min.js",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"js/basepath.js"
 				],
 				"refer": [
 					"inforgather/detail_inforgather.html"
@@ -1276,7 +1291,8 @@
 					"js/copy.js"
 				],
 				"refer": [
-					"inforgather/detail_inforgather.html"
+					"inforgather/detail_inforgather.html",
+					"inforgather/inforGathering_search.html"
 				],
 				"priority": 0
 			},
@@ -1502,7 +1518,11 @@
 					"js/common.js",
 					"css/app.css",
 					"css/icons-extra.css",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"css/image_preview.css",
+					"js/mui.zoom.js",
+					"js/mui.previewimage.js",
+					"js/mui.view.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -1571,7 +1591,11 @@
 					"js/common.js",
 					"css/app.css",
 					"css/mui.min.css",
-					"css/icons-extra.css"
+					"css/icons-extra.css",
+					"css/image_preview.css",
+					"js/mui.zoom.js",
+					"js/mui.previewimage.js",
+					"js/mui.view.js"
 				],
 				"refer": [],
 				"priority": 0

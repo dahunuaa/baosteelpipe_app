@@ -7,6 +7,7 @@
 		<link href="../css/mui.min.css" rel="stylesheet" />
         <link rel="stylesheet" type="text/css" href="../css/app.css"/>
         <link rel="stylesheet" href="../css/comment.css" />
+        <link rel="stylesheet" href="../css/image_preview.css" />
         <link rel="stylesheet" type="text/css" href="../css/icons-extra.css" />
 		<style type="text/css">
 			body {
@@ -57,6 +58,17 @@
 				<button id="downloadfile" class="mui-btn mui-btn-primary" type="button" onclick="return true;" >点击下载</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<button id="openfile" class="mui-btn mui-btn-danger" type="button" onclick="return false;">打开文件</button>
 			</div>	
+			
+			<p style="display: none;" id="picture_down">
+			<img id="picture_src" src="" hspace="5" vspace="5"   style="width: -webkit-fill-available;" data-preview-src="" data-preview-group="1"></img>
+			</p>
+			<p style="display: none;" id="picture_down2">
+			<img id="picture_src2" src="" hspace="5" vspace="5"   style="width: -webkit-fill-available;" data-preview-src="" data-preview-group="1"></img>
+			</p>
+			<p style="display: none;" id="picture_down3">
+			<img id="picture_src3" src="" hspace="5" vspace="5"   style="width: -webkit-fill-available;" data-preview-src="" data-preview-group="1"></img>
+			</p>
+			<br/>
 	        
 	        <span id="comment_area">评论区：</span>
 			
@@ -82,6 +94,9 @@
 		<script src="../js/app.js"></script>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/common.js"></script>
+		<script src="../js/mui.view.js "></script>
+		<script src="../js/mui.zoom.js"></script>
+		<script src="../js/mui.previewimage.js"></script>
 		<script type="text/javascript" src="../js/basepath.js" ></script>
 		<script>
 		 //点击下载和打开按钮中的onclick时间的tap按钮不能放在（function（$,doc）{mui,document}下面 要不然不好使）
@@ -117,6 +132,9 @@
 					var gather_time = document.getElementById("gather_time");
 					var file_to_download = document.getElementById("file_to_download");
 					var file_size = document.getElementById("filesize")
+					var pic_path = document.getElementById("pic_path");
+					var pic_path2 = document.getElementById("pic_path2");
+					var pic_path3 = document.getElementById("pic_path3");
 					
 					//获取前一个页面传过来的值
 					var self = plus.webview.currentWebview();//必须用plusReady 来获取前面传过来的值
@@ -129,6 +147,9 @@
 					var inforgather_text = self.gather_text
 					var infor_gather_oil_field = self.gather_oil_field
 					var time = self.gather_time
+					var pic_path = self.pic_path
+					var pic_path2 = self.pic_path2
+					var pic_path3 = self.pic_path3
 					var file_name = self.filename
 					var filepath = self.filepath
 					if(file_name == "null"||file_name ==""||file_name=="undefined"){
@@ -146,6 +167,25 @@
 					gather_oil_field.innerHTML=infor_gather_oil_field
 					gather_text.innerHTML=inforgather_text
 					file_to_download.innerHTML=file_name	
+					var pic_download = document.getElementById("picture_down")
+					var pic_download2 = document.getElementById("picture_down2")
+					var pic_download3 = document.getElementById("picture_down3")
+					
+					if(pic_path!="null"&&pic_path!=""&&pic_path!="undefined"){
+					pic_download.style.display = "block"
+					document.getElementById("picture_src").src=pic_path
+					
+					}
+					if(pic_path2!="null"&&pic_path2!=""&&pic_path2!="undefined"){
+					pic_download2.style.display = "block"
+					document.getElementById("picture_src2").src=pic_path2
+					
+					}
+					if(pic_path3!="null"&&pic_path3!=""&&pic_path3!="undefined"){
+					pic_download3.style.display = "block"
+					document.getElementById("picture_src3").src=pic_path3
+					
+					}
 					
 					//收藏操作
 					like_style = document.getElementById("like")

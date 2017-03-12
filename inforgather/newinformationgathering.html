@@ -61,10 +61,18 @@
 				</form>
 				<div>
         		<br/>
+        		<label>&nbsp;&nbsp;&nbsp;上传图片（可选）</label>
+				<br />
+				<img class="picture" id="pic_1" src="../img/iconfont-tianjia.png" style="margin-left: 20px; height: 100px;">
+				<img class="picture" id="pic_2" src="../img/iconfont-tianjia.png" style="margin-left: 20px; height: 100px;">
+				<img class="picture" id="pic_3" src="../img/iconfont-tianjia.png" style="margin-left: 20px; height: 100px;">
+				<br/> 
 				<div class="mui-button-row">
 					<button id="newgather_submit" class="mui-btn mui-btn-primary" type="button" onclick="return true;">提交</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<button id="newgather_cancel" class="mui-btn mui-btn-danger" type="button" onclick="return false;">取消</button>
 				</div>
+				<br />
+				<br />
 		
 			
 		</div>
@@ -73,6 +81,10 @@
 		<script src="../js/mui.picker.js"></script>
 		<script src="../js/mui.poppicker.js"></script>
 		<script type="text/javascript" src="../js/basepath.js" ></script>
+		<script src="../js/mui.view.js "></script>
+		<script src="../js/mui.zoom.js"></script>
+		<script src="../js/mui.previewimage.js"></script>
+		<script type="text/javascript" src="../js/selectpic.js" ></script>
 		<script>
 		(function($, doc) {
 				mui.init();
@@ -111,6 +123,23 @@
 						});
 					}, false);
 					
+					//上传图片
+				var upload_img=""
+				var carmer_1 = doc.getElementById('pic_1')
+				carmer_1.addEventListener('tap', function(event) {
+					selectpic("pic_1");
+				});
+				
+				var carmer_2 = doc.getElementById('pic_2')
+				carmer_2.addEventListener('tap', function(event) {
+					selectpic("pic_2");
+				});
+				
+				var carmer_3 = doc.getElementById('pic_3')
+				carmer_3.addEventListener('tap', function(event) {
+					selectpic("pic_3");
+				});
+					
 			     //提交出差任务
 //			        var editorBox = doc.getElementById('editor');
 //			        var editornameBox = doc.getElementById('editor_name');
@@ -128,6 +157,29 @@
 					})
 					
 					newgather_submitButton.addEventListener('tap', function(event) {
+						var f1 = localStorage.getItem("pic_1");
+						var f2 = localStorage.getItem("pic_2");
+						var f3 = localStorage.getItem("pic_3");
+						if (f1==""||f1=="undefined"||f1==null) {
+							var f1_base64 = ""
+						} else{
+							var f1_base64 = f1.split(',')[1]
+						}
+						if (f2==""||f2=='undefined'||f2==null) {
+							var f2_base64 = ""
+						} else{
+							var f2_base64 = f2.split(',')[1]
+						}
+						if (f3==""||f3=='undefined'||f3==null) {
+							var f3_base64 = ""
+						} else{
+							var f3_base64 = f3.split(',')[1]
+						}
+						
+						upload_img = [f1_base64,f2_base64,f3_base64]
+						localStorage.removeItem("pic_1");
+						localStorage.removeItem("pic_2");
+						localStorage.removeItem("pic_3");
 						if(titleBox.value==""){
 							plus.nativeUI.toast("请输入标题")
 						}else if(addressBox.value==""){
@@ -175,6 +227,7 @@
 								"gather_area":areaBox.innerText,
 								"gather_text":textareaBox.value,
 								"gather_oilfield":oil_fieldBox.value,
+								"images_list":JSON.stringify(upload_img),
 								"filename":window.filename,
 								"filepath":window.filepath,
 							},

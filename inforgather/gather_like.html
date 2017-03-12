@@ -70,6 +70,9 @@
 					 li.setAttribute("gathering_text",value.gather_text);
 					 li.setAttribute("gather_oil_field",value.gather_oilfield);
 					 li.setAttribute("time",value.last_updated_time);
+					 li.setAttribute("pic_path",value.images[0]);
+					li.setAttribute("pic_path2",value.images[1]);
+					li.setAttribute("pic_path3",value.images[2]);
 					 li.setAttribute("filename",value.filename);
 					 li.setAttribute("filepath",value.filepath);
 					li.innerHTML ='<a class="mui-navigate-right"'+"&nbsp&nbsp&nbsp"+"编辑者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time+"<br>" +"标题："+value.gather_title 
@@ -89,6 +92,9 @@
 							var gather_text = this.getAttribute("gathering_text")
 							var gather_oil_field = this.getAttribute("gather_oil_field")
 							var time = this.getAttribute("time")
+							var pic_path = this.getAttribute("pic_path")
+							var pic_path2 = this.getAttribute("pic_path2")
+							var pic_path3 = this.getAttribute("pic_path3")
 							var filename = this.getAttribute("filename")
 							var filepath = this.getAttribute("filepath")
 												
@@ -106,6 +112,9 @@
 						    	gather_text:gather_text,
 						    	gather_oil_field:gather_oil_field,
 						    	gather_time:time,
+						    	pic_path:pic_path,
+						    	pic_path2:pic_path2,
+						    	pic_path3:pic_path3,
 						    	filename:filename,
 						    	filepath:filepath,
 						    }

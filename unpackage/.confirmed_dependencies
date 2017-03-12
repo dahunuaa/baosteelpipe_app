@@ -169,12 +169,17 @@
 			"css/comment.css",
 			"js/basepath.js",
 			"fonts/mui-icons-extra.ttf",
-			"css/icons-extra.css"
+			"css/icons-extra.css",
+			"js/mui.zoom.js",
+			"js/mui.previewimage.js",
+			"js/mui.view.js",
+			"css/image_preview.css"
 		]
 	},
 	"inforgather/inforgather_list.html": {
 		"refer": [
-			"inforgather/detail_inforgather.html"
+			"inforgather/detail_inforgather.html",
+			"inforgather/inforGathering_search.html"
 		],
 		"resources": [
 			"js/app.js",
@@ -289,6 +294,9 @@
 			"css/mui.poppicker.css",
 			"css/mui.picker.css",
 			"js/basepath.js"
+		],
+		"refer": [
+			"inforgather/inforgather_search_content.html"
 		]
 	},
 	"inforguide/inforguide_search.html": {
@@ -462,7 +470,12 @@
 			"fonts/mui.ttf",
 			"css/mui.min.css",
 			"css/mui.poppicker.css",
-			"css/mui.picker.css"
+			"css/mui.picker.css",
+			"img/iconfont-tianjia.png",
+			"js/mui.zoom.js",
+			"js/selectpic.js",
+			"js/mui.previewimage.js",
+			"js/mui.view.js"
 		]
 	},
 	"notice/notice.html": {
@@ -534,7 +547,12 @@
 			"js/basepath.js",
 			"js/app.js",
 			"js/mui.min.js",
-			"fonts/mui.ttf"
+			"fonts/mui.ttf",
+			"img/iconfont-tianjia.png",
+			"js/mui.zoom.js",
+			"js/selectpic.js",
+			"js/mui.previewimage.js",
+			"js/mui.view.js"
 		]
 	},
 	"notice/notice_main.html": {
@@ -654,7 +672,11 @@
 			"js/common.js",
 			"css/app.css",
 			"css/icons-extra.css",
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"css/image_preview.css",
+			"js/mui.zoom.js",
+			"js/mui.previewimage.js",
+			"js/mui.view.js"
 		]
 	},
 	"inforgather/report.html": {
@@ -720,7 +742,11 @@
 			"js/common.js",
 			"css/app.css",
 			"css/mui.min.css",
-			"css/icons-extra.css"
+			"css/icons-extra.css",
+			"css/image_preview.css",
+			"js/mui.zoom.js",
+			"js/mui.previewimage.js",
+			"js/mui.view.js"
 		]
 	},
 	"inforguide/statistic.html": {
@@ -847,6 +873,18 @@
 			"js/app.js",
 			"js/mui.min.js",
 			"fonts/mui.ttf"
+		]
+	},
+	"inforgather/inforgather_search_content.html": {
+		"resources": [
+			"css/mui.min.css",
+			"js/mui.js",
+			"js/basepath.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf"
+		],
+		"refer": [
+			"inforgather/detail_inforgather.html"
 		]
 	}
 }

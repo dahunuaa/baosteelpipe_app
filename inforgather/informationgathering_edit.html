@@ -69,6 +69,12 @@
 				</form>
 				<div>
         		<br/>
+        		<label>&nbsp;&nbsp;&nbsp;上传图片（可选）</label>
+				<br />
+				<img class="picture" id="pic_1" src="../img/iconfont-tianjia.png" style="margin-left: 20px; height: 100px;">
+				<img class="picture" id="pic_2" src="../img/iconfont-tianjia.png" style="margin-left: 20px; height: 100px;">
+				<img class="picture" id="pic_3" src="../img/iconfont-tianjia.png" style="margin-left: 20px; height: 100px;">
+				<br/> 
 				<div class="mui-button-row">
 					<button id="inforgather_alter" class="mui-btn mui-btn-primary" type="button" onclick="return true;">确定</button>&nbsp;&nbsp;
 					<button id="inforgather_delete" class="mui-btn mui-btn-danger" type="button" onclick="return false;">删除</button>
@@ -80,6 +86,10 @@
 		<script src="../js/mui.picker.js"></script>
 		<script src="../js/mui.poppicker.js"></script>
 		<script type="text/javascript" src="../js/basepath.js" ></script>
+		<script src="../js/mui.view.js "></script>
+		<script src="../js/mui.zoom.js"></script>
+		<script src="../js/mui.previewimage.js"></script>
+		<script type="text/javascript" src="../js/selectpic.js" ></script>
 		<script>
 		(function($, doc) {
 				$.init();
@@ -142,8 +152,27 @@
 					var gather_address = self.gather_address
 					var gather_text = self.gather_text
 					var gather_oil_field = self.gather_oil_field
+					var pic_path =self.pic_path
+					var pic_path2 =self.pic_path2
+					var pic_path3 =self.pic_path3
 					var filename = self.filename
 					var filepath = self.filepath
+					if(pic_path=="undefined"||pic_path==""||pic_path==NaN){
+						document.getElementById("pic_1").src="../img/iconfont-tianjia.png"
+					}else{
+						document.getElementById("pic_1").src=pic_path
+					}
+					
+					if(pic_path2=="undefined"||pic_path2==""||pic_path2==NaN){
+						document.getElementById("pic_2").src="../img/iconfont-tianjia.png"
+					}else{
+						document.getElementById("pic_2").src=pic_path2
+					}
+					if(pic_path3=="undefined"||pic_path3==""||pic_path3==NaN){
+						document.getElementById("pic_3").src="../img/iconfont-tianjia.png"
+					}else{
+						document.getElementById("pic_3").src=pic_path3
+					}
 					if(filename!=""&&filename!="null"){
 						plus.nativeUI.toast("已选择文件："+filename)
 					}
@@ -157,7 +186,22 @@
 					textareaBox.value=gather_text
 					oil_fieldBox.value=gather_oil_field
 					
+					//上传图片
+					var upload_img=""
+					var carmer_1 = doc.getElementById('pic_1')
+					carmer_1.addEventListener('tap', function(event) {
+						selectpic("pic_1");
+					});
 					
+					var carmer_2 = doc.getElementById('pic_2')
+					carmer_2.addEventListener('tap', function(event) {
+						selectpic("pic_2");
+					});
+					
+					var carmer_3 = doc.getElementById('pic_3')
+					carmer_3.addEventListener('tap', function(event) {
+						selectpic("pic_3");
+					});
 					
 					document.getElementById("cancel_file").addEventListener('tap',function(e){
 		          		var obj= document.getElementById("file_up");
@@ -172,6 +216,38 @@
 					
 					
 					inforgather_alterButton.addEventListener('tap', function(event) {
+						var f1 = localStorage.getItem("pic_1");
+						var f2 = localStorage.getItem("pic_2");
+						var f3 = localStorage.getItem("pic_3");
+						
+						//当图片是撤销图片时候是“”，当图片是没有修改的时候是null
+						if (f1=="") {
+							var f1_base64 = ""
+						}else if(f1==null){
+							var f1_base64 =pic_path
+						} else{
+							var f1_base64 = f1.split(',')[1]
+						}
+						if (f2=="") {
+							var f2_base64 = ""
+						}else if(f2==null){
+							var f2_base64 =pic_path2
+						} else{
+							var f2_base64 = f2.split(',')[1]
+						}
+						if (f3=="") {
+							var f3_base64 = ""
+						}else if(f3==null){
+							var f3_base64 =pic_path3
+						} else{
+							var f3_base64 = f3.split(',')[1]
+						}
+						
+						upload_img = [f1_base64,f2_base64,f3_base64]
+						localStorage.removeItem("pic_1");
+						localStorage.removeItem("pic_2");
+						localStorage.removeItem("pic_3");
+						
 						if(titleBox.value==""){
 							plus.nativeUI.toast("请输入标题")
 						}else if(areaBox.innerText==""){
@@ -213,6 +289,7 @@
 								"gather_area":areaBox.innerText,
 								"gather_text":textareaBox.value,
 								"gather_oilfield":oil_fieldBox.value,
+								"images_list":JSON.stringify(upload_img),
 								"filename":window.filename,
 								"filepath":window.filepath,
 								
