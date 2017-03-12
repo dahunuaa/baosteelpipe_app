@@ -49,7 +49,16 @@
 				<div class="mui-input-row" style="margin: 10px 5px;">
 					<textarea id="textarea" rows="5" placeholder="请填写正文"></textarea>
 				</div>	
-				
+				<form id="uploadForm" style="margin-top: -15px;">
+				<label>&nbsp;&nbsp;&nbsp;上传文件（可选）</label>
+				<br/>
+				<input type="file" name="file" id="file_up" style="margin-top: 10px; margin-left: 12px; "/>
+				<br/>
+				<button id="cancel_file"  type="button"style="margin-top: 10px; margin-left: 12px; height: 30px; width: 85px; background-color:skyblue"  >撤销文件</button>
+				</form>
+				<br />
+				<br />
+				<div>
 				<label>&nbsp;&nbsp;&nbsp;上传图片（可选）</label>
 				<br />
 				<img class="picture" id="pic_1" src="../img/iconfont-tianjia.png" style="margin-left: 20px; height: 100px;">
@@ -136,6 +145,10 @@
 					var newguide_submitButton = doc.getElementById("newguide_submit");
 					var newguide_cancelButton = doc.getElementById('newguide_cancel');
 					
+					document.getElementById("cancel_file").addEventListener('tap',function(e){
+		          		var obj= document.getElementById("file_up");
+		          		obj.outerHTML = obj.outerHTML
+					})
 					
 					newguide_submitButton.addEventListener('tap', function(event) {
 						var f1 = localStorage.getItem("pic_1");
@@ -169,7 +182,33 @@
 						}else if(textareaBox.value==""){
 							plus.nativeUI.toast("请填写正文")
 						}else{
-						var wt=plus.nativeUI.showWaiting("正在提交...");
+							//必须把下面两行代码放在这儿 如果放在刚开始不行
+							var  file = document.getElementById("file_up").files[0];
+							var formData = new FormData($("#uploadForm")[0]);
+							formData.append("access_token",localStorage.getItem("token"))//上传的formData可以添加json数组，下面的另一个ajax完全可以直接添加进来
+							var wt  = plus.nativeUI.showWaiting("正在提交...");
+							if(file !=""&&file !=undefined){
+								origin_name=file.name
+								$.ajax({
+								type:"post",
+								url:basepath+"api/v1.0/file/upload",
+								data:formData,
+								async: false,//想把data值赋给一个全局变量 然后给下一个ajax里面用，必须将此处改为false，应为js是非阻塞的，会同时执行多个ajax
+//								cache:false,
+								contentType:false,
+								processData:false,
+								dataType:"json",
+								success:function(data){
+									window.filepath = data.response.data.file_path
+									window.filename = data.response.data.file_name
+								},
+								error:function(data){
+									plus.nativeUI.toast("上传失败！");
+								}
+							});	
+							}
+							
+							
 						$.ajax({
 						type: "post",
 						url: basepath+"api/v1.0/inforguide",
@@ -179,9 +218,11 @@
 							"guide_type":categoryBox.innerText,
 							"guide_text":textareaBox.value,
 							"images_list":JSON.stringify(upload_img),
+							"filename":window.filename,
+							"filepath":window.filepath,
 							
 						},
-						async: true,
+						async: false,
 						dataType:"json",//如果返回的是str，那么这个地方必须用text，用json报错
 						success: function(data) {
 //							alert(JSON.stringify(data))

@@ -59,7 +59,7 @@
 					<textarea id="textarea" rows="5" placeholder="请填写正文"></textarea>
 				</div>
 				<form id="uploadForm" style="margin-top: -15px;">
-				<label>&nbsp;&nbsp;&nbsp;上传文件（可选）【小于5M】</label>
+				<label>&nbsp;&nbsp;&nbsp;上传文件（可选）</label>
 				<br/>
 				
 				<input type="file" name="file" id="file_up" style="margin-top: 10px; margin-left: 12px; "/>
@@ -294,7 +294,7 @@
 								"filepath":window.filepath,
 								
 							},
-							async: true,
+							async: false,
 							dataType:"json",
 							success: function(data) {
 								if (data.response.success=="1")

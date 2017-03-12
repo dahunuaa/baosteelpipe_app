@@ -51,6 +51,14 @@
         <span >类别:</span>&nbsp;&nbsp;&nbsp;<span id="guide_category"></span>   
         <br />
         <span style="border-left:20px;">正文:</span>&nbsp;&nbsp;&nbsp;<span id="guide_text"></span>
+        <br />
+        <span>文件：</span><span id="file_to_download"></span>
+		<br/>
+		<span id="processspan">下载进度：</span><span id="processtext"></span>
+		<div class="mui-button-row">
+			<button id="downloadfile" class="mui-btn mui-btn-primary" type="button" onclick="return true;" >点击下载</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<button id="openfile" class="mui-btn mui-btn-danger" type="button" onclick="return false;">打开文件</button>
+		</div>	
         <p style="display: none;" id="picture_down">
 		<img id="picture_src" src="" hspace="5" vspace="5"   style="width: -webkit-fill-available;" data-preview-src="" data-preview-group="1"></img>
 		</p>
@@ -108,6 +116,8 @@
 					var guide_category = document.getElementById('guide_category');
 					var guide_text = document.getElementById("guide_text");
 					var guide_time = document.getElementById("guide_time");
+					var file_to_download = document.getElementById("file_to_download");
+					var file_size = document.getElementById("filesize")
 					var pic_path = document.getElementById("pic_path");
 					var pic_path2 = document.getElementById("pic_path2");
 					var pic_path3 = document.getElementById("pic_path3");
@@ -124,6 +134,14 @@
 					var pic_path = self.pic_path
 					var pic_path2 = self.pic_path2
 					var pic_path3 = self.pic_path3
+					var file_name = self.filename
+					var filepath = self.filepath
+					if(file_name == "null"||file_name ==""||file_name=="undefined"){
+						file_name = "无"
+						document.getElementById("processspan").style.display="none"
+						document.getElementById("downloadfile").style.display ="none"
+						document.getElementById("openfile").style.display="none"
+					}	
 				
 					title.innerHTML=guideinfor_title
 					guide_id.innerHTML=guideinfor_id
@@ -131,6 +149,7 @@
 					guide_name.innerHTML=guideinfor_name
 					guide_category.innerHTML=guideinfor_category
 					guide_text.innerHTML=guideinfor_text
+					file_to_download.innerHTML=file_name
 					
 					var pic_download = document.getElementById("picture_down")
 					var pic_download2 = document.getElementById("picture_down2")
@@ -228,6 +247,47 @@
 						}
 					})
 					
+					//文件下载
+					var processtext = document.getElementById("processtext")
+					var dtask=null;
+					var fileName=file_name;
+					document.getElementById("downloadfile").addEventListener('tap',function(e){
+						if(file_name==""){
+							plus.nativeUI.toast("无文件可下载！")
+						}else{
+							var url = filepath;
+						    var options = {method:"GET",filename:"_doc/"+fileName};
+							dtask = plus.downloader.createDownload(url, options);//目前这种方式仅支持网络文件，本地文件不可以
+						    dtask.addEventListener( "statechanged", function(task,status){
+//						    	alert(task.totalSize)
+						    	if(!dtask){return;}
+						    	switch(task.state) {
+						    		case 1: // 开始
+						    			plus.nativeUI.toast("开始下载...");			    			
+						    		break;
+						    		case 2: // 已连接到服务器
+						    			plus.nativeUI.toast("开始下载...");
+						    		break;
+						    		case 3:	// 已接收到数据
+										processtext.innerHTML=task.downloadedSize+"/"+task.totalSize;
+						    			
+						    		break;
+						    		case 4:	// 下载完成			    			
+						    			processtext.innerHTML=parseInt(task.totalSize/1024)+"KB"
+						    			plus.nativeUI.toast("下载完成!");
+						    		break;
+						    	}
+						    } );
+			
+						    dtask.start();
+							}
+					    
+						})
+					document.getElementById("openfile").addEventListener('tap',function(e){
+						plus.runtime.openFile("_doc/"+fileName, {},function(e){
+							plus.nativeUI.toast("下载失败")
+				    })
+					})
 					
 						
 					//显示当前出差任务下的评论

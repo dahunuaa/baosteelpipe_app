@@ -56,6 +56,17 @@
 				<div class="mui-input-row" style="margin: 10px 5px;">
 					<textarea id="textarea" rows="5" placeholder="请填写正文"></textarea>
 				</div>
+				<form id="uploadForm" style="margin-top: -15px;">
+				<label>&nbsp;&nbsp;&nbsp;上传文件（可选）</label>
+				<br/>
+				
+				<input type="file" name="file" id="file_up" style="margin-top: 10px; margin-left: 12px; "/>
+				<br/>
+				
+				<button id="cancel_file"  type="button"style="margin-top: 10px; margin-left: 12px; height: 30px; width: 85px; background-color:skyblue">撤销文件</button>
+				</form>
+				<div>
+        		<br/>
 				<label>&nbsp;&nbsp;&nbsp;上传图片（可选）</label>
 				<br />
 				<img class="picture" id="pic_1" src="../img/iconfont-tianjia.png" style="margin-left: 20px; height: 100px;">
@@ -134,9 +145,9 @@
 					var pic_path =self.pic_path
 					var pic_path2 =self.pic_path2
 					var pic_path3 =self.pic_path3
-					//填写的用.value,选择的用.innerText
-//					editorBox.value=guide_editor
-//					editornameBox.value=guide_name
+					var filename = self.filename
+					var filepath = self.filepath
+					
 					titleBox.value=guide_title
 					categoryBox.innerText=guide_category
 					textareaBox.value=guide_text
@@ -158,6 +169,10 @@
 						document.getElementById("pic_3").src=pic_path3
 					}
 					
+					if(filename!=""&&filename!="null"){
+						plus.nativeUI.toast("已选择文件："+filename)
+					}
+					
 				//上传图片
 				var upload_img=""
 				var carmer_1 = doc.getElementById('pic_1')
@@ -174,6 +189,17 @@
 				carmer_3.addEventListener('tap', function(event) {
 					selectpic("pic_3");
 				});
+				
+				document.getElementById("cancel_file").addEventListener('tap',function(e){
+		          		var obj= document.getElementById("file_up");
+		          		obj.outerHTML = obj.outerHTML
+		          		if(filename ==""||filename=="null"){
+		          			plus.nativeUI.toast("未选择文件！")
+		          		}else{
+							plus.nativeUI.toast("已删除文件："+filename)		          			
+		          		}
+		          		filename = ""
+					})
 					
 					inforguide_alterButton.addEventListener('tap', function(event) {
 						var f1 = localStorage.getItem("pic_1");
@@ -215,10 +241,31 @@
 						}else if(textareaBox.value==""){
 							plus.nativeUI.toast("请填写正文")
 						}else{
-//						if(f1==null){
-//							upload_img=[pic_path,'','']//编辑的时候如果有图片而且不修改图片放置图片被空值覆盖的处理方法
-//						}
-						var wt=plus.nativeUI.showWaiting("正在提交...");
+						var  file = document.getElementById("file_up").files[0];
+							var formData = new FormData($("#uploadForm")[0]);
+							formData.append("access_token",localStorage.getItem("token"))
+							var wt  = plus.nativeUI.showWaiting("正在提交...");
+							if(file !=""&&file !=undefined){
+								origin_name=file.name
+								$.ajax({
+								type:"post",
+								url:basepath+"api/v1.0/file/upload",
+								data:formData,
+								async: false,//想把data值赋给一个全局变量 然后给下一个ajax里面用，必须将此处改为false，应为js是非阻塞的，会同时执行多个ajax
+//								cache:false,
+								contentType:false,
+								processData:false,
+								dataType:"json",
+								success:function(data){
+									window.filepath = data.response.data.file_path
+									window.filename = data.response.data.file_name
+								},
+								error:function(data){
+									plus.nativeUI.toast("上传失败！");
+								}
+							});	
+							}
+
 						$.ajax({
 						type: "PUT",
 						url:basepath+"api/v1.0/inforguide/"+guide_id,
@@ -228,8 +275,10 @@
 							"guide_type":categoryBox.innerText,
 							"guide_text":textareaBox.value,
 							"images_list":JSON.stringify(upload_img),
+							"filename":window.filename,
+							"filepath":window.filepath,
 						},
-						async: true,
+						async: false,
 						dataType:"json",
 						success: function(data) {
 //							plus.nativeUI.toast("服务器传回来的消息为:" +data);

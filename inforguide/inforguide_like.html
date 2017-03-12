@@ -71,6 +71,8 @@
 					li.setAttribute("pic_path",value.images[0])
 					li.setAttribute("pic_path2",value.images[1])
 					li.setAttribute("pic_path3",value.images[2])
+					li.setAttribute("filename",value.filename);
+				    li.setAttribute("filepath",value.filepath);
 					 li.innerHTML ="编辑者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time +"<br>"+"分类："+value.guide_type 
                                           +"<br>"+"标题："+value.guide_title+'</a>';
                      
@@ -90,6 +92,8 @@
 							var pic_path = this.getAttribute("pic_path")
 							var pic_path2 = this.getAttribute("pic_path2")
 							var pic_path3 = this.getAttribute("pic_path3")
+							var filename = this.getAttribute("filename")
+							var filepath = this.getAttribute("filepath")
 												
 							mui.openWindow({
 						    url:"like_detail_inforguide.html",
@@ -106,6 +110,8 @@
 						    	pic_path:pic_path,
 						    	pic_path2:pic_path2,
 						    	pic_path3:pic_path3,
+						    	filename:filename,
+							    filepath:filepath,
 						    }
 						     
 						})
