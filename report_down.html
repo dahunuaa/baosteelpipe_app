@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link rel="stylesheet" href="css/app.css" />
+		<link rel="stylesheet" href="css/mui.css" />
+		<link rel="stylesheet" href="css/mui.picker.css" />
+		<script type="text/javascript" src="js/mui.poppicker.js" ></script>
+		<style>
+			li{
+				list-style-type:none;/*去掉li前面的小黑点*/
+			}
+		</style>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">下载报表</h1>
+		</header>
+		<div class="mui-content">
+			
+			<form id="report_search" class="mui-input-group">
+				<ul class="mui-table-view mui-table-view-radio">
+					<li class="mui-table-view-cell mui-selected" id="all">
+					<a class="mui-navigate-right ">
+						所有数据
+					</a>
+				</li>
+				<li class="mui-table-view-cell" id="user_defined">
+					<a class="mui-navigate-right">
+						选择时间范围
+					</a>
+				</li>
+				</ul>
+				<ul class="mui-table-view-cell" id="time_select" style="display: none;">
+					<li class="mui-table-view-cell">
+					<a id="start" class="mui-navigate-right">
+						开始时间<span id="start_time" style="padding: 0px 0px 0px 45px;"></span>
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a id="end" class="mui-navigate-right">
+						结束时间<span id="end_time" style="padding: 0px 0px 0px 45px;"></span>
+					</a>
+				</li>
+				</ul>
+				
+			</form>
+			<div class="mui-button-row">
+				<button id="downloadfile" class="mui-btn mui-btn-primary" type="button" onclick="return true;" >下载报表</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<button id="openfile" class="mui-btn mui-btn-danger" type="button" onclick="return false;">打开报表</button>
+			</div>
+		</div>
+		
+		
+		<script type="text/javascript" src="js/app.js" ></script>
+		<script type="text/javascript" src="js/mui.min.js" ></script>
+		<!--<script type="text/javascript" src="../js/mui.picker.js" ></script>-->
+		<!--<script type="text/javascript" src="../js/mui.poppicker.js" ></script>-->
+		<script type="text/javascript" src="js/basepath.js" ></script>
+		<script>
+			(function($,doc){
+				$.init();
+				$.plusReady(function(e){
+					//选择出差开始时间
+					var timebegin = document.getElementById("start_time");
+			
+					document.getElementById("start").addEventListener('tap', function() {
+						var dDate = new Date();
+						dDate.setFullYear(dDate.getFullYear(), dDate.getMonth(), dDate.getDate());//月份小1
+						var minDate = new Date();
+						minDate.setFullYear(2016, 0, 1);
+						var maxDate = new Date();
+						maxDate.setFullYear(2020, 11, 31);
+						plus.nativeUI.pickDate(function(e) {
+							var d = e.date;
+							timebegin.innerText = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+						}, function(e) {
+							timebegin.innerText = "您没有选择日期";
+						}, {
+							title: "请选择日期",
+							date: dDate,
+							minDate: minDate,
+							maxDate: maxDate
+						});
+					})
+			
+			//选择出差结束时间
+					var timeend = document.getElementById("end_time");
+					
+							document.getElementById("end").addEventListener('tap', function() {
+								var dDate = new Date();
+								dDate.setFullYear(dDate.getFullYear(), dDate.getMonth(), dDate.getDate());//月份小1
+								var minDate = new Date();
+								minDate.setFullYear(2016, 0, 1);
+								var maxDate = new Date();
+								maxDate.setFullYear(2020, 11, 31);
+								plus.nativeUI.pickDate(function(e) {
+									var d = e.date;
+									timeend.innerText = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+								}, function(e) {
+									timeend.innerText = "您没有选择日期";
+								}, {
+									title: "请选择日期",
+									date: dDate,
+									minDate: minDate,
+									maxDate: maxDate
+								});
+							})
+							
+					var time_desc="all"
+					document.getElementById("all").addEventListener('tap',function(){
+						document.getElementById("time_select").style.display="none"
+						time_desc="all"
+					})
+					
+					document.getElementById("user_defined").addEventListener('tap',function(){
+						document.getElementById("time_select").style.display ="block"
+						time_desc="user_defined"
+					})
+					
+					var time_start =document.getElementById("start_time")
+					var end_time =document.getElementById("end_time")
+					var _time_start=""
+					var _end_time=""
+					var dtask=null;
+					var fileName="";
+					var url = "";
+					
+				var self = plus.webview.currentWebview()
+				var model = self.model
+				
+				document.getElementById("downloadfile").addEventListener('tap',function(){
+					if(time_desc=="user_defined"){
+						if(time_start.innerHTML==""||time_start.innerHTML=="您没有选择日期"){
+							plus.nativeUI.toast("请选择开始时间")
+						}else if(end_time.innerHTML==""||end_time.innerHTML=="您没有选择日期"){
+							plus.nativeUI.toast("请选择结束时间")
+						}else{
+							_time_start = time_start.innerHTML+" "+"00:00:00"
+							_end_time = end_time.innerHTML+" "+"23:59:59"
+							console.info(time_start.innerHTML+" "+"00:00:00")
+							console.info(end_time.innerHTML+" "+"23:59:59")
+						}
+						
+					}
+					$.ajax({
+						type:"get",
+						url:basepath+"api/v1.0/report/"+model+"?access_token="+localStorage.getItem("token")+"&time_desc="+time_desc+
+						"&start_time="+_time_start+"&end_time="+_end_time,
+						async:true,
+						dataType:"json",
+						success:function(data){
+							if(data.response.success=="1"){
+								var download_path = data.response.data.download_path
+								file_name = data.response.data.file_name
+								url = download_path;
+							    var options = {method:"GET",file_name:"_doc/"+file_name};
+								dtask = plus.downloader.createDownload(url, options);//目前这种方式仅支持网络文件，本地文件不可以
+							    dtask.addEventListener( "statechanged", function(task,status){
+//						    	alert(task.totalSize)
+						    	if(!dtask){return;}
+						    	switch(task.state) {
+						    		case 1: // 开始
+						    			plus.nativeUI.toast("开始下载...");			    			
+						    		break;
+						    		case 2: // 已连接到服务器
+						    			plus.nativeUI.toast("开始下载...");
+						    		break;
+						    		case 3:	// 已接收到数据
+										plus.nativeUI.toast("下载进度：" +task.downloadedSize+"/"+task.totalSize) 
+						    			
+						    		break;
+						    		case 4:	// 下载完成			    			
+//						    			plus.nativeUI.toast(parseInt(task.totalSize/1024)+"KB") 
+						    			plus.nativeUI.toast("下载完成!点击打开报表，完成查看！");
+						    		break;
+						    	}
+						    } );
+			
+						    dtask.start();
+							}else{
+								plus.nativeUI.toast("无法下载，请联系工程师")
+							}
+							
+						}
+					});
+					
+				})
+				
+				document.getElementById("openfile").addEventListener('tap',function(event){
+					plus.runtime.openFile("_doc/"+file_name,{},function(event){
+						plus.nativeUI.toast("打开失败，请重新下载！")
+				    })
+				})
+					
+				})
+			}(mui,document))
+		</script>
+	</body>
+</html>

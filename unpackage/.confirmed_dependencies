@@ -90,7 +90,9 @@
 			"inforgather/gather_list_base.html",
 			"inforgather/area_list_base.html",
 			"inforgather/newinformationgathering.html",
-			"inforgather/myinformationgathering.html"
+			"inforgather/myinformationgathering.html",
+			"inforgather/report_down.html",
+			"report_down.html"
 		]
 	},
 	"echart.html": {
@@ -120,7 +122,8 @@
 			"bussinessinfo/buss_search.html",
 			"bussinessinfo/sign_list.html",
 			"bussinessinfo/createNewTask.html",
-			"bussinessinfo/myBusinessRecord.html"
+			"bussinessinfo/myBusinessRecord.html",
+			"report_down.html"
 		]
 	},
 	"inforguide/detail_inforguide.html": {
@@ -586,7 +589,8 @@
 			"inforguide/inforguide_like_base.html",
 			"inforguide/statistic.html",
 			"inforguide/newinformationguide.html",
-			"inforguide/myInformationGuiding.html"
+			"inforguide/myInformationGuiding.html",
+			"report_down.html"
 		]
 	},
 	"inforguide/inforguide_main_base.html": {
@@ -885,6 +889,31 @@
 		],
 		"refer": [
 			"inforgather/detail_inforgather.html"
+		]
+	},
+	"inforgather/report_down.html": {
+		"resources": [
+			"css/app.css",
+			"fonts/mui.ttf",
+			"css/mui.css",
+			"js/mui.picker.js",
+			"js/mui.poppicker.js",
+			"css/mui.picker.css",
+			"js/basepath.js",
+			"js/app.js",
+			"js/mui.min.js"
+		]
+	},
+	"report_down.html": {
+		"resources": [
+			"css/app.css",
+			"js/mui.poppicker.js",
+			"css/mui.picker.css",
+			"css/mui.css",
+			"js/basepath.js",
+			"js/app.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf"
 		]
 	}
 }
