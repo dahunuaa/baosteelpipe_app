@@ -580,7 +580,8 @@
 			"js/app.js",
 			"js/mui.min.js",
 			"fonts/mui-icons-extra.ttf",
-			"css/icons-extra.css"
+			"css/icons-extra.css",
+			"js/common.js"
 		],
 		"refer": [
 			"inforguide/informationGuiding.html",
