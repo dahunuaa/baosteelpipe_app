@@ -24,6 +24,15 @@
 				width:150px;
 				text-align:center;
 			}
+			#msg_remind{
+		   	  height: 10px;
+		   	  width: 10px;
+		      margin-right: 0px;
+		      background-color:red;
+		      border-radius: 15px;
+		      float:right;/*先将前面的符号改成浮动型的再改margin-top就可以和数据对齐了*/
+		      margin-top:5px;
+		    }
 		</style>
    </head>
 	<body>
@@ -108,7 +117,19 @@
 		<script type="text/javascript" src="../js/basepath.js" ></script>
 		<script>
 		(function($,doc){
-			$.init();
+			$.init(
+				$.ajax({
+					type:"get",
+					url:basepath+"api/v1.0/msgunread?access_token="+localStorage.getItem("token")+"&user_id="+localStorage.getItem("mobile"),
+					async:false,
+					dataType:"json",
+					success:function(data){
+						if(data.response.data[0].guide_unread==null||data.response.data[0].guide_unread==""){
+							document.getElementById("msg_remind").style.display="none"
+						}
+					}
+				})
+			);
 			
 			$.plusReady(function(){
 			var inforguide_list = document.getElementById("inforguide_list")
@@ -117,6 +138,7 @@
 					url:"inforguide_main_base.html",
 					id:"inforguide_main_base",
 				})
+				document.getElementById("msg_remind").style.display="none"
 				})
 			//新建信息指南
 			document.getElementById("new_guide").addEventListener('tap',function(event){
