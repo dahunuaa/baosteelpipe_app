@@ -30,6 +30,15 @@
 		      float:left;/*先将前面的符号改成浮动型的再改margin-top就可以和数据对齐了*/
 		      margin-top:40px;
 		    }
+		    .unread{
+		   	  height: 10px;
+		   	  width: 10px;
+		      margin-right: 0px;
+		      background-color:red;
+		      border-radius: 15px;
+		      float:right;/*先将前面的符号改成浮动型的再改margin-top就可以和数据对齐了*/
+		      margin-top:5px;
+		    }
 		</style>
     </head>
 	<body>
@@ -102,13 +111,11 @@
 				setTimeout(function() {
 					
 					mui.ajax({
-					type: "get",//后面必须加逗号！！！！！！！！
+					type: "get",
 					url:basepath+"api/v1.0/inforgather?access_token="+localStorage.getItem("token")+"&page_size=10&page="+(count+1),
 					async:true,
 					dataType:"json",
 					success:function(data){
-//						console.info(localStorage.getItem("job_no"))
-//						console.info(JSON.stringify(data))
 						mui('#pullrefresh').pullRefresh().endPullupToRefresh((data.response.data==""||null))	
 						unread_msg = data.response.unread.gather_unread
 						mui.each(data.response.data,function(key,value){
@@ -124,84 +131,90 @@
 						 li.setAttribute("gather_oil_field",value.gather_oilfield);
 						 li.setAttribute("time",value.last_updated_time);
 						 li.setAttribute("pic_path",value.images[0]);
-						li.setAttribute("pic_path2",value.images[1]);
-						li.setAttribute("pic_path3",value.images[2]);
+						 li.setAttribute("pic_path2",value.images[1]);
+						 li.setAttribute("pic_path3",value.images[2]);
 						 li.setAttribute("filename",value.filename);
 						 li.setAttribute("filepath",value.filepath);
-						 var unread_msg_icon = document.createElement("icon")
+//						 var unread_msg_icon = document.createElement("icon")
 						 if(unread_msg.indexOf(value._id)>=0){
-							li.innerHTML ='<a class="mui-navigate-right"'+"&nbsp&nbsp&nbsp"+"编辑者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time+"<br>" +"标题："+value.gather_title 
+//						 	unread_msg_icon.className="mui-icon-unread"
+							li.innerHTML ='<a class="mui-navigate-right"'+"<br>"+"编辑者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time+'<span class="unread"></span>'+"<br>" +"标题："+value.gather_title 
                                           +"<br>"+"区域："+value.gather_area+'</a>';
-							unread_msg_icon.className="mui-icon-unread"
+							
 						}else{
-							li.innerHTML ='<a class="mui-navigate-right"'+"&nbsp&nbsp&nbsp"+"编辑者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time+"<br>" +"标题："+value.gather_title 
+							li.innerHTML ='<a class="mui-navigate-right"'+"<br>"+"编辑者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time+"<br>" +"标题："+value.gather_title 
                                           +"<br>"+"区域："+value.gather_area+'</a>';	
 						}
-                        
-                         list.appendChild(unread_msg_icon) 
+						var read_text ='<a class="mui-navigate-right"'+"<br>"+"编辑者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time+"<br>" +"标题："+value.gather_title 
+                                          +"<br>"+"区域："+value.gather_area+'</a>';	
+//                       list.appendChild(unread_msg_icon) 
                          list.appendChild(li)
+                         li.setAttribute("li_text",read_text)
                          
                          li.setAttribute("inforgather_text",li.textContent+"地址："+value.gather_address+"油田："+value.gather_oilfield+"正文："+value.gather_text+"文件地址："+basepath+value.filepath)
 						})
 						mui("#list").on('tap','li',function(){
-								var gather_id = this.getAttribute("gather_id")
-								var gather_editor = this.getAttribute("gather_editor")
-								var gather_editor_name = this.getAttribute("gather_editor_name")
-								var gather_title = this.getAttribute("gather_title")
-								var gather_area = this.getAttribute("gather_area")
-								var gather_address = this.getAttribute("gather_address")
-								var gather_text = this.getAttribute("gathering_text")
-								var gather_oil_field = this.getAttribute("gather_oil_field")
-								var time = this.getAttribute("time")
-								var pic_path = this.getAttribute("pic_path")
-								var pic_path2 = this.getAttribute("pic_path2")
-								var pic_path3 = this.getAttribute("pic_path3")
-								var filename = this.getAttribute("filename")
-								var filepath = this.getAttribute("filepath")
-//								plus.nativeUI.toast(guide_id)
-													
-								mui.openWindow({
-							    url:"detail_inforgather.html",
-							    id:"detail_inforgather",
-							    
-							    extras:{
-							    	gather_id:gather_id,
-							    	gather_editor:gather_editor,
-							    	gather_editor_name:gather_editor_name,
-							    	gather_title:gather_title,
-							    	gather_area:gather_area,
-							    	gather_address:gather_address,
-							    	gather_text:gather_text,
-							    	gather_oil_field:gather_oil_field,
-							    	gather_time:time,
-							    	pic_path:pic_path,
-							    	pic_path2:pic_path2,
-							    	pic_path3:pic_path3,
-							    	filename:filename,
-							    	filepath:filepath,
-							    }
-							    
-							})
-								
-								$.ajax({
-									type: "PUT",
-									url:basepath +"api/v1.0/msgunread/minus",
-									data:{
-										"access_token":localStorage.getItem("token"),
-										"user_id":localStorage.getItem("mobile"),
-										"type":"inforgather",
-										"msg_id":gather_id,
-										
-									},
-									async: true,
-									dataType:"json",
-									success: function(data) {
-										
-									},
-									error: function() {
-										plus.nativeUI.toast("请求服务器出现失败!");
-									}
-								});
+							var gather_id = this.getAttribute("gather_id")
+							var gather_editor = this.getAttribute("gather_editor")
+							var gather_editor_name = this.getAttribute("gather_editor_name")
+							var gather_title = this.getAttribute("gather_title")
+							var gather_area = this.getAttribute("gather_area")
+							var gather_address = this.getAttribute("gather_address")
+							var gather_text = this.getAttribute("gathering_text")
+							var gather_oil_field = this.getAttribute("gather_oil_field")
+							var time = this.getAttribute("time")
+							var pic_path = this.getAttribute("pic_path")
+							var pic_path2 = this.getAttribute("pic_path2")
+							var pic_path3 = this.getAttribute("pic_path3")
+							var filename = this.getAttribute("filename")
+							var filepath = this.getAttribute("filepath")
+							var li_text = this.getAttribute("li_text")
+							
+							
+							
+							mui.openWindow({
+						    url:"detail_inforgather.html",
+						    id:"detail_inforgather",
+						    
+						    extras:{
+						    	gather_id:gather_id,
+						    	gather_editor:gather_editor,
+						    	gather_editor_name:gather_editor_name,
+						    	gather_title:gather_title,
+						    	gather_area:gather_area,
+						    	gather_address:gather_address,
+						    	gather_text:gather_text,
+						    	gather_oil_field:gather_oil_field,
+						    	gather_time:time,
+						    	pic_path:pic_path,
+						    	pic_path2:pic_path2,
+						    	pic_path3:pic_path3,
+						    	filename:filename,
+						    	filepath:filepath,
+						    }
+						    
+						})
+							this.innerHTML=li_text//点击进入详情页面后将未读标记去掉
+							
+							$.ajax({
+								type: "PUT",
+								url:basepath +"api/v1.0/msgunread/minus",
+								data:{
+									"access_token":localStorage.getItem("token"),
+									"user_id":localStorage.getItem("mobile"),
+									"type":"inforgather",
+									"msg_id":gather_id,
+									
+								},
+								async: true,
+								dataType:"json",
+								success: function(data) {
+									
+								},
+								error: function() {
+									plus.nativeUI.toast("请求服务器出现失败!");
+								}
+							});
 		                  });
 		                  
 		                //长按复制  
