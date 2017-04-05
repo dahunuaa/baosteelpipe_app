@@ -23,14 +23,14 @@
 		    	background-color:#D8D8D8;
 		    	margin-bottom: 10px;
 		    }
-		    .mui-icon-unread{
+		    .unread{
 		   	  height: 10px;
 		   	  width: 10px;
 		      margin-right: 0px;
 		      background-color:red;
 		      border-radius: 15px;
-		      float:left;/*先将前面的符号改成浮动型的再改margin-top就可以和数据对齐了*/
-		      margin-top:40px;
+		      float:right;/*先将前面的符号改成浮动型的再改margin-top就可以和数据对齐了*/
+		      margin-top:5px;
 		    }
 		</style>
     </head>
@@ -111,19 +111,21 @@
 						li.setAttribute("pic_path3",value.images[2])
 						li.setAttribute("filename",value.filename);
 						 li.setAttribute("filepath",value.filepath);
-						var unread_msg_icon = document.createElement("icon")
+//						var unread_msg_icon = document.createElement("icon")
 						 if(unread_msg.indexOf(value._id)>=0){
-							li.innerHTML ="编辑者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time +"<br>"+"分类："+value.guide_type 
+							li.innerHTML ='<a class="mui-navigate-right"'+"<br>"+'<span class="unread"></span>'+"编辑者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time +"<br>"+"分类："+value.guide_type 
                                           +"<br>"+"标题："+value.guide_title+'</a>';
-							unread_msg_icon.className="mui-icon-unread"
+//							unread_msg_icon.className="mui-icon-unread"
 						}else{
-							li.innerHTML ="编辑者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time +"<br>"+"分类："+value.guide_type 
+							li.innerHTML ='<a class="mui-navigate-right"'+"<br>"+"编辑者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time +"<br>"+"分类："+value.guide_type 
                                           +"<br>"+"标题："+value.guide_title+'</a>';
 						}
-                         
+                         var read_text ='<a class="mui-navigate-right"'+"<br>"+"编辑者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time +"<br>"+"分类："+value.guide_type 
+                                          +"<br>"+"标题："+value.guide_title+'</a>';
                         li.setAttribute("inforguide_text",li.textContent+"正文:"+value.guide_text+"图片地址:"+value.images[0]+value.images[1]+value.images[2])               
-                        list.appendChild(unread_msg_icon)
+//                      list.appendChild(unread_msg_icon)
                         list.appendChild(li)
+                        li.setAttribute("li_text",read_text)
 						})
 						
 						mui("#list").on('tap','li',function(){
@@ -139,7 +141,9 @@
 								var pic_path3 = this.getAttribute("pic_path3")
 								var filename = this.getAttribute("filename")
 								var filepath = this.getAttribute("filepath")
-													
+								var li_text = this.getAttribute("li_text")
+								
+								
 								mui.openWindow({
 							    url:"detail_inforguide.html",
 							    id:"detail_inforguide",
@@ -160,6 +164,9 @@
 							    }
 							     
 							})
+								this.innerHTML=li_text
+								
+								
 							$.ajax({
 								type: "PUT",
 								url:basepath +"api/v1.0/msgunread/minus",

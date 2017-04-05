@@ -27,6 +27,15 @@
 		      float:left;/*先将前面的符号改成浮动型的再改margin-top就可以和数据对齐了*/
 		      margin-top:40px;
 		    }
+		    .unread{
+		   	  height: 10px;
+		   	  width: 10px;
+		      margin-right: 0px;
+		      background-color:red;
+		      border-radius: 15px;
+		      float:right;/*先将前面的符号改成浮动型的再改margin-top就可以和数据对齐了*/
+		      margin-top:5px;
+		    }
 		</style>
 
 	</head>
@@ -100,16 +109,17 @@
 								li.setAttribute("notice_title",value.notice_title);
 								li.setAttribute("notice_time",value.last_updated_time);
 								
-								var unread_msg_icon = document.createElement("icon")
+//								var unread_msg_icon = document.createElement("icon")
 								if(unread_msg.indexOf(value._id)>=0){
-									li.innerHTML = "发布者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time+"<br>"+"标题："+value.notice_title +'</a>';
-									unread_msg_icon.className="mui-icon-unread"
+									li.innerHTML ='<a class="mui-navigate-right"'+"<br>"+ "发布者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time+"<br>"+'<span class="unread"></span>'+"标题："+value.notice_title +'</a>';
+//									unread_msg_icon.className="mui-icon-unread"
 								}else{
-									li.innerHTML ="发布者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time+"<br>"+"标题："+value.notice_title +'</a>';	
+									li.innerHTML ='<a class="mui-navigate-right"'+"<br>"+"发布者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time+"<br>"+"标题："+value.notice_title +'</a>';	
 								}
-	                            
-	                            list.appendChild(unread_msg_icon)                           
+	                            var read_text ='<a class="mui-navigate-right"'+"<br>"+"发布者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time+"<br>"+"标题："+value.notice_title +'</a>';
+//	                            list.appendChild(unread_msg_icon)                           
 	                            list.appendChild(li)
+	                            li.setAttribute("li_text",read_text)
 							})
 							
 							mui("#list").on('tap','li',function(){
@@ -119,6 +129,8 @@
 								var notice = this.getAttribute("notice")
 								var notice_title = this.getAttribute("notice_title")
 								var notice_time = this.getAttribute("notice_time")
+								var li_text = this.getAttribute("li_text")
+								
 								
 								mui.openWindow({
 							    url:"notice_detail.html",
@@ -135,6 +147,7 @@
 							    }
 							    
 							})
+								this.innerHTML=li_text
 								
 								$.ajax({
 									type: "PUT",
