@@ -184,6 +184,7 @@
 						async:true,
 						dataType:"json",
 						success:function(data){
+							console.log(data.response.data[0].gather_like)
 							gather_like = data.response.data[0].gather_like//注意data中list和dict的区别
 							if(gather_like.indexOf(inforgather_id)>=0){
 								like_style.className="gather-like"

@@ -33,7 +33,7 @@
 			 <!--<a class="mui-icon mui-icon-reload mui-pull-right" id="refresh"><div style="margin:-18px 10px 10px 30px; font: '楷体';font-size: 18px;">刷新</div></a>-->
 			<h1 class="mui-title">信息指南详情</h1>
 			<span class="mui-pull-right" style="margin-top: 10px;">
-				<a class="guide-nolike" id="like" ><span class="mui-icon-extra mui-icon-extra-heart-filled"></span></a>
+				<a class="guide-like" id="like" ><span class="mui-icon-extra mui-icon-extra-heart-filled"></span></a>
 			</span>
 			
 			
@@ -171,26 +171,26 @@
 					}
 					//收藏操作
 					like_style = document.getElementById("like")
-					mui.ajax({
-						type:"get",
-						url:basepath+"api/v1.0/like?access_token="+localStorage.getItem("token")+"&user_id="+localStorage.getItem("mobile"),
-						async:true,
-						dataType:"json",
-						success:function(data){
-							guide_like = data.response.data[0].guide_like//注意data中list和dict的区别
-							if(guide_like.indexOf(guideinfor_id)>=0){
-								like_style.className="guide-like"
-							}else{
-								like_style.className="guide-nolike"
-							}
-							
-						},
-						error: function() {
-							plus.nativeUI.toast("请求服务器出现失败!");
-						}
-						
-					})
-					
+//					mui.ajax({
+//						type:"get",
+//						url:basepath+"api/v1.0/like?access_token="+localStorage.getItem("token")+"&user_id="+localStorage.getItem("mobile"),
+//						async:true,
+//						dataType:"json",
+//						success:function(data){
+//							guide_like = data.response.data[0].guide_like//注意data中list和dict的区别
+//							if(guide_like.indexOf(guideinfor_id)>=0){
+//								like_style.className="guide-like"
+//							}else{
+//								like_style.className="guide-nolike"
+//							}
+//							
+//						},
+//						error: function() {
+//							plus.nativeUI.toast("请求服务器出现失败!");
+//						}
+//						
+//					})
+//					
 					
 					like_style.addEventListener('tap',function(){
 						if(like_style.className=="guide-nolike"){//注意复制和判断是否相等
