@@ -1209,7 +1209,8 @@
 				"refer": [
 					"selfsetting/about_baosteel.html",
 					"selfsetting/changepsw.html",
-					"selfsetting/feedback.html"
+					"selfsetting/feedback.html",
+					"selfsetting/complete_infor.html"
 				],
 				"priority": 0
 			},
@@ -1756,6 +1757,23 @@
 					"css/mui.css",
 					"js/basepath.js",
 					"js/app.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"selfsetting/complete_infor.html": {
+				"resources": [
+					"js/mui.picker.js",
+					"js/mui.poppicker.js",
+					"css/mui.poppicker.css",
+					"css/mui.picker.css",
+					"css/mui.min.css",
+					"js/basepath.js",
+					"js/app.js",
+					"css/app.css",
+					"js/city.data.js",
 					"js/mui.min.js",
 					"fonts/mui.ttf"
 				],

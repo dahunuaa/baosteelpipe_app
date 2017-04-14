@@ -38,7 +38,7 @@
 		    }
 		    .icon-daiwancheng{
 		      margin-left: 10px;
-		      background-color:lightpink;
+		      background-color:#CF2D28;
 		      border-radius: 15px;
 		      float:left;
 		      margin-top:50px;
@@ -285,11 +285,10 @@
 						var icon = document.createElement("icon")
 						var date1 = new Date(value.end_time);
 						var date2 =new Date();
-						
 						if(date1<date2){
 							icon.className="mui-icon mui-icon-checkmarkempty"
 						}else{
-							icon.className="mui-icon iconfont icon-daiwancheng"							
+							icon.className="mui-icon icon-font icon-daiwancheng"							
 						}
 						list.appendChild(icon)
                         list.appendChild(li)
@@ -360,14 +359,15 @@
 			}
 			
 			document.getElementById("report").addEventListener('tap',function(){
-				mui.openWindow({
-					url:"../report_down.html",
-					id:"report_down",
-					
-					extras:{
-					model:"business"
-				}
-				})
+				plus.nativeUI.toast("手机端暂时不稳定，请移步电脑端下载报表！")
+//				mui.openWindow({
+//					url:"../report_down.html",
+//					id:"report_down",
+//					
+//					extras:{
+//					model:"business"
+//				}
+//				})
 				
 				
 			})

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>news</title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="../css/app.css"/>
+        <link href="../css/mui.picker.css" rel="stylesheet" />
+		<link href="../css/mui.poppicker.css" rel="stylesheet" />
+		<style>
+			ul {
+				font-size: 14px;
+				color: #8f8f94;
+				
+			}
+			li{
+				list-style-type:none;/*去掉li前面的小黑点*/
+			}
+			.mui-btn {
+				padding: 10px;
+			}
+			
+			
+		</style>
+
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">完善个人信息</h1>
+		</header>
+		<div class="mui-content">
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+					<label>姓名</label>
+					<input id="name" type="text" class="mui-input-clear" >
+				</div>
+				<div class="mui-input-row">
+					<label>工号</label>
+					<input id="job_no" type="text" class="mui-input-clear">
+				</div>
+				<div class="mui-input-row">
+				    <label>手机号</label>
+				    <input id="tel" type="text" class="mui-input-clear" >
+				</div>
+				<li class="mui-table-view-cell">
+					<a id="selectsex" class="mui-navigate-right">
+						性别<span id="sex" style="padding: 0px 0px 0px 90px;" ></span>
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a id="selectdepart" class="mui-navigate-right">
+						部门<span id="depart" style="padding: 0px 0px 0px 90px;" ></span>
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a id="selectpos" class="mui-navigate-right">
+						职位<span id="position"style="padding: 0px 0px 0px 90px;" ></span>
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a id="selectmarital" class="mui-navigate-right">
+						是否已婚<span id="marital"style="padding: 0px 0px 0px 58px;" ></span>
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a id="selectbirthplace" class="mui-navigate-right">
+						出生地<span id="birthplace"style="padding: 0px 0px 0px 75px;" ></span>
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+				<a id="birth" class="mui-navigate-right">
+					生日<span id="birthday"style="padding: 0px 0px 0px 100px;"></span>
+				</a>
+			    </li>
+			</form>
+			<div class="mui-button-row">
+				<button id="newtask_submittask" class="mui-btn mui-btn-primary" type="button" onclick="return true;">提交</button>&nbsp;&nbsp;
+				<button id="newtask_cancel" class="mui-btn mui-btn-danger" type="button" onclick="return false;">取消</button>
+			</div>
+			
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/app.js"></script>
+		<script src="../js/mui.picker.js"></script>
+		<script src="../js/mui.poppicker.js"></script>
+		<script src="../js/city.data.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="../js/basepath.js" ></script>
+		<script>
+		(function($, doc) {
+				$.init();
+				$.ready(function() {
+					//选择性别
+					var sex_type = new $.PopPicker();
+					sex_type.setData([{
+						value:'men',
+						text:'男'
+					},{
+						value:'women',
+						text:'女'
+					}]);
+					
+					var sexPicker = doc.getElementById("selectsex");
+					var sextype=doc.getElementById("sex");
+					sextype.innerHTML="男";
+					sexPicker.addEventListener('tap',function(event){
+						sex_type.show(function(items){
+							sextype.innerHTML=items[0].text;
+						})
+					},false);
+					//选择部门
+					var depart_type = new $.PopPicker();
+					depart_type.setData([{
+						value:'01',
+						text:'宝钢钢管事业部'
+					},{
+						value:'02',
+						text:'宝钢钢管加工部'
+					}]);
+					var departPicker = doc.getElementById("selectdepart");
+					var departtype = doc.getElementById("depart")
+					departtype.innerHTML="宝钢钢管事业部";
+					departPicker.addEventListener('tap',function(event){
+						depart_type.show(function(items){
+							departtype.innerHTML=items[0].text;
+						})
+					},false);
+					//选择职位
+					var pos_type = new $.PopPicker();
+					pos_type.setData([{
+						value:'01',
+						text:'工人'
+					},{
+						value:'02',
+						text:'技术员'
+					}]);
+					var posPicker = doc.getElementById("selectpos");
+					var postype = doc.getElementById("position")
+					postype.innerHTML="工人";
+					posPicker.addEventListener('tap',function(event){
+						pos_type.show(function(items){
+							postype.innerHTML=items[0].text;
+						})
+					},false);
+					//是否已婚
+					var marital_type = new $.PopPicker();
+					marital_type.setData([{
+						value:'yes',
+						text:'已婚'
+					},{
+						value:'no',
+						text:'未婚'
+					}]);
+					var maritalPicker = doc.getElementById("selectmarital");
+					var maritaltype = doc.getElementById("marital")
+					maritaltype.innerHTML="已婚";
+					maritalPicker.addEventListener('tap',function(event){
+						marital_type.show(function(items){
+							maritaltype.innerHTML=items[0].text;
+						})
+					},false);
+					//选择出生地
+					var cityPicker = new $.PopPicker({
+						layer: 2
+					});
+					cityPicker.setData(cityData);
+					var birthplacePicker = doc.getElementById('selectbirthplace');
+					var birthplace_type = doc.getElementById('birthplace');
+					birthplacePicker.addEventListener('tap', function(event) {
+						cityPicker.show(function(items) {
+							birthplace_type.innerText =items[0].text + " " + items[1].text;
+							//返回 false 可以阻止选择框的关闭
+							//return false;
+						});
+					}, false);
+					//选择生日
+					var birthday = document.getElementById("birthday");
+					document.getElementById("birth").addEventListener('tap', function() {
+						var dDate = new Date();
+						dDate.setFullYear(dDate.getFullYear(), dDate.getMonth(), dDate.getDate());//月份小1
+						var minDate = new Date();
+						minDate.setFullYear(2016, 0, 1);
+						var maxDate = new Date();
+						maxDate.setFullYear(2020, 11, 31);
+						plus.nativeUI.pickDate(function(e) {
+							var d = e.date;
+							birthday.innerText = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+						}, function(e) {
+							birthday.innerText = "您没有选择日期";
+						}, {
+							title: "请选择日期",
+							date: dDate,
+							minDate: minDate,
+							maxDate: maxDate
+						});
+					})
+			
+			        var nameBox = doc.getElementById('name');
+					var job_noBox = doc.getElementById('job_no');
+					var telBox = doc.getElementById('tel');
+					var sexBox = doc.getElementById("sex");
+					var departBox = doc.getElementById('depart');
+					var positionBox = doc.getElementById('position');
+					var marital = doc.getElementById("marital");
+					var birthplace = doc.getElementById('birthplace');
+					var birthday = doc.getElementById("birthday");
+					var submittaskButton = doc.getElementById("newtask_submittask");
+					var newtask_cancelButton = doc.getElementById('newtask_cancel');
+					
+					$.ajax({
+						type: "get",
+						url: basepath+"api/v1.0/user/"+localStorage.getItem("user_id")+"?access_token="+localStorage.getItem("token"),
+						async: true,
+						dataType:"json",
+						success: function(data) {
+							if (data.response.success=="1")
+							{
+								nameBox.value=data.response.data.name;
+								job_noBox.value=data.response.data.job_no;
+								telBox.value=data.response.data.tel;
+								sexBox.innerText=data.response.data.sex;
+								departBox.innerText=data.response.data.depart;
+								positionBox.innerText=data.response.data.position;
+								marital.innerText=data.response.data.marital;
+								birthplace.innerText=data.response.data.birthplace;
+								birthday.innerText=data.response.data.birthday;
+							}else{
+								plus.nativeUI.toast("个人资料加载失败");
+							}
+						},
+						error: function() {
+							plus.nativeUI.toast("请求服务器失败!");
+						}
+					});
+					
+					
+					nameBox.value=localStorage.getItem("name")
+					job_noBox.value=localStorage.getItem("job_no")
+					
+					submittaskButton.addEventListener('tap', function(event) {
+						if(nameBox.value==""){
+							plus.nativeUI.toast("请输入姓名")
+						}else if(job_noBox.value==""){
+							plus.nativeUI.toast("请输入工号")
+						}else{
+						
+						$.ajax({
+						type: "put",
+						url: basepath+"api/v1.0/user/"+localStorage.getItem("user_id"),
+						data: {
+							"access_token":localStorage.getItem("token"),
+							"scope":localStorage.getItem("scope"),
+							"name":nameBox.value,
+                    		"job_no":job_noBox.value,
+                    		"mobile":job_noBox.value,
+                    		"tel":telBox.value,
+                    		"sex":sexBox.innerText,
+                    		"depart":departBox.innerText,
+                    		"position":positionBox.innerText,
+                    		"marital":marital.innerText,
+                    		"birthplace":birthplace.innerText,
+                    		"birthday":birthday.innerText,
+						},
+						async: true,
+						dataType:"json",
+						success: function(data) {
+							if (data.response.success=="1")
+							{
+								plus.nativeUI.toast("更新个人资料成功");
+								mui.back();
+								
+							}else{
+								plus.nativeUI.toast("更新个人资料失败");
+							}
+						},
+						error: function() {
+							plus.nativeUI.toast("请求服务器失败!");
+						}
+					});
+			
+						}
+						});
+			   
+			   newtask_cancelButton.addEventListener('tap',function(event){
+			   	mui.back();
+			   })
+			
+				});
+			})(mui, document);
+		</script>
+		</script>
+	</body>
+</html>

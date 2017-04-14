@@ -48,6 +48,11 @@
 						关于宝钢 app
 					</a>
 				</li>
+				<li class="mui-table-view-cell">
+					<a id="complete_infor" class="mui-navigate-right">
+						完善个人信息
+					</a>
+				</li>
 			</ul>
 		</div>	
 	</body>
@@ -61,14 +66,14 @@
 			//意见反馈
 			document.getElementById("feedback").addEventListener('tap',function(){
 				mui.openWindow({
-					url:"../selfsetting/feedback.html",
+					url:"feedback.html",
 					id:"feedback",
 				})
 			})
 //			修改密码
 			document.getElementById("changepsw").addEventListener('tap',function(){
 				mui.openWindow({
-					url:"../selfsetting/changepsw.html",
+					url:"changepsw.html",
 					id:"changpsw",
 				})
 			})
@@ -80,8 +85,15 @@
 			//关于宝钢app
 			document.getElementById("about_baosteel").addEventListener('tap',function(){
 				mui.openWindow({
-					url:"../selfsetting/about_baosteel.html",
+					url:"about_baosteel.html",
 					id:"about_baosteel",
+				})
+			})
+			
+			document.getElementById("complete_infor").addEventListener('tap',function(){
+				mui.openWindow({
+					url:"complete_infor.html",
+					id:"complete_infor"
 				})
 			})
 		})
