@@ -329,7 +329,7 @@
 									success:function(data){
 										if(data.response.success=="1"){
 											plus.nativeUI.toast("该评论已删除~")
-											plus.webview.getWebviewById("detail_inforguide").reload()
+											plus.webview.getWebviewById("like_detail_inforguide").reload()
 										}else if(data.response.success=="0"){
 											plus.nativeUI.toast("您无权限删除此评论！")
 										}else{
@@ -370,7 +370,7 @@
 							success:function(data){
 							 	if (data.response.success == "1"){
 										plus.nativeUI.toast("评论成功~")
-										plus.webview.getWebviewById("detail_inforguide").reload()
+										plus.webview.getWebviewById("like_detail_inforguide").reload()
 									}else{
 										plus.nativeUI.toast("评论失败，请重试！")
 									}   

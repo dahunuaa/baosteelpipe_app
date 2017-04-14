@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>informationGuiding</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<style>
+			html,
+			body {
+				background-color:#efeff4;
+			}
+		    .mui-table-view-cell{
+		    	border-radius: 10px;
+		    	margin-left: 10px;
+		    	margin-right: 10px;
+		    	background-color:#D8D8D8;
+		    	margin-bottom: 10px;
+		    }
+		    
+		</style>
+    </head>
+	<body>
+		<!--下拉刷新容器-->
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<ul class="mui-table-view mui-table-view-chevron" id="list">
+					
+				</ul>
+			</div>
+		</div>
+	
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/app.js"></script>
+	<script type="text/javascript" src="../js/basepath.js" ></script>
+	<script type="text/javascript" src="../js/copy.js" ></script>
+	<script>
+		(function($,doc){
+			mui.init({
+				gestureConfig:{
+					   tap: true, //默认为true
+					   longtap: true, //默认为false
+					  }
+			})
+			$.plusReady(function(){
+				mui.ajax({
+				type: "get",//后面必须加逗号！！！！！！！！
+				url: basepath+"api/v1.0/like/list?access_token="+localStorage.getItem("token")+"&user_id="+localStorage.getItem("mobile"),
+				async:true,
+				dataType:"json",
+				success:function(data){
+					buss_like = data.response.data.buss_like_detail
+//					alert(guide_like)
+					if(buss_like==""){
+						plus.nativeUI.toast("你还没有收藏任何消息")
+						mui.back()
+					}
+					mui.each(buss_like,function(key,value){
+					var li = document.createElement("li")
+					 li.className = "mui-table-view-cell"
+						li.setAttribute("buss_id",value._id);
+						li.setAttribute("editor_name",value.add_user_name);
+						li.setAttribute("time",value.last_updated_time);
+						li.setAttribute("buss_begintime",value.begin_time);
+						li.setAttribute("buss_endtime",value.end_time);
+						li.setAttribute("bussmen_name",value.business_staff);
+						li.setAttribute("accounts",value.business_num);
+						li.setAttribute("buss_reason",value.business_reason);
+						li.setAttribute("buss_place",value.business_place)
+						li.setAttribute("buss_remark",value.remark)
+						
+						li.innerHTML = "编辑人："+value.add_user_name+"<br>"+"编辑时间："+value.last_updated_time+"<br>"+"出差日期："
+									+value.begin_time +"—"+value.end_time +"<br>" +value.business_staff
+                                   +"<br>"+value.business_num+"人"+"&nbsp&nbsp"+value.business_reason+"&nbsp&nbsp"+value.business_place;
+                        li.setAttribute("buss_text",li.textContent)
+                        list.appendChild(li)
+					
+					})
+					
+					mui("#list").on('tap','li',function(){
+						var buss_id = this.getAttribute("buss_id")
+						var editor_name = this.getAttribute("editor_name")
+						var edit_time = this.getAttribute("time")
+						var buss_begintime = this.getAttribute("buss_begintime")
+						var buss_endtime = this.getAttribute("buss_endtime")
+						var bussmen_name = this.getAttribute("bussmen_name")
+						var accounts = this.getAttribute("accounts")
+						var buss_reason = this.getAttribute("buss_reason")
+						var buss_place = this.getAttribute("buss_place")
+						var buss_remark = this.getAttribute("buss_remark")
+						
+						mui.openWindow({
+					    url:"like_detail_buss.html",
+					    id:"like_detail_buss",
+					    
+					    extras:{
+					    	buss_id:buss_id,
+					    	editor_name:editor_name,
+					    	edit_time:edit_time,
+					    	buss_begintime:buss_begintime,
+					    	buss_endtime:buss_endtime,
+					    	bussmen_name:bussmen_name,
+					    	accounts:accounts,
+					    	buss_reason:buss_reason,
+					    	buss_place:buss_place,
+					    	remark :buss_remark,
+					    }
+						     
+						})
+	                  });	
+		                  
+		                //长按复制  
+		                mui("#list").on("longtap","li",function(){
+	                 	buss_text = this.getAttribute("buss_text")
+	                 	copy(buss_text)
+	                 	var btnArray = ['否','是'];
+	                 })
+		   		        },
+				  
+				        });	
+			});
+		}(mui,document))
+		</script>
+
+  </body>
+</html>
