@@ -74,6 +74,11 @@
 					生日<span id="birthday"style="padding: 0px 0px 0px 100px;"></span>
 				</a>
 			    </li>
+			    <li class="mui-table-view-cell">
+				<a id="entryday" class="mui-navigate-right">
+					入职时间<span id="entry"style="padding: 0px 0px 0px 67px;"></span>
+				</a>
+			    </li>
 			</form>
 			<div class="mui-button-row">
 				<button id="newtask_submittask" class="mui-btn mui-btn-primary" type="button" onclick="return true;">提交</button>&nbsp;&nbsp;
@@ -195,6 +200,28 @@
 							maxDate: maxDate
 						});
 					})
+					//选择入职时间
+					var entry = document.getElementById("entry");
+					document.getElementById("entryday").addEventListener('tap', function() {
+						var dDate = new Date();
+						dDate.setFullYear(dDate.getFullYear(), dDate.getMonth(), dDate.getDate());//月份小1
+						var minDate = new Date();
+						minDate.setFullYear(2016, 0, 1);
+						var maxDate = new Date();
+						maxDate.setFullYear(2020, 11, 31);
+						plus.nativeUI.pickDate(function(e) {
+							var d = e.date;
+							entry.innerText = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+						}, function(e) {
+							entry.innerText = "您没有选择日期";
+						}, {
+							title: "请选择日期",
+							date: dDate,
+							minDate: minDate,
+							maxDate: maxDate
+						});
+					})
+					
 			
 			        var nameBox = doc.getElementById('name');
 					var job_noBox = doc.getElementById('job_no');
@@ -225,6 +252,7 @@
 								marital.innerText=data.response.data.marital;
 								birthplace.innerText=data.response.data.birthplace;
 								birthday.innerText=data.response.data.birthday;
+								entry.innerText=data.response.data.entryday;
 							}else{
 								plus.nativeUI.toast("个人资料加载失败");
 							}
@@ -261,6 +289,7 @@
                     		"marital":marital.innerText,
                     		"birthplace":birthplace.innerText,
                     		"birthday":birthday.innerText,
+                    		"entryday":entry.innerText,
 						},
 						async: true,
 						dataType:"json",
