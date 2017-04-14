@@ -23,7 +23,7 @@
 		    .mui-table-view-cell{
 		    	border-radius: 30px;
 		    	margin-left: 40px;
-		    	margin-right: 20px;
+		    	margin-right: 0px;
 		    	background-color:#D8D8D8;
 		    	margin-bottom: 10px;
 		    }
@@ -65,6 +65,15 @@
 			    padding-right: 0px;
 			    padding-left: 0px;
 			}
+			.unread{
+		   	  height: 10px;
+		   	  width: 10px;
+		      margin-right: 0px;
+		      background-color:red;
+		      border-radius: 15px;
+		      float:right;/*先将前面的符号改成浮动型的再改margin-top就可以和数据对齐了*/
+		      margin-top:5px;
+		    }
 		   
    		   
 		   
@@ -273,6 +282,7 @@
 					success:function(data){
 //						alert(JSON.stringify(data))
 						mui('#pullrefresh').pullRefresh().endPullupToRefresh((data.response.data ==""||null));	
+						unread_msg = data.response.unread.buss_unread
 						mui.each(data.response.data,function(key,value){
 //						alert(JSON.stringify(value))
 						var li = document.createElement("li")
@@ -287,11 +297,19 @@
 						li.setAttribute("buss_reason",value.business_reason);
 						li.setAttribute("buss_place",value.business_place)
 						li.setAttribute("buss_remark",value.remark)
-						
-						li.innerHTML = "编辑人："+value.add_user_name+"<br>"+"编辑时间："+value.last_updated_time+"<br>"+"出差日期："
+						if(unread_msg.indexOf(value._id)>=0){
+							li.innerHTML ='<span class="unread"></span>'+"编辑人："+value.add_user_name+"<br>"+"编辑时间："+value.last_updated_time+"<br>"+"出差日期："
 									+value.begin_time +"—"+value.end_time +"<br>" +value.business_staff
                                    +"<br>"+value.business_num+"人"+"&nbsp&nbsp"+value.business_reason+"&nbsp&nbsp"+value.business_place;
-                        li.setAttribute("buss_text",li.textContent)
+						}else{
+							li.innerHTML = "编辑人："+value.add_user_name+"<br>"+"编辑时间："+value.last_updated_time+"<br>"+"出差日期："
+									+value.begin_time +"—"+value.end_time +"<br>" +value.business_staff
+                                   +"<br>"+value.business_num+"人"+"&nbsp&nbsp"+value.business_reason+"&nbsp&nbsp"+value.business_place;
+						}
+						var read_text="编辑人："+value.add_user_name+"<br>"+"编辑时间："+value.last_updated_time+"<br>"+"出差日期："
+									+value.begin_time +"—"+value.end_time +"<br>" +value.business_staff
+                                   +"<br>"+value.business_num+"人"+"&nbsp&nbsp"+value.business_reason+"&nbsp&nbsp"+value.business_place;
+                        
 						var icon = document.createElement("icon")
 						var date1 = new Date(value.end_time);
 						var date2 =new Date();
@@ -302,6 +320,7 @@
 						}
 						list.appendChild(icon)
                         list.appendChild(li)
+                        li.setAttribute("li_text",read_text)       
                        
 					})
 					mui("#list").on('tap','li',function(){
@@ -315,6 +334,7 @@
 						var buss_reason = this.getAttribute("buss_reason")
 						var buss_place = this.getAttribute("buss_place")
 						var buss_remark = this.getAttribute("buss_remark")
+						var li_text = this.getAttribute("li_text")
 						
 						mui.openWindow({
 					    url:"buss_detail.html",
@@ -334,10 +354,31 @@
 					    }
 					     
 						})
+						this.innerHTML=li_text;//点击查看详情即为已读
+						
+						$.ajax({
+							type: "PUT",
+							url:basepath +"api/v1.0/msgunread/minus",
+							data:{
+								"access_token":localStorage.getItem("token"),
+								"user_id":localStorage.getItem("mobile"),
+								"type":"bussiness",
+								"msg_id":buss_id,
+								
+							},
+							async: true,
+							dataType:"json",
+							success: function(data) {
+								
+							},
+							error: function() {
+								plus.nativeUI.toast("请求服务器出现失败!");
+							}
+						});
 	                  });
 	                 //长按复制 
 	                 mui("#list").on("longtap","li",function(){
-	                 	buss_text = this.getAttribute("buss_text")
+	                 	buss_text = this.getAttribute("li_text")
 	                 	copy(buss_text)
 	                 })
 						

@@ -1,9 +1,67 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF-8">
-		<title></title>
+		<meta charset="utf-8">
+		<title>selfsetting</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<!--App自定义的css-->
+		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
+		<style>
+			html,body {
+				background-color: #efeff4;
+			}
+			.mui-content{
+				margin: -12px 0px 0px 0px;
+			}
+			
+		</style>
 	</head>
 	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">出差统计</h1>
+		</header>
+		<div class="mui-content">
+			<ul class="mui-table-view mui-table-view-chevron">
+				<li class="mui-table-view-cell">
+					<a id="users_rank" class="mui-navigate-right">
+						员工出差排行
+				    </a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a id="oilfield_rank" class="mui-navigate-right">
+						油田出差次数排行
+					</a>
+				</li>
+			</ul>
+		</div>	
 	</body>
+	
+	<script type="text/javascript" src="../js/mui.min.js" ></script>
+	<script>
+	    mui.init();
+	    
+		mui.plusReady(function(){
+			
+			//员工出差排行
+			document.getElementById("users_rank").addEventListener('tap',function(){
+				mui.openWindow({
+					url:"users_rank.html",
+					id:"users_rank",
+				})
+			})
+//			油田出差次数排行
+			document.getElementById("oilfield_rank").addEventListener('tap',function(){
+				mui.openWindow({
+					url:"oilfield_rank.html",
+					id:"oilfield_rank",
+				})
+			})
+		})
+	</script>
 </html>

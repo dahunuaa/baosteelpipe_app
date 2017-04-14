@@ -123,7 +123,9 @@
 			"bussinessinfo/sign_list.html",
 			"bussinessinfo/createNewTask.html",
 			"bussinessinfo/myBusinessRecord.html",
-			"report_down.html"
+			"report_down.html",
+			"bussinessinfo/buss_like_base.html",
+			"bussinessinfo/statistic.html"
 		]
 	},
 	"inforguide/detail_inforguide.html": {
@@ -157,7 +159,8 @@
 			"fonts/mui.ttf",
 			"css/mui.min.css",
 			"js/basepath.js",
-			"js/copy.js"
+			"js/copy.js",
+			"js/common.js"
 		]
 	},
 	"inforgather/detail_inforgather.html": {
@@ -217,7 +220,8 @@
 			"fonts/mui.ttf",
 			"css/mui.min.css",
 			"css/comment.css",
-			"js/basepath.js"
+			"js/basepath.js",
+			"css/icons-extra.css"
 		]
 	},
 	"notice/notice_detail.html": {
@@ -592,7 +596,8 @@
 			"inforguide/statistic.html",
 			"inforguide/newinformationguide.html",
 			"inforguide/myInformationGuiding.html",
-			"report_down.html"
+			"report_down.html",
+			"inforguide/guide_type_list_base.html"
 		]
 	},
 	"inforguide/inforguide_main_base.html": {
@@ -752,7 +757,11 @@
 			"css/image_preview.css",
 			"js/mui.zoom.js",
 			"js/mui.previewimage.js",
-			"js/mui.view.js"
+			"js/mui.view.js",
+			"js/basepath.js",
+			"js/app.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf"
 		]
 	},
 	"inforguide/statistic.html": {
@@ -816,7 +825,11 @@
 			"css/mui.min.css",
 			"js/mui.previewimage.js",
 			"css/icons-extra.css",
-			"js/mui.view.js"
+			"js/mui.view.js",
+			"js/basepath.js",
+			"js/app.js",
+			"fonts/mui.ttf",
+			"js/mui.min.js"
 		]
 	},
 	"bussinessinfo/sign_list.html": {
@@ -931,6 +944,48 @@
 			"js/city.data.js",
 			"js/mui.min.js",
 			"fonts/mui.ttf"
+		]
+	},
+	"bussinessinfo/buss_like_base.html": {
+		"resources": [
+			"js/mui.min.js",
+			"css/app.css",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"bussinessinfo/buss_like.html"
+		],
+		"refer": [
+			"bussinessinfo/buss_like.html"
+		]
+	},
+	"bussinessinfo/like_detail_buss.html": {
+		"resources": [
+			"fonts/mui-icons-extra.ttf",
+			"css/comment.css",
+			"css/app.css",
+			"css/mui.min.css",
+			"css/icons-extra.css",
+			"js/mui.view.js"
+		]
+	},
+	"bussinessinfo/buss_like.html": {
+		"resources": [
+			"js/basepath.js",
+			"js/app.js",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"js/copy.js"
+		],
+		"refer": [
+			"bussinessinfo/like_detail_buss.html"
+		]
+	},
+	"bussinessinfo/statistic.html": {
+		"resources": [
+			"js/mui.min.js",
+			"css/app.css",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
 		]
 	}
 }
