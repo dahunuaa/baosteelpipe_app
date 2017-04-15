@@ -268,17 +268,17 @@
 						    var options = {method:"GET",filename:"_doc/"+fileName};
 							dtask = plus.downloader.createDownload(url, options);//目前这种方式仅支持网络文件，本地文件不可以
 						    dtask.addEventListener( "statechanged", function(task,status){
-//						    	alert(task.totalSize)
 						    	if(!dtask){return;}
 						    	switch(task.state) {
 						    		case 1: // 开始
-						    			plus.nativeUI.toast("开始下载...");			    			
+						    			plus.nativeUI.toast("准备下载...");			    			
 						    		break;
 						    		case 2: // 已连接到服务器
 						    			plus.nativeUI.toast("开始下载...");
 						    		break;
 						    		case 3:	// 已接收到数据
 										processtext.innerHTML=task.downloadedSize+"/"+task.totalSize;
+//										
 						    			
 						    		break;
 						    		case 4:	// 下载完成			    			

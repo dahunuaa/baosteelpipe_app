@@ -15,8 +15,8 @@
 				background-color:#efeff4;
 			}
 			#middlePopover {
-				height: 270px;
-				width: 150px;
+				height: 470px;
+				width: 200px;
 				text-align:center;
 			}
 			#reportPopover{
@@ -80,6 +80,16 @@
 				<div class="mui-scroll">
 					<ul class="mui-table-view">
 						<li class="mui-table-view-cell"><a href="#" id="my_inforguide">我的信息指南</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#" id="jianceshouce">螺纹检测手册</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#" id="xiajingshouce">油井下井手册</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#" id="jiancejil">螺纹检测记录</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#" id="jingyanfenxiang">油田服务经验分享</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#" id="zhiliangyiyi">质量异议分析处理报告</a>
 						</li>
 						<li class="mui-table-view-cell"><a href="#" id="bijixiaojie">笔记小结</a>
 						</li>
@@ -154,8 +164,44 @@
 					id:"myInformationGuiding",
 				})
 				})
-			document.getElementById("bijixiaojie").addEventListener('tap',function(){
+			document.getElementById("jianceshouce").addEventListener('tap',function(){
+					localStorage.setItem("guide_type","螺纹检测手册")
+					mui.openWindow({
+						url:"guide_type_list_base.html",
+						id:"guide_type_list_base"
+					})
+				})
+			document.getElementById("xiajingshouce").addEventListener('tap',function(){
+					localStorage.setItem("guide_type","油井下井手册")
+					mui.openWindow({
+						url:"guide_type_list_base.html",
+						id:"guide_type_list_base"
+					})
+				})
+			document.getElementById("jiancejil").addEventListener('tap',function(){
+					localStorage.setItem("guide_type","螺纹检测记录")
+					mui.openWindow({
+						url:"guide_type_list_base.html",
+						id:"guide_type_list_base"
+					})
+				})
+			document.getElementById("jingyanfenxiang").addEventListener('tap',function(){
+					localStorage.setItem("guide_type","油田服务经验分享")
+					mui.openWindow({
+						url:"guide_type_list_base.html",
+						id:"guide_type_list_base"
+					})
+				})
+			document.getElementById("zhiliangyiyi").addEventListener('tap',function(){
 					localStorage.setItem("guide_type","笔记小结")
+					mui.openWindow({
+						url:"guide_type_list_base.html",
+						id:"guide_type_list_base"
+					})
+				})
+			
+			document.getElementById("bijixiaojie").addEventListener('tap',function(){
+					localStorage.setItem("guide_type","质量异议分析处理报告")
 					mui.openWindow({
 						url:"guide_type_list_base.html",
 						id:"guide_type_list_base"
