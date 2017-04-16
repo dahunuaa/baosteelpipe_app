@@ -55,6 +55,11 @@
 					</a>
 				</li>
 				<li class="mui-table-view-cell">
+					<a id="selectgongzuozu" class="mui-navigate-right">
+						工作组<span id="gongzuozu" style="padding: 0px 0px 0px 73px;" ></span>
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
 					<a id="selectpos" class="mui-navigate-right">
 						职位<span id="position"style="padding: 0px 0px 0px 90px;" ></span>
 					</a>
@@ -118,31 +123,93 @@
 					var depart_type = new $.PopPicker();
 					depart_type.setData([{
 						value:'01',
-						text:'宝钢钢管事业部'
+						text:'钢管条钢事业部管加工中心'
 					},{
 						value:'02',
-						text:'宝钢钢管加工部'
+						text:'钢管条钢事业部营销部'
+					},{
+						value:'03',
+						text:'钢管研究院'
+					},{
+						value:'04',
+						text:'钢管条钢事业部制造管理部'
 					}]);
 					var departPicker = doc.getElementById("selectdepart");
 					var departtype = doc.getElementById("depart")
-					departtype.innerHTML="宝钢钢管事业部";
+					departtype.innerHTML="钢管条钢事业部管加工中心";
 					departPicker.addEventListener('tap',function(event){
 						depart_type.show(function(items){
 							departtype.innerHTML=items[0].text;
+						})
+					},false);
+					//选择工作组
+					var gongzuozu_type = new $.PopPicker();
+					gongzuozu_type.setData([{
+						value:'01',
+						text:'中心领导'
+					},{
+						value:'02',
+						text:'作业区管理'
+					},{
+						value:'03',
+						text:'生产运行组(工艺技术质量)'
+					},{
+						value:'04',
+						text:'综合管理组'
+					},{
+						value:'05',
+						text:'生产运行组(设备)'
+					},{
+						value:'06',
+						text:'用户服务组'
+					},{
+						value:'07',
+						text:'营销服务组'
+					},{
+						value:'08',
+						text:'工艺技术室'
+					},{
+						value:'09',
+						text:'钢研所'
+					}]);
+					var gongzuozuPicker = doc.getElementById("selectgongzuozu");
+					var gongzuozutype = doc.getElementById("gongzuozu")
+					gongzuozutype.innerHTML="中心领导";
+					gongzuozuPicker.addEventListener('tap',function(event){
+						gongzuozu_type.show(function(items){
+							gongzuozutype.innerHTML=items[0].text;
 						})
 					},false);
 					//选择职位
 					var pos_type = new $.PopPicker();
 					pos_type.setData([{
 						value:'01',
-						text:'工人'
+						text:'油田服务'
 					},{
 						value:'02',
-						text:'技术员'
+						text:'营销服务'
+					},{
+						value:'03',
+						text:'产品开发'
+					},{
+						value:'04',
+						text:'区域工程师'
+					},{
+						value:'05',
+						text:'技术协理'
+					},{
+						value:'06',
+						text:'主任工程师'
+					},{
+						value:'07',
+						text:'综合管理'
+					},{
+						value:'08',
+						text:'领导'
 					}]);
 					var posPicker = doc.getElementById("selectpos");
 					var postype = doc.getElementById("position")
-					postype.innerHTML="工人";
+					postype.innerHTML="油田服务";
 					posPicker.addEventListener('tap',function(event){
 						pos_type.show(function(items){
 							postype.innerHTML=items[0].text;
@@ -228,6 +295,7 @@
 					var telBox = doc.getElementById('tel');
 					var sexBox = doc.getElementById("sex");
 					var departBox = doc.getElementById('depart');
+					var gongzuozuBox = doc.getElementById('gongzuozu');
 					var positionBox = doc.getElementById('position');
 					var marital = doc.getElementById("marital");
 					var birthplace = doc.getElementById('birthplace');
@@ -248,6 +316,7 @@
 								telBox.value=data.response.data.tel;
 								sexBox.innerText=data.response.data.sex;
 								departBox.innerText=data.response.data.depart;
+								gongzuozuBox.innerText=data.response.data.gongzuozu
 								positionBox.innerText=data.response.data.position;
 								marital.innerText=data.response.data.marital;
 								birthplace.innerText=data.response.data.birthplace;
@@ -285,6 +354,7 @@
                     		"tel":telBox.value,
                     		"sex":sexBox.innerText,
                     		"depart":departBox.innerText,
+                    		"gongzuozu":gongzuozuBox.innerText,
                     		"position":positionBox.innerText,
                     		"marital":marital.innerText,
                     		"birthplace":birthplace.innerText,
