@@ -1572,7 +1572,8 @@
 					"inforgather/area_list.html",
 					"inforgather/area_list_base.html",
 					"inforgather/oil_gather_amounts.html",
-					"inforgather/important_words_rank.html"
+					"inforgather/important_words_rank.html",
+					"inforgather/key_words_rank.html"
 				],
 				"priority": 0
 			},

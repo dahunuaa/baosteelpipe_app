@@ -51,6 +51,8 @@
 	        <br />
 	        <span style="border-left:20px;">正文:</span>&nbsp;&nbsp;&nbsp;<span id="gather_text"></span>
 	        <br/>
+	        <span style="border-left:20px;">关键词:</span>&nbsp;&nbsp;&nbsp;<span id="key_words_list"></span>
+	        <br/>
         	<span>文件：</span><span id="file_to_download"></span>
 			<br/>
 			<span id="processspan">下载进度：</span><span id="processtext"></span>
@@ -128,6 +130,7 @@
 			        var gather_editor_name = document.getElementById('gather_editor_name');
 					var gather_address = document.getElementById('gather_address');
 					var gather_text = document.getElementById("gather_text");
+					var key_words_list = document.getElementById("key_words_list");
 					var gather_oil_field = document.getElementById("gather_oil_field");
 					var gather_time = document.getElementById("gather_time");
 					var file_to_download = document.getElementById("file_to_download");
@@ -145,6 +148,7 @@
 					var inforgather_area = self.gather_area
 					var inforgather_address = self.gather_address
 					var inforgather_text = self.gather_text
+					var key_words = self.key_words
 					var infor_gather_oil_field = self.gather_oil_field
 					var time = self.gather_time
 					var pic_path = self.pic_path
@@ -166,6 +170,7 @@
 					gather_address.innerHTML=inforgather_address
 					gather_oil_field.innerHTML=infor_gather_oil_field
 					gather_text.innerHTML=inforgather_text
+					key_words_list.innerHTML=key_words
 					file_to_download.innerHTML=file_name	
 					var pic_download = document.getElementById("picture_down")
 					var pic_download2 = document.getElementById("picture_down2")

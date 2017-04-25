@@ -67,6 +67,7 @@
 					 li.setAttribute("gather_area",value.gather_area);
 					 li.setAttribute("gather_address",value.gather_address);
 					 li.setAttribute("gathering_text",value.gather_text);
+					 li.setAttribute("key_words",value.key_words_list);
 					 li.setAttribute("gather_oil_field",value.gather_oilfield);
 					 li.setAttribute("time",value.last_updated_time);
 					 li.setAttribute("pic_path",value.images[0]);
@@ -89,6 +90,7 @@
 							var gather_area = this.getAttribute("gather_area")
 							var gather_address = this.getAttribute("gather_address")
 							var gather_text = this.getAttribute("gathering_text")
+							var key_words = this.getAttribute("key_words")
 							var gather_oil_field = this.getAttribute("gather_oil_field")
 							var time = this.getAttribute("time")
 							var pic_path = this.getAttribute("pic_path")
@@ -109,6 +111,7 @@
 						    	gather_area:gather_area,
 						    	gather_address:gather_address,
 						    	gather_text:gather_text,
+						    	key_words:key_words,
 						    	gather_oil_field:gather_oil_field,
 						    	gather_time:time,
 						    	pic_path:pic_path,

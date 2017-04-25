@@ -52,6 +52,16 @@
 				<div class="mui-input-row" style="margin: 10px 5px;">
 					<textarea id="textarea" rows="6" placeholder="请填写正文"></textarea>
 				</div>
+				<label>&nbsp;&nbsp;&nbsp;添加关键字</label>
+				<div>
+					<ul class="mui-table-view mui-table-view-cell" id="key_words" style="background-color:initial;">
+						<li>
+							<input type="text" style="width: 150px; height: 30px;" id="keyword_1"/>
+							<!--<a class="mui-icon mui-icon-close" style="color: red;"></a>-->
+							<button id="add_keyword">继续添加关键字</button>
+						</li>
+					</ul>
+				</div>
 				<form id="uploadForm" style="margin-top: -15px;">
 				<label>&nbsp;&nbsp;&nbsp;上传文件（可选)</label>
 				<br/>
@@ -122,6 +132,30 @@
 //							return false;
 						});
 					}, false);
+				
+				var key_words_array = []
+				//添加关键字
+				var key_word_list=document.getElementById("key_words")
+				var order=1
+				document.getElementById("add_keyword").addEventListener('tap',function(){
+					if(document.getElementById("keyword_"+order).value==""){
+						plus.nativeUI.toast("请添加完上一个关键字")
+					}else{
+					var text_context = document.createElement("input")
+					text_context.type="text"
+					text_context.style="width: 150px; height: 30px;"
+					text_context.id="keyword_"+(++order)
+//					var icon_close = document.createElement("icon")
+//					icon_close.className="mui-icon mui-icon-close"
+//					icon_close.style="color:red"
+//					icon_close.id="close_"+(++close_order)
+					key_word_list.appendChild(text_context)
+//					key_word_list.appendChild(icon_close)
+					
+					}
+				})
+				
+				
 					
 					//上传图片
 				var upload_img=""
@@ -157,6 +191,9 @@
 					})
 					
 					newgather_submitButton.addEventListener('tap', function(event) {
+						for(var i=1;i<=order;i++){
+							key_words_array[i-1]=document.getElementById("keyword_"+i).value
+						}
 						var f1 = localStorage.getItem("pic_1");
 						var f2 = localStorage.getItem("pic_2");
 						var f3 = localStorage.getItem("pic_3");
@@ -228,6 +265,7 @@
 								"gather_text":textareaBox.value,
 								"gather_oilfield":oil_fieldBox.value,
 								"images_list":JSON.stringify(upload_img),
+								"key_words_list":JSON.stringify(key_words_array),
 								"filename":window.filename,
 								"filepath":window.filepath,
 							},
