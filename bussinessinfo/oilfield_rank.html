@@ -55,14 +55,29 @@
 								li.setAttribute("id",value._id);
 								li.setAttribute("num",value.num);
 								
-								li.innerHTML = "油田："+value._id +"&nbsp;&nbsp;&nbsp;&nbsp;"+"数量："+value.num ;
+								li.innerHTML ='<a class="mui-navigate-right"'+"<br>"+ "油田："+value._id 
+								+"&nbsp;&nbsp;&nbsp;&nbsp;"+"数量："+value.num +'</a>';
 	                            
 	                            list.appendChild(li)
 							})
 							
-							mui("#list").on('longtap','li',function(){
+							mui("#list").on('tap','li',function(){
 								var id = this.getAttribute("id")
 								var num = this.getAttribute("num")
+								
+								mui.openWindow({
+									url:"buss_search_content.html",
+									id:"buss_search_content.html",
+									
+									extras:{
+										"bussmen_name":"",
+										"buss_account":"",
+										"buss_place":id,
+										"buss_reason":"",
+										"buss_begintime":"",
+										"buss_endtime":"",
+									}
+								})
 								
 		                  });										                                         			         			           
 			   		},

@@ -56,17 +56,31 @@
 								li.setAttribute("num",value.num);
 								li.setAttribute("name",value.name);
 								
-								li.innerHTML = "姓名："+value.name +"&nbsp;&nbsp;&nbsp;&nbsp;"+"数量："+value.num ;
+								li.innerHTML ='<a class="mui-navigate-right"'+"<br>"+ "姓名："+value.name 
+									+"&nbsp;&nbsp;&nbsp;&nbsp;"+"数量："+value.num +'</a>';
 	                            
 	                            list.appendChild(li)
 							})
 							
-							mui("#list").on('longtap','li',function(){
+							mui("#list").on('tap','li',function(){
 								var id = this.getAttribute("id")
 								var num = this.getAttribute("num")
 								var name = this.getAttribute("name")
 								
-								
+								mui.openWindow({
+									url:"buss_search_content.html",
+									id:"buss_search_content.html",
+									
+									extras:{
+										"add_user_id":id,
+										"bussmen_name":"",
+										"buss_account":"",
+										"buss_place":"",
+										"buss_reason":"",
+										"buss_begintime":"",
+										"buss_endtime":"",
+									}
+								})
 		                  });										                                         			         			           
 			   		},
 				  

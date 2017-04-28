@@ -28,14 +28,14 @@
 		</header>
 		<div class="mui-content">
 			<ul class="mui-table-view mui-table-view-chevron">
-				<li class="mui-table-view-cell">
+				<!--<li class="mui-table-view-cell">
 					<a id="month_buss_rank" class="mui-navigate-right">
 						月度出差次数排行
 				    </a>
-				</li>
+				</li>-->
 				<li class="mui-table-view-cell">
 					<a id="users_rank" class="mui-navigate-right">
-						员工年出差次数排行
+						员工出差次数排行
 				    </a>
 				</li>
 				<li class="mui-table-view-cell">
@@ -54,12 +54,12 @@
 		mui.plusReady(function(){
 			
 			//员工月度出差排行
-			document.getElementById("month_buss_rank").addEventListener('tap',function(){
-				mui.openWindow({
-					url:"month_buss_rank.html",
-					id:"month_buss_rank",
-				})
-			})
+//			document.getElementById("month_buss_rank").addEventListener('tap',function(){
+//				mui.openWindow({
+//					url:"month_buss_rank.html",
+//					id:"month_buss_rank",
+//				})
+//			})
 			//员工出差排行
 			document.getElementById("users_rank").addEventListener('tap',function(){
 				mui.openWindow({

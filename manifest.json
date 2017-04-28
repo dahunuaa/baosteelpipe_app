@@ -1854,9 +1854,15 @@
 					"js/basepath.js",
 					"js/app.js",
 					"js/common.js",
-					"css/icons-extra.css"
+					"css/icons-extra.css",
+					"js/mui.min.js",
+					"css/app.css",
+					"fonts/mui.ttf",
+					"css/mui.min.css"
 				],
-				"refer": [],
+				"refer": [
+					"inforgather/area_list_base.html"
+				],
 				"priority": 0
 			},
 			"bussinessinfo/users_rank.html": {
@@ -1868,7 +1874,9 @@
 					"js/mui.min.js",
 					"fonts/mui.ttf"
 				],
-				"refer": [],
+				"refer": [
+					"bussinessinfo/buss_search_content.html"
+				],
 				"priority": 0
 			},
 			"bussinessinfo/oilfield_rank.html": {
@@ -1879,6 +1887,20 @@
 					"css/app.css",
 					"fonts/mui.ttf",
 					"css/mui.min.css"
+				],
+				"refer": [
+					"bussinessinfo/buss_search_content.html"
+				],
+				"priority": 0
+			},
+			"inforgather/key_words_rank.html": {
+				"resources": [
+					"js/basepath.js",
+					"js/app.js",
+					"css/app.css",
+					"css/mui.min.css",
+					"js/mui.min.js",
+					"fonts/mui.ttf"
 				],
 				"refer": [],
 				"priority": 0
