@@ -688,7 +688,8 @@
 			"css/image_preview.css",
 			"js/mui.zoom.js",
 			"js/mui.previewimage.js",
-			"js/mui.view.js"
+			"js/mui.view.js",
+			"fonts/mui.ttf"
 		]
 	},
 	"inforgather/report.html": {
@@ -992,7 +993,9 @@
 			"css/mui.min.css"
 		],
 		"refer": [
-			"bussinessinfo/users_rank.html"
+			"bussinessinfo/users_rank.html",
+			"bussinessinfo/month_buss_rank.html",
+			"bussinessinfo/oilfield_rank.html"
 		]
 	},
 	"inforgather/oil_gather_amounts.html": {
@@ -1002,6 +1005,26 @@
 			"js/app.js",
 			"js/common.js",
 			"css/icons-extra.css"
+		]
+	},
+	"bussinessinfo/users_rank.html": {
+		"resources": [
+			"js/basepath.js",
+			"js/app.js",
+			"css/app.css",
+			"css/mui.min.css",
+			"js/mui.min.js",
+			"fonts/mui.ttf"
+		]
+	},
+	"bussinessinfo/oilfield_rank.html": {
+		"resources": [
+			"js/basepath.js",
+			"js/app.js",
+			"js/mui.min.js",
+			"css/app.css",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
 		]
 	}
 }
