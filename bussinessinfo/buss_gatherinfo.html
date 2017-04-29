@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>informationGuiding</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<style>
+			html,
+			body {
+				background-color:#efeff4;
+			}
+		    .mui-table-view-cell{
+		    	border-radius: 10px;
+		    	margin-left: 10px;
+		    	margin-right: 10px;
+		    	background-color:#D8D8D8;
+		    	margin-bottom: 10px;
+		    	margin-top: 2px;
+		    }
+		    .mui-icon-unread{
+		   	  height: 10px;
+		   	  width: 10px;
+		      margin-right: 0px;
+		      background-color:red;
+		      border-radius: 15px;
+		      float:left;/*先将前面的符号改成浮动型的再改margin-top就可以和数据对齐了*/
+		      margin-top:40px;
+		    }
+		    .unread{
+		   	  height: 10px;
+		   	  width: 10px;
+		      margin-right: 0px;
+		      background-color:red;
+		      border-radius: 15px;
+		      float:right;/*先将前面的符号改成浮动型的再改margin-top就可以和数据对齐了*/
+		      margin-top:5px;
+		    }
+		</style>
+    </head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a id="back" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 id="inforgather_list" class="mui-title">情报搜集</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-scroll">
+				<ul class="mui-table-view mui-table-view-chevron" id="list">
+					
+				</ul>
+			</div>
+		</div>
+			
+	
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/app.js"></script>
+	<script type="text/javascript" src="../js/basepath.js" ></script>
+	<script type="text/javascript" src="../js/copy.js" ></script>
+	<script>
+		(function($,doc){
+			mui.init({
+				
+			});
+			
+			$.plusReady(function(){
+				var self = plus.webview.currentWebview()
+				var editor_id=self.editor_id
+				var buss_start_time = self.buss_start_time
+				var buss_end_time = self.buss_end_time
+			
+			var list = document.getElementById("list")	
+				
+			mui.ajax({
+			type: "get",
+			url:basepath+"api/v1.0/inforgather/bussgather?access_token="+localStorage.getItem("token")+
+				"&editor_id="+editor_id+"&buss_start_time="+buss_start_time+"&buss_end_time="+buss_end_time,
+			async:true,
+			dataType:"json",
+			success:function(data){
+				mui.each(data.response.data,function(key,value){
+				var li = document.createElement("li")
+				 li.className="mui-table-view-cell"
+				 li.setAttribute("gather_id",value._id);
+				 li.setAttribute("gather_editor",value.add_user_id);
+				 li.setAttribute("gather_editor_name",value.add_user_name);
+				 li.setAttribute("gather_title",value.gather_title);
+				 li.setAttribute("gather_area",value.gather_area);
+				 li.setAttribute("gather_address",value.gather_address);
+				 li.setAttribute("gathering_text",value.gather_text);
+				 li.setAttribute("key_words",value.key_words_list);
+				 li.setAttribute("gather_oil_field",value.gather_oilfield);
+				 li.setAttribute("time",value.last_updated_time);
+				 li.setAttribute("pic_path",value.images[0]);
+				 li.setAttribute("pic_path2",value.images[1]);
+				 li.setAttribute("pic_path3",value.images[2]);
+				 li.setAttribute("filename",value.filename);
+				 li.setAttribute("filepath",value.filepath);
+//						 var unread_msg_icon = document.createElement("icon")
+				
+					li.innerHTML ='<a class="mui-navigate-right"'+"<br>"+"编辑者："+value.add_user_name +"<br>"+"编辑时间："+value.last_updated_time+"<br>" +"标题："+value.gather_title 
+                                  +"<br>"+"区域："+value.gather_area+'</a>';	
+				
+                 list.appendChild(li)
+                 
+                 li.setAttribute("inforgather_text",li.textContent+"地址："+value.gather_address+"油田："+value.gather_oilfield+"正文："+value.gather_text+"文件地址："+basepath+value.filepath)
+				})
+				mui("#list").on('tap','li',function(){
+					var gather_id = this.getAttribute("gather_id")
+					var gather_editor = this.getAttribute("gather_editor")
+					var gather_editor_name = this.getAttribute("gather_editor_name")
+					var gather_title = this.getAttribute("gather_title")
+					var gather_area = this.getAttribute("gather_area")
+					var gather_address = this.getAttribute("gather_address")
+					var gather_text = this.getAttribute("gathering_text")
+					var key_words = this.getAttribute("key_words")
+					var gather_oil_field = this.getAttribute("gather_oil_field")
+					var time = this.getAttribute("time")
+					var pic_path = this.getAttribute("pic_path")
+					var pic_path2 = this.getAttribute("pic_path2")
+					var pic_path3 = this.getAttribute("pic_path3")
+					var filename = this.getAttribute("filename")
+					var filepath = this.getAttribute("filepath")
+					var li_text = this.getAttribute("li_text")
+					
+					
+					
+					mui.openWindow({
+				    url:"../inforgather/detail_inforgather.html",
+				    id:"detail_inforgather",
+				    
+				    extras:{
+				    	gather_id:gather_id,
+				    	gather_editor:gather_editor,
+				    	gather_editor_name:gather_editor_name,
+				    	gather_title:gather_title,
+				    	gather_area:gather_area,
+				    	gather_address:gather_address,
+				    	gather_text:gather_text,
+				    	key_words:key_words,
+				    	gather_oil_field:gather_oil_field,
+				    	gather_time:time,
+				    	pic_path:pic_path,
+				    	pic_path2:pic_path2,
+				    	pic_path3:pic_path3,
+				    	filename:filename,
+				    	filepath:filepath,
+				    }
+				    
+				})
+					this.innerHTML=li_text//点击进入详情页面后将未读标记去掉
+					
+                  });
+   		        },
+		  
+		        });	
+				
+			
+			
+		})
+		}(mui,document))
+		</script>
+
+  </body>
+</html>

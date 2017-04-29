@@ -225,6 +225,9 @@
 			"js/basepath.js",
 			"css/icons-extra.css",
 			"fonts/mui-icons-extra.ttf"
+		],
+		"refer": [
+			"bussinessinfo/buss_gatherinfo.html"
 		]
 	},
 	"notice/notice_detail.html": {
@@ -1146,6 +1149,19 @@
 			"js/app.js",
 			"js/mui.min.js",
 			"fonts/mui.ttf"
+		]
+	},
+	"bussinessinfo/buss_gatherinfo.html": {
+		"resources": [
+			"css/mui.min.css",
+			"js/basepath.js",
+			"js/app.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"js/copy.js"
+		],
+		"refer": [
+			"inforgather/detail_inforgather.html"
 		]
 	}
 }

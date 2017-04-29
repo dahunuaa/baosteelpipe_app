@@ -1408,7 +1408,9 @@
 					"css/icons-extra.css",
 					"fonts/mui-icons-extra.ttf"
 				],
-				"refer": [],
+				"refer": [
+					"bussinessinfo/buss_gatherinfo.html"
+				],
 				"priority": 0
 			},
 			"notice/notice_main.html": {
@@ -2009,6 +2011,20 @@
 					"fonts/mui.ttf"
 				],
 				"refer": [],
+				"priority": 0
+			},
+			"bussinessinfo/buss_gatherinfo.html": {
+				"resources": [
+					"css/mui.min.css",
+					"js/basepath.js",
+					"js/app.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"js/copy.js"
+				],
+				"refer": [
+					"inforgather/detail_inforgather.html"
+				],
 				"priority": 0
 			}
 		},
