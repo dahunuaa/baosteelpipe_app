@@ -782,7 +782,8 @@
 			"fonts/mui.ttf"
 		],
 		"refer": [
-			"inforguide/guide_type_list_base.html"
+			"inforguide/guide_type_list_base.html",
+			"inforguide/files_amounts.html"
 		]
 	},
 	"inforguide/guide_type_list.html": {
@@ -796,7 +797,8 @@
 		],
 		"refer": [
 			"inforguide/detail_inforguide.html",
-			"inforguide/guide_type_detail.html"
+			"inforguide/guide_type_detail.html",
+			"inforguide/inforguide_search.html"
 		]
 	},
 	"inforguide/guide_type_list_base.html": {
@@ -1048,6 +1050,22 @@
 			"css/mui.min.css",
 			"js/mui.min.js",
 			"fonts/mui.ttf"
+		]
+	},
+	"inforguide/files_amounts.html": {
+		"resources": [
+			"css/comment.css",
+			"js/basepath.js",
+			"js/app.js",
+			"js/common.js",
+			"js/mui.min.js",
+			"css/app.css",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/icons-extra.css"
+		],
+		"refer": [
+			"inforguide/guide_type_list_base.html"
 		]
 	}
 }

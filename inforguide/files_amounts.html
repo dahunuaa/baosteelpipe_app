@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>detail_inforguide</title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="../css/app.css"/>
+		<style type="text/css">
+			body {
+				background-color:#efeff4;
+			}
+		   
+		</style>
+
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			 
+			 <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			 <!--<a class="mui-icon mui-icon-reload mui-pull-right" id="refresh"><div style="margin:-18px 10px 10px 30px; font: '楷体';font-size: 18px;">刷新</div></a>-->
+			<h1 class="mui-title">信息指南统计</h1>
+			
+		</header>	
+		
+		<div class="mui-content" style="font-size: 16px;" >
+			
+			<div class="mui-scroll">
+				<ul class="mui-table-view mui-table-view-chevron" id="list">
+					
+				</ul>
+			</div>
+		</div>
+		
+		<!--<div class="mui-content" >
+			<table border="2" style="width: -webkit-fill-available;">
+			  <tr>
+			    <th>信息类型</th>
+			    <th>信息数量</th>
+			    <th>查看详情</th>
+			  </tr>
+			  <tr style="text-align: center;">
+			    <td>螺纹检测手册</td>
+			    <td><span id="jianceshouce"></span></td>
+			    <td><button  id="jianceshouce_detail" style=" color: blue;">查看详情</button></td>
+			  </tr>
+			  <tr style="text-align: center;">
+			    <td>油井下井手册</td>
+			    <td><span id="xiajingshouce"></span></td>
+			    <td><button  id="xiajingshouce_detail" style=" color: blue;">查看详情</button></td>
+			  </tr>
+			  <tr style="text-align: center;">
+			    <td>螺纹检测记录</td>
+			    <td><span id="jiancejil"></span></td>
+			    <td><button  id="jiancejil_detail" style=" color: blue;">查看详情</button></td>
+			  </tr>
+			  <tr style="text-align: center;">
+			    <td>油田服务经验分享</td>
+			    <td><span id="jingyanfenxiang"></span></td>
+			    <td><button  id="jingyanfenxiang_detail" style=" color: blue;">查看详情</button></td>
+			  </tr>
+			  <tr style="text-align: center;">
+			    <td>质量异议分析处理报告</td>
+			    <td><span id="zhiliangyiyi"></span></td>
+			    <td><button  id="zhiliangyiyi_detail" style=" color: blue;">查看详情</button></td>
+			  </tr>
+			  <tr style="text-align: center;">
+			    <td>笔记小结</td>
+			    <td><span id="bijixiaojie"></span></td>
+			    <td><button  id="bijixiaojie_detail" style=" color: blue;">查看详情</button></td>
+			  </tr>
+			  <tr style="text-align: center;">
+			    <td>用户信息</td>
+			    <td><span id="yonghuxinxi"></span></td>
+			    <td><button  id="yonghuxinxi_detail" style=" color: blue;">查看详情</button></td>
+			  </tr>
+			  <tr style="text-align: center;">
+			    <td>产品信息</td>
+			    <td><span id="chanpinxinxi"></span></td>
+			    <td><button  id="chanpinxinxi_detail" style=" color: blue;">查看详情</button></td>
+			  </tr>
+			  <tr style="text-align: center;">
+			    <td>行业信息</td>
+			    <td><span id="hangyexinxi"></span></td>
+			    <td><button  id="hangyexinxi_detail" style=" color: blue;">查看详情</button></td>
+			  </tr>
+			  <tr style="text-align: center;">
+			    <td>公司新闻</td>
+			    <td><span id="gongsixinwen"></span></td>
+			    <td><button  id="gongsixinwen_detail" style=" color: blue;">查看详情</button></td>
+			  </tr>
+			</table>
+	        
+		</div>-->
+		
+		<script src="../js/app.js"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/common.js"></script>
+		<script type="text/javascript" src="../js/basepath.js" ></script>
+		<script>
+		
+			(function($,doc){
+				$.init({
+					
+				});
+				
+				var list = document.getElementById("list")
+					mui.ajax({
+						type: "get",//后面必须加逗号！！！！！！！！
+						url:basepath+"api/v1.0/inforguide/classify?access_token="+localStorage.getItem("token"),
+						async:true,
+						dataType:"json",
+						success:function(data){
+							
+							mui.each(data.response.data,function(key,value){
+								var li = document.createElement("li")
+								li.className="mui-table-view-cell";
+								li.setAttribute("id",value._id);
+								li.setAttribute("num",value.num);
+								
+								li.innerHTML ='<a class="mui-navigate-right"'+"<br>"+ "文件类型："+value._id 
+								+"&nbsp;&nbsp;&nbsp;&nbsp;"+"数量："+value.num +'</a>';
+	                            
+	                            list.appendChild(li)
+							})
+							
+							mui("#list").on('tap','li',function(){
+								var id = this.getAttribute("id")
+								var num = this.getAttribute("num")
+								
+								mui.openWindow({
+									url:"guide_type_list_base.html",
+									id:"guide_type_list_base"
+								})
+								localStorage.setItem("guide_type",id)
+								
+		                  });										                                         			         			           
+			   		},
+				  
+				  });
+				
+				
+//				mui.plusReady(function(){
+//					bijixiaojie = document.getElementById("bijixiaojie")
+//					yonghuxinxi = document.getElementById("yonghuxinxi")
+//					chanpinxinxi = document.getElementById("chanpinxinxi")
+//					hangyexinxi = document.getElementById("hangyexinxi")
+//					gongsixinwen = document.getElementById("gongsixinwen")
+//					
+//					
+//					mui.ajax({
+//						type:"get",
+//						url:basepath+"api/v1.0/inforguide/classify?access_token="+localStorage.getItem("token"),
+//						async:false,
+//						dataType:"json",
+//						success:function(data){
+//							result = data.response.data
+//							bijixiaojie.innerHTML=result["bijixiaojie"]
+//							yonghuxinxi.innerHTML=result["yonghuxinxi"]
+//							chanpinxinxi.innerHTML=result["chanpinxinxi"]
+//							hangyexinxi.innerHTML=result["hangyexinxi"]
+//							gongsixinwen.innerHTML=result["gongsixinwen"]
+//							
+//						},
+//						error:function(){
+//							plus.nativeUI.toast("加载失败，请重新刷新~")
+//						}
+//					})
+//					
+//					bijixiaojie_detail = document.getElementById("bijixiaojie_detail")
+//					bijixiaojie_detail.addEventListener('tap',function(){
+//						localStorage.setItem("guide_type","笔记小结")
+//						mui.openWindow({
+//							url:"guide_type_list_base.html",
+//							id:"guide_type_list_base"
+//						})
+//						
+//					})
+//					
+//					yonghuxinxi_detail = document.getElementById("yonghuxinxi_detail")
+//					yonghuxinxi_detail.addEventListener('tap',function(){
+//						localStorage.setItem("guide_type","用户信息")
+//						mui.openWindow({
+//							url:"guide_type_list_base.html",
+//							id:"guide_type_list_base"
+//						})
+//						
+//					})
+//					
+//					chanpinxinxi_detail = document.getElementById("chanpinxinxi_detail")
+//					chanpinxinxi_detail.addEventListener('tap',function(){
+//						localStorage.setItem("guide_type","产品信息")
+//						mui.openWindow({
+//							url:"guide_type_list_base.html",
+//							id:"guide_type_list_base"
+//						})
+//						
+//					})
+//					
+//					hangyexinxi_detail = document.getElementById("hangyexinxi_detail")
+//					hangyexinxi_detail.addEventListener('tap',function(){
+//						localStorage.setItem("guide_type","行业信息")
+//						mui.openWindow({
+//							url:"guide_type_list_base.html",
+//							id:"guide_type_list_base"
+//						})
+//						
+//					})
+//					
+//					gongsixinwen_detail = document.getElementById("gongsixinwen_detail")
+//					gongsixinwen_detail.addEventListener('tap',function(){
+//						localStorage.setItem("guide_type","公司新闻")
+//						mui.openWindow({
+//							url:"guide_type_list_base.html",
+//							id:"guide_type_list_base"
+//						})
+//						
+//					})
+//					
+//					
+//					
+//					})
+			}(mui, document));
+				
+		</script>
+		
+	</body>
+</html>
