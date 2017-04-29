@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<title>buss_detail</title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="../css/app.css"/>
+        <link rel="stylesheet" href="../css/comment.css" />
+        <link rel="stylesheet" type="text/css" href="../css/icons-extra.css" />
+		<style type="text/css">
+			body {
+				background-color:#efeff4;
+			}
+		    div{
+		    	background-color: #EEEEEE;
+		    }
+		    .buss-nolike{
+		    	color: #8F8F94;
+		    }
+		    .buss-like{
+		    	color: red;
+		    }
+		    
+		</style>
+
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			 
+			 <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			 <!--<a class="mui-icon mui-icon-reload mui-pull-right" id="refresh"><div style="margin:-18px 10px 10px 30px; font: '楷体';font-size: 18px;">刷新</div></a>-->
+			<h1 class="mui-title">出差任务详情</h1>
+			<span class="mui-pull-right" style="margin-top: 10px;">
+				<a class="buss-nolike" id="like" ><span class="mui-icon-extra mui-icon-extra-heart-filled"></span></a>
+			</span>
+			
+		</header>
+		
+		<div class="mui-content" >
+		
+        <h3 id="title" style="text-align:center"></h3>    
+        <span >出差任务序号:</span>&nbsp;&nbsp;&nbsp;<span id="buss_id"></span>
+        <br>
+        <span >编辑人:</span>&nbsp;&nbsp;&nbsp;<span id="editor_name"></span>
+        <br>
+        <span >编辑时间:</span>&nbsp;&nbsp;&nbsp;<span id="edit_time"></span>   
+        <br />
+        <span >出差日期:</span>&nbsp;&nbsp;&nbsp;<span id="buss_time"></span>   
+        <br />
+        <span >出差人:</span>&nbsp;&nbsp;&nbsp;<span id="bussmen_name"></span>   
+        <br />
+        <span >出差总人数:</span>&nbsp;&nbsp;&nbsp;<span id="accounts"></span>   
+        <br />
+        <span >出差缘由:</span>&nbsp;&nbsp;&nbsp;<span id="buss_reason"></span>   
+        <br />
+        <span >出差地:</span>&nbsp;&nbsp;&nbsp;<span id="buss_place"></span>   
+        <br />
+        <span>备注：</span>&nbsp;&nbsp;&nbsp;<span id="buss_remark"></span>
+        <br />
+      	<button id="evalute" type="button" class=" mui-table-view-cell mui-btn mui-btn-block mui-btn-primary" style="margin-top: 25px;">考核该出差</button>
+        <br />
+		<span id="comment_area">评论区：</span>
+			
+		<div id="comments" class="comment">
+			<ul class="mui-table-view mui-table-view-chevron" id="comments_list">
+				
+			</ul>
+		</div>
+		
+		</div>
+		
+		<footer>
+			<div class="footer-center">
+				<textarea id='comment_text' type="text" class='input-text' placeholder="发表评论~"></textarea>
+			</div>
+			<label for="" class="footer-right">
+				<div id="comment_btn" class="mui-btn mui-btn-primary">
+					发表
+				</div>
+			</label>
+		</footer>
+		
+		<script src="../js/app.js"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/mui.view.js "></script>
+		<script type="text/javascript" src="../js/basepath.js" ></script>
+		<script>
+			(function($,doc){
+				$.init({ //需要先定义longtap
+					gestureConfig:{
+					   tap: true, //默认为true
+					   longtap: true, //默认为false
+					  }
+					})
+				$.plusReady(function(){
+					var buss_id = document.getElementById('buss_id');
+			        var editor_name = document.getElementById('editor_name');
+					var edit_time = document.getElementById('edit_time');
+			        var buss_time = document.getElementById('buss_time');
+					var bussmen_name = document.getElementById('bussmen_name');
+					var accounts = document.getElementById("accounts");
+					var buss_reason = document.getElementById("buss_reason");
+					var buss_place = document.getElementById("buss_place");
+					var remark= document.getElementById("buss_remark")
+					
+					//获取前一个页面传过来的值
+					var self = plus.webview.currentWebview();//必须用plusReady 来获取前面传过来的值
+					var _buss_id =self.buss_id
+					var _editor_name = self.editor_name
+					var _edit_time = self.edit_time
+					var _buss_start_time = self.buss_begintime
+					var _buss_end_time = self.buss_endtime
+					var _bussmen_name = self.bussmen_name
+					var _accounts = self.accounts
+					var _buss_reason = self.buss_reason
+					var _buss_place = self.buss_place
+					var _buss_remark = self.remark
+				
+					buss_id.innerHTML=_buss_id
+					editor_name.innerHTML=_editor_name
+					edit_time.innerHTML=_edit_time
+					buss_time.innerHTML=_buss_start_time+"—"+_buss_end_time
+					bussmen_name.innerHTML=_bussmen_name
+					accounts.innerHTML=_accounts
+					buss_reason.innerHTML = _buss_reason
+					buss_place.innerHTML = _buss_place
+					
+					if(_buss_remark==""||_buss_remark==NaN||_buss_remark==undefined){
+						remark.innerHTML=="无"
+					}else{
+						remark.innerHTML = _buss_remark	
+					}
+					//出差考核
+					document.getElementById("evalute").addEventListener('tap',function(){
+						mui.openWindow({
+							url:"evalute_detail.html",
+							id:"evalute_detail",
+							
+							extras:{
+								"buss_id":_buss_id,
+							}
+						})
+					})
+					
+					//收藏操作
+					like_style = document.getElementById("like")
+					mui.ajax({
+						type:"get",
+						url:basepath+"api/v1.0/like?access_token="+localStorage.getItem("token")+"&user_id="+localStorage.getItem("mobile"),
+						async:true,
+						dataType:"json",
+						success:function(data){
+							buss_like = data.response.data[0].buss_like//注意data中list和dict的区别
+							if(buss_like.indexOf(_buss_id)>=0){
+								like_style.className="buss-like"
+							}else{
+								like_style.className="buss-nolike"
+							}
+							
+						},
+						error: function() {
+							plus.nativeUI.toast("请求服务器出现失败!");
+						}
+						
+					})
+					
+					
+					like_style.addEventListener('tap',function(){
+						if(like_style.className=="buss-nolike"){//注意复制和判断是否相等
+							like_style.className="buss-like"
+							mui.ajax({
+								type:"PUT",
+								url:basepath+"api/v1.0/like/alter",
+								data:{
+									"access_token":localStorage.getItem("token"),
+									"user_id":localStorage.getItem("mobile"),
+									"type":"bussiness",
+									"like_id":_buss_id,
+								},
+								async:true,
+								dataType:"json",
+								success:function(data){
+									if(data.response.success == "1"){
+										plus.nativeUI.toast("已收藏")
+									}else{
+										plus.nativeUI.toast("操作失败")
+									}
+								},
+								error:function(){
+									plus.nativeUI.toast("请求服务器失败!")
+								}
+							})
+							
+							
+						}else{
+							like_style.className = "buss-nolike"
+							mui.ajax({
+								type:"put",
+								url:basepath+"api/v1.0/like/alter",
+								data:{
+									"access_token":localStorage.getItem("token"),
+									"user_id":localStorage.getItem("mobile"),
+									"type":"bussiness",
+									"like_id":_buss_id,
+								},
+								async:true,
+								dataType:"json",
+								success:function(data){
+									if(data.response.success == "1"){
+										plus.nativeUI.toast("已取消收藏")
+									}else{
+										plus.nativeUI.toast("操作失败")
+									}
+								},
+								error:function(){
+									plus.nativeUI.toast("请求服务器失败!")
+								}
+							})
+							
+						}
+					})
+					
+					//显示当前出差任务下的评论
+					var comment_list = document.getElementById("comments_list")
+					mui.ajax({
+					type:"get",
+					url:basepath+"api/v1.0/comment?access_token="+localStorage.getItem('token')+"&comment_type=bussiness&text_id="+_buss_id,
+					async:true,
+					dataType:"json",
+					success:function(data){
+						if(data.response.data==""||data.response.data==NaN||data.response.data==undefined){
+							document.getElementById("comment_area").style.display="none"
+						}
+						mui.each(data.response.data,function(key,value){
+						var li = document.createElement("li")
+						li.className="mui-table-view-cell"
+						li.setAttribute("comment_id",value._id);
+						li.setAttribute("user_id",value.user_id);
+						li.innerHTML="<span id='com_name'>"+value.add_user_name+"</span>"+"&nbsp;&nbsp;&nbsp;"+"<span id='com_time'>"+value.add_time
+										+"</span>"+"<br>"+"<span id='com_text'>"+value.text+"</span>";
+
+                        comment_list.appendChild(li)
+						})
+						
+					//长按评论删除
+					 mui("#comments_list").on("longtap","li",function(){
+					 	comment_id=this.getAttribute("comment_id")
+					 	user_id = this.getAttribute("user_id")
+					 	var btnArray = ['否', '是'];
+						mui.confirm('删除此评论？', '', btnArray, function(e) {
+							if (e.index == 1) {
+								mui.ajax({
+									type:"delete",
+									url:basepath+"api/v1.0/comment/"+comment_id+"?access_token="+localStorage.getItem("token"),
+									data:{
+										"user_id":localStorage.getItem("mobile")
+									},
+									async:true,
+									dataTyoe:"json",
+									success:function(data){
+										if(data.response.success=="1"){
+											plus.nativeUI.toast("该评论已删除~")
+											plus.webview.getWebviewById("buss_detail").reload()
+										}else if(data.response.success=="0"){
+											plus.nativeUI.toast("您无权限删除此评论！")
+										}else{
+											plus.nativeUI.toast("出现异常，请重试~")
+										}
+									},
+								});
+							} else {
+							   
+							}
+						})
+					 })
+						 	
+		   		        },
+					});
+					
+					
+					
+					//提交评论
+					comment_text = document.getElementById("comment_text")
+					comment_btn = document.getElementById("comment_btn")
+					comment_btn.addEventListener('tap',function(event){
+						if(comment_text.value ==""){
+							plus.nativeUI.toast("请输入评论内容~")
+						}else{
+							mui.ajax({
+							type:"post",
+							url:basepath+"api/v1.0/comment",
+							data:{
+								"access_token":localStorage.getItem("token"), 
+								"comment_type":"bussiness",
+								"text_id":_buss_id,
+								"user_id":localStorage.getItem("mobile"),
+								"text":comment_text.value,
+							},
+							async:true,
+							dataType:"json",
+							success:function(data){
+							 	if (data.response.success == "1"){
+										plus.nativeUI.toast("评论成功~")
+										plus.webview.getWebviewById("buss_detail").reload()
+									}else{
+										plus.nativeUI.toast("评论失败，请重试！")
+									}   
+							}
+						 });	
+						}
+						
+					})
+					
+					
+					
+				})
+			}(mui,document))
+		</script>
+		
+	</body>
+</html>

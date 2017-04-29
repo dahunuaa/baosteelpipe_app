@@ -1198,7 +1198,9 @@
 					"downloadfile.html",
 					"user_account.html",
 					"echart.html",
-					"admin/manage_user.html"
+					"admin/manage_user.html",
+					"admin/buss_evaluate.html",
+					"evalute/buss_evaluate.html"
 				],
 				"priority": 0
 			},
@@ -1922,6 +1924,91 @@
 				"refer": [
 					"inforguide/guide_type_list_base.html"
 				],
+				"priority": 0
+			},
+			"admin/buss_evaluate.html": {
+				"resources": [
+					"css/iconfont.css",
+					"css/mui.min.css",
+					"js/basepath.js",
+					"js/app.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/icons-extra.css",
+					"js/copy.js",
+					"fonts/mui-icons-extra.ttf"
+				],
+				"refer": [
+					"bussinessinfo/buss_detail.html",
+					"admin/buss_detail.html"
+				],
+				"priority": 0
+			},
+			"admin/buss_detail.html": {
+				"resources": [
+					"css/comment.css",
+					"css/app.css",
+					"js/mui.view.js",
+					"js/basepath.js",
+					"fonts/mui-icons-extra.ttf",
+					"js/app.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"css/icons-extra.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"evalute/buss_detail.html": {
+				"resources": [
+					"css/comment.css",
+					"css/app.css",
+					"js/mui.view.js",
+					"css/mui.min.css",
+					"js/basepath.js",
+					"fonts/mui-icons-extra.ttf",
+					"js/app.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/icons-extra.css"
+				],
+				"refer": [
+					"evalute/evalute_detail.html"
+				],
+				"priority": 0
+			},
+			"evalute/buss_evaluate.html": {
+				"resources": [
+					"js/basepath.js",
+					"fonts/mui-icons-extra.ttf",
+					"js/app.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/iconfont.css",
+					"css/mui.min.css",
+					"css/icons-extra.css",
+					"js/copy.js"
+				],
+				"refer": [
+					"evalute/buss_detail.html"
+				],
+				"priority": 0
+			},
+			"evalute/evalute_detail.html": {
+				"resources": [
+					"css/app.css",
+					"css/mui.min.css",
+					"js/mui.picker.js",
+					"js/mui.poppicker.js",
+					"css/mui.poppicker.css",
+					"css/mui.picker.css",
+					"js/basepath.js",
+					"js/app.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf"
+				],
+				"refer": [],
 				"priority": 0
 			}
 		},

@@ -88,6 +88,11 @@
 						个人设置
 					</a>
 				</li>
+				<div class="mui-table-view-cell" style="display: none;" id="evaluate_buss">
+					<a class="mui-navigate-right" id="buss_evaluate">
+						出差考核
+					</a>
+				</div>
 				<div class="mui-table-view-cell" style="display: none;" id="user_manage">
 					<a class="mui-navigate-right" id="manage_user">
 						管理用户
@@ -112,6 +117,9 @@
 	(function($,doc){
 
 		mui.init();
+		if(localStorage.getItem("scope")=="admin"||localStorage.getItem("scope")=="backend"){
+				document.getElementById("evaluate_buss").style.display ="block"
+			}
 		
 		if(localStorage.getItem("scope")=="admin"){
 				document.getElementById("user_manage").style.display ="block"
@@ -222,6 +230,14 @@
 				id:"noice",
 			})
 		});
+		
+		document.getElementById("buss_evaluate").addEventListener('tap',function(){
+			mui.openWindow({
+				url:"evalute/buss_evaluate.html",
+				id:"buss_evaluate"
+				})
+		})
+		
 		document.getElementById("manage_user").addEventListener('tap',function(){
 			mui.openWindow({
 				url:"admin/manage_user.html",
