@@ -1976,7 +1976,8 @@
 					"css/icons-extra.css"
 				],
 				"refer": [
-					"evalute/evalute_detail.html"
+					"evalute/evalute_detail.html",
+					"bussinessinfo/buss_gatherinfo.html"
 				],
 				"priority": 0
 			},

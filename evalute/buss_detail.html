@@ -58,6 +58,7 @@
         <br />
         <span>备注：</span>&nbsp;&nbsp;&nbsp;<span id="buss_remark"></span>
         <br />
+        <button id="buss_gatherinfo" type="button" class=" mui-table-view-cell mui-btn mui-btn-block mui-btn-primary" style="margin-top: 25px;height: 50px;">查看该出差任务下的情报搜集</button>
       	<button id="evalute" type="button" class=" mui-table-view-cell mui-btn mui-btn-block mui-btn-primary" style="margin-top: 25px;">考核该出差</button>
         <br />
 		<span id="comment_area">评论区：</span>
@@ -107,6 +108,7 @@
 					//获取前一个页面传过来的值
 					var self = plus.webview.currentWebview();//必须用plusReady 来获取前面传过来的值
 					var _buss_id =self.buss_id
+					var _editor_id = self.editor_id
 					var _editor_name = self.editor_name
 					var _edit_time = self.edit_time
 					var _buss_start_time = self.buss_begintime
@@ -131,6 +133,21 @@
 					}else{
 						remark.innerHTML = _buss_remark	
 					}
+					
+					//查看该出差任务下所有情报
+					document.getElementById("buss_gatherinfo").addEventListener('tap',function(){
+						mui.openWindow({
+							url:"../bussinessinfo/buss_gatherinfo.html",
+							id:"buss_gatherinfo",
+							
+							extras:{
+								editor_id:_editor_id,
+								buss_start_time:_buss_start_time+" 00:00:00",
+								buss_end_time:_buss_end_time+" 23:59:59",
+							}
+						})
+					})
+					
 					//出差考核
 					document.getElementById("evalute").addEventListener('tap',function(){
 						mui.openWindow({
