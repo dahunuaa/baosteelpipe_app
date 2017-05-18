@@ -19,7 +19,7 @@
  *
  */
 (function(w){
-var server="http://121.42.186.54:8081/update/update.json",//获取升级描述文件服务器地址
+var server="http://47.92.89.156/update/",//获取升级描述文件服务器地址
 localDir="update",localFile="update.json",//本地保存升级描述目录和文件名
 keyUpdate="updateCheck",//取消升级键名
 keyAbort="updateAbort",//忽略版本键名
