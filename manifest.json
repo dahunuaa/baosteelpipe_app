@@ -7,7 +7,7 @@
 	"id": "H57030830",/*应用的标识，创建应用时自动生成，勿手动修改*/
 	"name": "BaosteelPipe",/*应用名称，程序桌面图标名称*/
 	"version": {
-		"name": "3.2",/*应用版本名称*/
+		"name": "3.3",/*应用版本名称*/
 		"code": ""
 	},
 	"description": "",/*应用描述信息*/
@@ -1431,7 +1431,8 @@
 					"inforguide/newinformationguide.html",
 					"inforguide/myInformationGuiding.html",
 					"report_down.html",
-					"inforguide/guide_type_list_base.html"
+					"inforguide/guide_type_list_base.html",
+					"inforguide/scapy.html"
 				],
 				"priority": 0
 			},
@@ -2011,6 +2012,64 @@
 				"refer": [
 					"inforgather/detail_inforgather.html"
 				],
+				"priority": 0
+			},
+			"inforguide/scapy.html": {
+				"resources": [
+					"css/mui.min.css",
+					"css/app.css"
+				],
+				"refer": [
+					"inforguide/scapy/baowunews.html",
+					"inforguide/scapy/baowuprice.html",
+					"inforguide/scapy/shougangnews.html",
+					"inforguide/scapy/baowushareprice.html"
+				],
+				"priority": 0
+			},
+			"inforguide/scapy/baowunews.html": {
+				"resources": [
+					"css/mui.min.css"
+				],
+				"refer": [
+					"inforguide/scapy/detail_baowu_news.html"
+				],
+				"priority": 0
+			},
+			"inforguide/scapy/detail_baowu_news.html": {
+				"resources": [
+					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"inforguide/scapy/baowushareprice.html": {
+				"resources": [
+					"js/common.js",
+					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"inforguide/scapy/shougangnews.html": {
+				"resources": [
+					"css/mui.min.css",
+					"js/basepath.js",
+					"js/app.js",
+					"js/mui.min.js"
+				],
+				"refer": [
+					"inforguide/scapy/detail_shougang_news.html"
+				],
+				"priority": 0
+			},
+			"inforguide/scapy/detail_shougang_news.html": {
+				"resources": [
+					"css/mui.min.css",
+					"js/app.js",
+					"js/mui.min.js"
+				],
+				"refer": [],
 				"priority": 0
 			}
 		},
